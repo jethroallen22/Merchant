@@ -23,6 +23,7 @@ import com.example.merchant.databinding.FragmentOrdersBinding;
 import com.example.merchant.interfaces.RecyclerViewInterface;
 import com.example.merchant.models.OrderItemModel;
 import com.example.merchant.models.OrderModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -91,5 +92,10 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
         Log.d("TAG", "Success");
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
         Log.d("TAG", "Success Click");
+    }
+
+    @Override
+    public void onItemClickEdit(int position) {
+
     }
 }

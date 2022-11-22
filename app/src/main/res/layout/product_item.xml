@@ -30,10 +30,12 @@
 
             <TextView
                 android:id="@+id/tv_product_name"
-                android:layout_width="0dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/robotobold"
+                android:lines="1"
+                android:maxLines="1"
                 android:text="TextView"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/iv_product_image"
@@ -44,7 +46,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:fontFamily="@font/robotobold"
                 android:text="P 123"
                 android:textSize="16sp"
@@ -55,12 +56,31 @@
                 android:id="@+id/tv_product_cal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/robotomedium"
                 android:text="360cal"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_product_price"
+                app:layout_constraintStart_toEndOf="@+id/iv_product_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_price" />
+
+            <ImageView
+                android:id="@+id/iv_edit_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/iv_delete_product"
+                app:layout_constraintTop_toTopOf="@+id/tv_product_name"
+                app:srcCompat="@drawable/ic_baseline_edit_24" />
+
+            <ImageView
+                android:id="@+id/iv_delete_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_product_price" />
+                app:layout_constraintTop_toTopOf="@+id/tv_product_name"
+                app:srcCompat="@drawable/ic_baseline_delete_24" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

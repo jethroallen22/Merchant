@@ -14,6 +14,7 @@ public class OrderModel implements Parcelable {
     String address;
     String time;
     String distance;
+    String status;
     List<OrderItemModel> orderItem_list;
     int item_count;
     float total;
