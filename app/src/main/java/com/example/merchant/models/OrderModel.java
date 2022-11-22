@@ -9,49 +9,53 @@ import java.io.Serializable;
 import java.util.List;
 
 public class OrderModel implements Parcelable {
-    long order_id;
-    String name;
-    String address;
-    String time;
-    String distance;
-    String status;
+    int idOrder;
+    String orderItemTotalPrice;
+    String orderStatus;
+    int store_idstore;
+    int users_id;
     List<OrderItemModel> orderItem_list;
-    int item_count;
-    float total;
 
-    public OrderModel(long order_id, String name, String address, String time, String distance, List<OrderItemModel> orderItem_list, int item_count, float total) {
-        this.order_id = order_id;
-        this.name = name;
-        this.address = address;
-        this.time = time;
-        this.distance = distance;
+    public OrderModel(int idOrder, String orderItemTotalPrice, String orderStatus, int store_idstore, int users_id, List<OrderItemModel> orderItem_list) {
+        this.idOrder = idOrder;
+        this.orderItemTotalPrice = orderItemTotalPrice;
+        this.orderStatus = orderStatus;
+        this.store_idstore = store_idstore;
+        this.users_id = users_id;
         this.orderItem_list = orderItem_list;
-        this.item_count = item_count;
-        this.total = total;
     }
 
-    public OrderModel(String name, String address, String time, String distance, List<OrderItemModel> orderItem_list, int item_count, float total) {
-        this.name = name;
-        this.address = address;
-        this.time = time;
-        this.distance = distance;
-        this.orderItem_list = orderItem_list;
-        this.item_count = item_count;
-        this.total = total;
-    }
+    //    public OrderModel(long order_id, String name, String address, String time, String distance, List<OrderItemModel> orderItem_list, int item_count, float total) {
+//        this.order_id = order_id;
+//        this.name = name;
+//        this.address = address;
+//        this.time = time;
+//        this.distance = distance;
+//        this.orderItem_list = orderItem_list;
+//        this.item_count = item_count;
+//        this.total = total;
+//    }
+
+//    public OrderModel(String name, String address, String time, String distance, List<OrderItemModel> orderItem_list, int item_count, float total) {
+//        this.name = name;
+//        this.address = address;
+//        this.time = time;
+//        this.distance = distance;
+//        this.orderItem_list = orderItem_list;
+//        this.item_count = item_count;
+//        this.total = total;
+//    }
 
     public OrderModel() {
     }
 
     protected OrderModel(Parcel in) {
-        order_id = in.readLong();
-        name = in.readString();
-        address = in.readString();
-        time = in.readString();
-        distance = in.readString();
+        idOrder = in.readInt();
+        orderItemTotalPrice = in.readString();
+        orderStatus = in.readString();
+        store_idstore = in.readInt();
+        users_id = in.readInt();
         orderItem_list = in.createTypedArrayList(OrderItemModel.CREATOR);
-        item_count = in.readInt();
-        total = in.readFloat();
     }
 
     public static final Creator<OrderModel> CREATOR = new Creator<OrderModel>() {
@@ -66,44 +70,44 @@ public class OrderModel implements Parcelable {
         }
     };
 
-    public long getOrder_id() {
-        return order_id;
+    public int getIdOrder() {
+        return idOrder;
     }
 
-    public void setOrder_id(long order_id) {
-        this.order_id = order_id;
+    public void setIdOrder(int idOrder) {
+        this.idOrder = idOrder;
     }
 
-    public String getName() {
-        return name;
+    public String getOrderItemTotalPrice() {
+        return orderItemTotalPrice;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOrderItemTotalPrice(String orderItemTotalPrice) {
+        this.orderItemTotalPrice = orderItemTotalPrice;
     }
 
-    public String getAddress() {
-        return address;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public String getTime() {
-        return time;
+    public int getStore_idstore() {
+        return store_idstore;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setStore_idstore(int store_idstore) {
+        this.store_idstore = store_idstore;
     }
 
-    public String getDistance() {
-        return distance;
+    public int getUsers_id() {
+        return users_id;
     }
 
-    public void setDistance(String distance) {
-        this.distance = distance;
+    public void setUsers_id(int users_id) {
+        this.users_id = users_id;
     }
 
     public List<OrderItemModel> getOrderItem_list() {
@@ -114,22 +118,6 @@ public class OrderModel implements Parcelable {
         this.orderItem_list = orderItem_list;
     }
 
-    public int getItem_count() {
-        return item_count;
-    }
-
-    public void setItem_count(int item_count) {
-        this.item_count = item_count;
-    }
-
-    public float getTotal() {
-        return total;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -137,14 +125,12 @@ public class OrderModel implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeLong(order_id);
-        dest.writeString(name);
-        dest.writeString(address);
-        dest.writeString(time);
-        dest.writeString(distance);
+        dest.writeInt(idOrder);
+        dest.writeString(orderItemTotalPrice);
+        dest.writeString(orderStatus);
+        dest.writeInt(store_idstore);
+        dest.writeInt(users_id);
         dest.writeTypedList(orderItem_list);
-        dest.writeInt(item_count);
-        dest.writeFloat(total);
     }
 }
 

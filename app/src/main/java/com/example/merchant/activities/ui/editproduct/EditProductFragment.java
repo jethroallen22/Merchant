@@ -59,10 +59,10 @@ public class EditProductFragment extends Fragment {
 
 
                 ProductModel productModel = new ProductModel();
-                productModel.setProduct_name(product_name);
-                productModel.setProduct_description(description);
-                productModel.setProduct_calories(calories);
-                productModel.setProduct_price(price);
+//                productModel.setProduct_name(product_name);
+//                productModel.setProduct_description(description);
+//                productModel.setProduct_calories(calories);
+//                productModel.setProduct_price(price);
 
                 Bundle bundle = new Bundle();
                 ProductsFragment productsFragment = new ProductsFragment();

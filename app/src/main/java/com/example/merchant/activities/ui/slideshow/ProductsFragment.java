@@ -49,8 +49,8 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
 
         rv_products = root.findViewById(R.id.rv_products);
         product_list = new ArrayList<>();
-        product_list.add(new ProductModel("test", "Burger Mcdo", "Tasty delicious burger Mcdo", "Mcdo - Binondo", 45F, 350));
-        product_list.add(new ProductModel("test", "Chicken Ala king", "Tasty delicious burger Mcdo", "Mcdo - Binondo", 45F, 350));
+//        product_list.add(new ProductModel("test", "Burger Mcdo", "Tasty delicious burger Mcdo", "Mcdo - Binondo", 45F, 350));
+//        product_list.add(new ProductModel("test", "Chicken Ala king", "Tasty delicious burger Mcdo", "Mcdo - Binondo", 45F, 350));
         productAdapter = new ProductAdapter(getActivity(), product_list, this);
         rv_products.setAdapter(productAdapter);
         productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {

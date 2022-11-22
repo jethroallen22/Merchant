@@ -32,8 +32,8 @@ public class OrderItemsAdapter extends RecyclerView.Adapter<OrderItemsAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tv_order_item_name.setText("- " + list.get(position).getProduct_name());
-        holder.tv_order_item_qty.setText("Qty:" + list.get(position).getQuantity() + "x");
+        holder.tv_order_item_name.setText("- " + list.get(position).getProductName());
+        holder.tv_order_item_qty.setText("Qty:" + list.get(position).getItemQuantity() + "x");
     }
 
     @Override

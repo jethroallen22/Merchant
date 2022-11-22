@@ -31,11 +31,11 @@ public class Home2 extends AppCompatActivity {
         getSupportActionBar().hide();
 
         order_item_list = new ArrayList<>();
-        order_item_list.add(new OrderItemModel("Burger Mcdo", 2, 80F));
+        //order_item_list.add(new OrderItemModel("Burger Mcdo", 2, 80F));
 
         rv_orders = findViewById(R.id.rv_orders);
         order_list = new ArrayList<>();
-        order_list.add(new OrderModel("Juan Dela Cruz", "Tondo, Manila", String.valueOf(LocalDateTime.now()), "3.5", order_item_list, order_item_list.size(),123F));
+        //order_list.add(new OrderModel("Juan Dela Cruz", "Tondo, Manila", String.valueOf(LocalDateTime.now()), "3.5", order_item_list, order_item_list.size(),123F));
         orderAdapter = new OrderAdapter(this,order_list, recyclerViewInterface);
         rv_orders.setAdapter(orderAdapter);
         rv_orders.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));

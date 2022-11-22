@@ -42,15 +42,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         //text = String.join(", ", list.get(position).getOrderItem_list().get(i).getProduct_name());
         for(i = 0 ; i < list.get(position).getOrderItem_list().size() ; i++){
             if (i == list.get(position).getOrderItem_list().size() - 1){
-                text += list.get(position).getOrderItem_list().get(i).getProduct_name();
+                text += list.get(position).getOrderItem_list().get(i).getProductName();
             } else {
-                text += list.get(position).getOrderItem_list().get(i).getProduct_name() + ", ";
+                text += list.get(position).getOrderItem_list().get(i).getProductName() + ", ";
             }
         }
         holder.tv_order_info.setText(text);
-        holder.tv_order_item_info.setText(list.get(position).getItem_count() + " items ● " +
-                list.get(position).getTime() + "min ● " +
-                list.get(position).getDistance() + "km");
+        holder.tv_order_item_info.setText("Qty: " + list.get(position).getOrderItem_list().size());
     }
 
     @Override

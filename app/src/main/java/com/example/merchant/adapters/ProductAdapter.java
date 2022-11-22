@@ -50,9 +50,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 //        Glide.with(context)
 //                .load(list.get(position).getProduct_image())
 //                .into(holder.iv_product_image);
-        holder.tv_product_name.setText(list.get(position).getProduct_name());
-        holder.tv_product_calories.setText(list.get(position).getProduct_calories() + "cal");
-        holder.tv_product_price.setText("P" + list.get(position).getProduct_price().toString());
+        holder.tv_product_name.setText(list.get(position).getProductName());
+        //holder.tv_product_calories.setText(list.get(position).getProduct_calories() + "cal");
+        holder.tv_product_price.setText("P" + list.get(position).getProductPrice().toString());
     }
 
     @Override

@@ -43,18 +43,6 @@
                     android:text="Juan Dela Cruz"
                     android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/robotomedium"
-                    android:text="2399 Taft Ave, Malate, Manila, 1004 Metro Manila" />
-
-                <TextView
-                    android:id="@+id/tv_distance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Distance from you: 5.4km" />
             </LinearLayout>
 
             <LinearLayout
@@ -99,6 +87,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotomedium"
+                android:text="Total"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/robotobold"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <Button
             android:id="@+id/btn_place_order"
             android:layout_width="match_parent"
@@ -109,7 +124,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/btn_place_order2"
+            android:id="@+id/btn_cancel_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/mosibusOffWhite"
