@@ -62,9 +62,10 @@ public class OrderSummaryFragment extends Fragment {
         btn_complete_order = root.findViewById(R.id.btn_complete_order);
 
         Bundle bundle = this.getArguments();
-        order = new OrderModel();
-        order = bundle.getParcelable("Order");
-
+        if (bundle != null) {
+            order = new OrderModel();
+            order = bundle.getParcelable("Order");
+        }
         tv_order_id.setText(String.valueOf(order.getIdOrder()));
         tv_name.setText(String.valueOf(order.getUsers_id()));
         tv_total_price.setText(String.valueOf(order.getOrderItemTotalPrice()));

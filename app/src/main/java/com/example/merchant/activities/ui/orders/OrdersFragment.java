@@ -144,7 +144,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                         JSONObject jsonObjectRec1 = response.getJSONObject(i);
                         //ORDER DB
                         int idOrder = jsonObjectRec1.getInt("idOrder");
-                        String orderItemTotalPrice = jsonObjectRec1.getString("orderItemTotalPrice");
+                        int orderItemTotalPrice = jsonObjectRec1.getInt("orderItemTotalPrice");
                         String orderStatus = jsonObjectRec1.getString("orderStatus");
                         int store_idstore = jsonObjectRec1.getInt("store_idstore");
                         int users_id = jsonObjectRec1.getInt("users_id");

@@ -112,6 +112,9 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
     public void onItemClickEdit(int position){
         Log.d("Test", "Success");
         EditProductFragment fragment = new EditProductFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Product", product_list.get(position));
+        fragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
     }
 }
