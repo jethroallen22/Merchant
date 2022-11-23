@@ -38,17 +38,19 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull OrderAdapter.ViewHolder holder, int position) {
         ArrayList<String> strings = new ArrayList<>();
         String text = "";
-        int i,j =0;
-        //text = String.join(", ", list.get(position).getOrderItem_list().get(i).getProduct_name());
-        for(i = 0 ; i < list.get(position).getOrderItem_list().size() ; i++){
-            if (i == list.get(position).getOrderItem_list().size() - 1){
-                text += list.get(position).getOrderItem_list().get(i).getProductName();
-            } else {
-                text += list.get(position).getOrderItem_list().get(i).getProductName() + ", ";
+        if(list.size() != 0) {
+            int i, j = 0;
+            //text = String.join(", ", list.get(position).getOrderItem_list().get(i).getProduct_name());
+            for (i = 0; i < list.get(position).getOrderItem_list().size(); i++) {
+                if (i == list.get(position).getOrderItem_list().size() - 1) {
+                    text += list.get(position).getOrderItem_list().get(i).getProductName();
+                } else {
+                    text += list.get(position).getOrderItem_list().get(i).getProductName() + ", ";
+                }
             }
+            holder.tv_order_info.setText(text);
+            holder.tv_order_item_info.setText("Qty: " + list.get(position).getOrderItem_list().size());
         }
-        holder.tv_order_info.setText(text);
-        holder.tv_order_item_info.setText("Qty: " + list.get(position).getOrderItem_list().size());
     }
 
     @Override

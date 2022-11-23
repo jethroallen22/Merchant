@@ -10,13 +10,13 @@ import java.util.List;
 
 public class OrderModel implements Parcelable {
     int idOrder;
-    String orderItemTotalPrice;
+    float orderItemTotalPrice;
     String orderStatus;
     int store_idstore;
     int users_id;
     List<OrderItemModel> orderItem_list;
 
-    public OrderModel(int idOrder, String orderItemTotalPrice, String orderStatus, int store_idstore, int users_id, List<OrderItemModel> orderItem_list) {
+    public OrderModel(int idOrder, float orderItemTotalPrice, String orderStatus, int store_idstore, int users_id, List<OrderItemModel> orderItem_list) {
         this.idOrder = idOrder;
         this.orderItemTotalPrice = orderItemTotalPrice;
         this.orderStatus = orderStatus;
@@ -51,7 +51,7 @@ public class OrderModel implements Parcelable {
 
     protected OrderModel(Parcel in) {
         idOrder = in.readInt();
-        orderItemTotalPrice = in.readString();
+        orderItemTotalPrice = in.readFloat();
         orderStatus = in.readString();
         store_idstore = in.readInt();
         users_id = in.readInt();
@@ -78,11 +78,11 @@ public class OrderModel implements Parcelable {
         this.idOrder = idOrder;
     }
 
-    public String getOrderItemTotalPrice() {
+    public float getOrderItemTotalPrice() {
         return orderItemTotalPrice;
     }
 
-    public void setOrderItemTotalPrice(String orderItemTotalPrice) {
+    public void setOrderItemTotalPrice(float orderItemTotalPrice) {
         this.orderItemTotalPrice = orderItemTotalPrice;
     }
 
@@ -126,7 +126,7 @@ public class OrderModel implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(idOrder);
-        dest.writeString(orderItemTotalPrice);
+        dest.writeFloat(orderItemTotalPrice);
         dest.writeString(orderStatus);
         dest.writeInt(store_idstore);
         dest.writeInt(users_id);
