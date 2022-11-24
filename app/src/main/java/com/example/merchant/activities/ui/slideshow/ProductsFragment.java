@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,8 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
     List<ProductModel> product_list;
     ProductAdapter productAdapter;
     RecyclerViewInterface recyclerViewInterface;
+    TextView tv_product_namee2, tv_product_pricee2, tv_product_description2, tv_product_info;
+    ImageView iv_product_imagee2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,10 +53,12 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
 
         rv_products = root.findViewById(R.id.rv_products);
         product_list = new ArrayList<>();
-//        product_list.add(new ProductModel("test", "Burger Mcdo", "Tasty delicious burger Mcdo", "Mcdo - Binondo", 45F, 350));
+        product_list.add(new ProductModel("Burger Mcdo", "Burger Mcdo test description lorem ipsum dolor", 45F, "1pc", "Burger", 10));
 //        product_list.add(new ProductModel("test", "Chicken Ala king", "Tasty delicious burger Mcdo", "Mcdo - Binondo", 45F, 350));
         productAdapter = new ProductAdapter(getActivity(), product_list, this);
         rv_products.setAdapter(productAdapter);
+
+        //Remove Product
         productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -99,6 +104,17 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                         R.layout.product_bottom_sheet_layout,
                         getActivity().findViewById(R.id.product_bottomSheet_container)
                 );
+        tv_product_namee2 = bottomSheetView.findViewById(R.id.tv_product_namee2);
+        tv_product_pricee2 = bottomSheetView.findViewById(R.id.tv_product_pricee2);
+        tv_product_description2 = bottomSheetView.findViewById(R.id.tv_product_description2);
+        tv_product_info = bottomSheetView.findViewById(R.id.tv_product_info);
+
+        tv_product_namee2.setText(product_list.get(position).getProductName());
+        tv_product_pricee2.setText("P "+ product_list.get(position).getProductPrice());
+        tv_product_description2.setText(product_list.get(position).getProductDescription());
+        tv_product_info.setText(product_list.get(position).getProductPrepTime() +
+                "min | " + product_list.get(position).getProductServingSize() +
+                " | " + product_list.get(position).getProductTag());
         Log.d(TAG,"bottomSheetView = LayoutInflater.from");
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();

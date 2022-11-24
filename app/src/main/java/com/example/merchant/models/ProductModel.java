@@ -49,6 +49,16 @@ public class ProductModel implements Parcelable {
         this.productPrepTime = productPrepTime;
     }
 
+    public ProductModel(String productName, String productDescription, Float productPrice, String productServingSize, String productTag, int productPrepTime) {
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.productPrice = productPrice;
+        this.productImage = productImage;
+        this.productServingSize = productServingSize;
+        this.productTag = productTag;
+        this.productPrepTime = productPrepTime;
+    }
+
     public ProductModel(){}
 
     protected ProductModel(Parcel in) {

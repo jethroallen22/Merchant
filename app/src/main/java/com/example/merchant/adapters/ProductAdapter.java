@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.bumptech.glide.Glide;
+import com.bumptech.glide.Glide;
 import com.example.merchant.R;
 import com.example.merchant.interfaces.RecyclerViewInterface;
 import com.example.merchant.models.ProductModel;
@@ -48,10 +49,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
 //        Glide.with(context)
-//                .load(list.get(position).getProduct_image())
-//                .into(holder.iv_product_image);
+//                .load(list.get(position).getProductImage())
+//                .into(holder.iv_product_imagee2);
         holder.tv_product_name.setText(list.get(position).getProductName());
-        //holder.tv_product_calories.setText(list.get(position).getProduct_calories() + "cal");
+        holder.tv_product_calories.setText(list.get(position).getProductPrepTime() +
+                "min | " + list.get(position).getProductServingSize() +
+                " | " + list.get(position).getProductTag());
         holder.tv_product_price.setText("P" + list.get(position).getProductPrice().toString());
     }
 

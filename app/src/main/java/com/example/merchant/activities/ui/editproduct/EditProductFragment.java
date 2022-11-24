@@ -50,7 +50,7 @@ public class EditProductFragment extends Fragment {
         category_text_input = root.findViewById(R.id.category_text_input);
         servesize_text_input = root.findViewById(R.id.servesize_text_input);
         price_text_input = root.findViewById(R.id.price_text_input);
-        btn_edit_product = root.findViewById(R.id.btn_add_product);
+        btn_edit_product = root.findViewById(R.id.btn_edit_product);
         btn_upload = root.findViewById(R.id.btn_upload);
 
         Bundle bundle = this.getArguments();
@@ -61,7 +61,7 @@ public class EditProductFragment extends Fragment {
 
         name_text_input.setText(productModel.getProductName());
         description_text_input.setText(productModel.getProductDescription());
-        preptime_text_input.setText(productModel.getProductPrepTime());
+        preptime_text_input.setText(String.valueOf(productModel.getProductPrepTime()));
         category_text_input.setText(productModel.getProductTag());
         servesize_text_input.setText(productModel.getProductServingSize());
         price_text_input.setText(productModel.getProductPrice().toString());

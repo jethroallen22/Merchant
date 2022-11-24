@@ -1,5 +1,6 @@
 package com.example.merchant.activities.ui.Dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,15 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+//        Intent intent = getActivity().getIntent();
+//        if(intent.getStringExtra("name") != null) {
+//            userName = intent.getStringExtra("name");
+//            userId = intent.getIntExtra("id",0);
+//            Log.d("HOME FRAG name", userName + userId);
+//        } else {
+//            Log.d("HOME FRAG name", "FAIL");
+//        }
 
         final TextView textView = binding.textHome;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
