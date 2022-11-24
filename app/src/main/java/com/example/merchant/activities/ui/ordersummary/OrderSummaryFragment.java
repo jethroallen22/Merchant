@@ -44,7 +44,7 @@ public class OrderSummaryFragment extends Fragment {
     OrderItemsAdapter orderItemsAdapter;
     TextView tv_order_id, tv_name, tv_total_price;
     Button btn_complete_order, btn_cancel_order;
-    private static String JSON_URL_MERCHANT="http://192.168.68.114/merchant/";
+    private static String JSON_URL_MERCHANT="http://192.168.68.114/mosibus_php/merchant/";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

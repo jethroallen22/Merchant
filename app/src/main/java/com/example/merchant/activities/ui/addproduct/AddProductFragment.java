@@ -141,6 +141,12 @@ public class AddProductFragment extends Fragment {
                     protected Map<String, String> getParams(){
                         Map<String, String> paramV = new HashMap<>();
                         paramV.put("image", base64Image);
+                        paramV.put("name", product_name);
+                        paramV.put("description",description);
+                        paramV.put("category", category);
+                        paramV.put("servesize", servesize);
+                        paramV.put("prep_time_tmp",prep_time_tmp);
+                        paramV.put("price_tmp",price_tmp);
                         return paramV;
                     }
                 };
@@ -148,6 +154,8 @@ public class AddProductFragment extends Fragment {
 
             } else
                 Toast.makeText(getActivity().getApplicationContext(),"Please select an image first!", Toast.LENGTH_SHORT).show();
+
+
             product_name = String.valueOf(name_text_input.getText());
             description = String.valueOf(name_text_input.getText());
             category = String.valueOf(category_text_input.getText());

@@ -54,7 +54,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     OrderItemsAdapter orderItemsAdapter;
     RecyclerViewInterface recyclerViewInterface = this;
     private RequestQueue requestQueue1, requestQueue2, requestQueue3;
-    private static String JSON_URL_MERCHANT="http://192.168.68.114/merchant/";
+    private static String JSON_URL_MERCHANT="http://192.168.68.114/mosibus_php/merchant/";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +89,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
 //        if(extractProduct() != null)
         extractProduct();
+
 
         extractOrderItem();
 
@@ -136,7 +137,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     }
 
     //PRODUCT DB
-    public boolean extractProduct(){
+    public void extractProduct(){
         Log.d("JSON_URL_MERCHANT: ", JSON_URL_MERCHANT);
 
         JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testP.php", null, new Response.Listener<JSONArray>() {
@@ -181,14 +182,14 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
             }
         });
         requestQueue1.add(jsonArrayRequestRec1);
-        return true;
+
     }
 
     //OrderItem DB
     public void extractOrderItem(){
         Log.d("JSON_URL_MERCHANT: ", JSON_URL_MERCHANT);
 
-        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testOI.php", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequestRec2 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testOI.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("Response OrderItem: ", String.valueOf(response.length()));
@@ -237,13 +238,13 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                 Log.d("OnError OI: ", String.valueOf(error));
             }
         });
-        requestQueue2.add(jsonArrayRequestRec1);
+        requestQueue2.add(jsonArrayRequestRec2);
     }
 
     //Order DB
     public void extractOrder(){
 
-        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testO.php", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequestRec3 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testO.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("Response Order: ", String.valueOf(response.length()));
@@ -284,7 +285,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                 Log.d("OnError O: ", String.valueOf(error));
             }
         });
-        requestQueue3.add(jsonArrayRequestRec1);
+        requestQueue3.add(jsonArrayRequestRec3);
     }
 
 }

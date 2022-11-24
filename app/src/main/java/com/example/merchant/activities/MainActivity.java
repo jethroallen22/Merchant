@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private String testUser = "test";
     private String testPass = "test";
     //School IP
-    private static String URL_LOGIN = "http://192.168.68.106/android_register_login/login.php";
+    private static String URL_LOGIN = "http://192.168.68.114/mosibus_php/merchant/";
 
     //Workspace IP
     //private static String URL_LOGIN = "http://192.168.68.109/android_register_login/login.php";
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //input checker
-                /*String mEmail = login_email_text_input.getText().toString().trim();
+                String mEmail = login_email_text_input.getText().toString().trim();
                 String mPass = login_password_text_input.getText().toString().trim();
 
                 if (mEmail.isEmpty() || mPass.isEmpty()){
@@ -69,16 +70,16 @@ public class MainActivity extends AppCompatActivity {
                     if (mPass.isEmpty())
                         login_password_text_input.setError("Please insert Password!");
                 } else if(mEmail == testUser && mPass == testPass){
-                    Intent intent = new Intent(getApplicationContext(), Home2.class);
+                    Intent intent = new Intent(getApplicationContext(), Home.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     MainActivity.this.startActivity(intent);
                 } else {
                     LogIn(mEmail, mPass);
-                }*/
+                }
 
-                Intent intent = new Intent(getApplicationContext(), Home.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                MainActivity.this.startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), Home.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                MainActivity.this.startActivity(intent);
             }
         });
     }
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     //Login
     private void LogIn(String login_email_text_input, String login_password_text_input){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN+"loginM.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -103,30 +104,51 @@ public class MainActivity extends AppCompatActivity {
 
 
                     JSONArray jsonArray = jsonObject.getJSONArray("login");
+                    int id = 0;
+                    String name = "";
 
-
+                    Log.d("OnRespo: ", success);
                     if (success.equals("1")){
+                        Log.d("INSIDE IF:", "SUCCESS");
                         for (int i = 0; i < jsonArray.length(); i++){
 
                             JSONObject object = jsonArray.getJSONObject(i);
 
-                            String name = object.getString("name").trim();
+                            name = object.getString("name").trim();
                             String email = object.getString("email").trim();
+//                            id = object.getInt("id");
 
                             Toast.makeText(MainActivity.this, "Success Login. \nYour Name : "
                                     + name + "\nYour Email : "
                                     + email, Toast.LENGTH_SHORT).show();
+
+                            Log.d("HELLO", name + email);
+
+//                            final FragmentManager fragmentManager = getSupportFragmentManager();
+//                            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                            final HomeFragment homeFragment = new HomeFragment();
+
+//                            Log.d("before bundling: ", String.valueOf(id));
+//                            Bundle bundle = new Bundle();
+//                            bundle.putInt("id", id);
+//                            bundle.putString("name",name);
+//                            homeFragment.setArguments(bundle);
+//
+//                            fragmentTransaction.add(R.id.nav_host_fragment_content_home, homeFragment).commit();
+
                         }
+                        Intent intent = new Intent(getApplicationContext(), Home.class);
+//                        intent.putExtra("name",name);
+//                        intent.putExtra("id",id);
+                        Log.d("NAME LOGIN: " , name);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
 
-                    Intent intent = new Intent(getApplicationContext(), Home2.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    MainActivity.this.startActivity(intent);
-
                 } catch (JSONException e) {
-                    /*
-                    e.printStackTrace();
-                    Toast.makeText(Login.this, "Error! "+ e.toString(),Toast.LENGTH_SHORT).show();*/
+
+//                    e.printStackTrace();
+//                    Toast.makeText(Login.this, "Error! "+ e.toString(),Toast.LENGTH_SHORT).show();*/
 
                     Toast.makeText(MainActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
                 }
