@@ -69,13 +69,20 @@ public class Register extends AppCompatActivity {
                 String rpassword = register_password_text_input.getText().toString().trim();
                 String rconfpassword = register_confpassword_text_input.getText().toString().trim();
 
-                if (!rpassword.equals(rconfpassword)){
-                    register_password_text_input.setError("Passwords do not match");
-                    register_confpassword_text_input.setError("Passwords do not match");
-                } else if (!rname.equals("")&&!remail.equals("")&&!rnumber.equals("")&&!rpassword.equals("")){
-                    SignUp(rname, remail, rnumber, rpassword);
-
-                }
+//                if (!rpassword.equals(rconfpassword)){
+//                    register_password_text_input.setError("Passwords do not match");
+//                    register_confpassword_text_input.setError("Passwords do not match");
+//                } else if (!rname.equals("")&&!remail.equals("")&&!rnumber.equals("")&&!rpassword.equals("")){
+//                    SignUp(rname, remail, rnumber, rpassword);
+//
+//                }
+                Intent intent = new Intent(getApplicationContext(), StoreRegister.class);
+                intent.putExtra("Name", rname);
+                intent.putExtra("Email", remail);
+                intent.putExtra("Number", rnumber);
+                intent.putExtra("Password", rpassword);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                Register.this.startActivity(intent);
             }
         });
 
@@ -101,10 +108,10 @@ public class Register extends AppCompatActivity {
 
                     Log.d("REGISTER: success= ", success );
                     if (success.equals("1")){
-                Intent intent = new Intent(getApplicationContext(), Home2.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                Register.this.startActivity(intent);
-                  } else {
+                        Intent intent = new Intent(getApplicationContext(), StoreRegister.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Register.this.startActivity(intent);
+                    } else {
                         Toast.makeText(Register.this, "Email/Contact has been used ",Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
