@@ -1,6 +1,7 @@
 package com.example.merchant.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class OrderItemsAdapter extends RecyclerView.Adapter<OrderItemsAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.d("OI Adapter", "INSIDE");
         holder.tv_order_item_name.setText("- " + list.get(position).getProductName());
         holder.tv_order_item_qty.setText("Qty:" + list.get(position).getItemQuantity() + "x");
     }

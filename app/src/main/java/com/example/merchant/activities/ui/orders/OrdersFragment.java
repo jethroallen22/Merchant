@@ -39,6 +39,7 @@ import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class OrdersFragment extends Fragment implements RecyclerViewInterface {
@@ -47,6 +48,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     //Cart List Recycler View
     RecyclerView rv_orders;
     List<OrderModel> order_list;
+    List<OrderModel> temp_order;
     OrderAdapter orderAdapter;
     List<OrderItemModel> order_item_list;
     List<OrderItemModel> temp_order_item;
@@ -54,7 +56,8 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     OrderItemsAdapter orderItemsAdapter;
     RecyclerViewInterface recyclerViewInterface = this;
     private RequestQueue requestQueue1, requestQueue2, requestQueue3;
-    private static String JSON_URL_MERCHANT="http://192.168.68.114/mosibus_php/merchant/";
+    private static String JSON_URL_MERCHANT="http://10.172.156.111/mosibus_php/merchant/";
+    int temp_idOrder = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -88,12 +91,19 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 //        temp_order_item = new ArrayList<>();
 
 //        if(extractProduct() != null)
-        extractProduct();
+//        Log.d("Check Size", String.valueOf(product_list.size()));
+//        extractOrderItem();
+//        extractProduct();
+//        Log.d("Check Size after", String.valueOf(product_list.size()));
+//        if(product_list.size() != 0){
+//            Log.d("Inside if", "product list not null");
+//            extractOrderItem();
+//        }
 
-
-        extractOrderItem();
-
-        extractOrder();
+//
+        temp_order_item = new ArrayList<>();
+        temp_order = new ArrayList<>();
+        extractOrders();
 
         //Log.d("Size", String.valueOf(order_item_list.size()));
         rv_orders.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
@@ -175,14 +185,16 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
                 }
             }
-        }, new Response.ErrorListener() {
+//            public Request.Priority Priority(){
+//                return Request.Priority.HIGH;
+//            }
+            }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("OnError P: ", String.valueOf(error));
             }
         });
         requestQueue1.add(jsonArrayRequestRec1);
-
     }
 
     //OrderItem DB
@@ -232,51 +244,149 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
                 }
             }
-        }, new Response.ErrorListener() {
+            }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("OnError OI: ", String.valueOf(error));
             }
         });
-        requestQueue2.add(jsonArrayRequestRec2);
+        requestQueue1.add(jsonArrayRequestRec2);
     }
 
     //Order DB
-    public void extractOrder(){
+//    public void extractOrder(){
+//
+//        JsonArrayRequest jsonArrayRequestRec3 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testO.php", null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                Log.d("Response Order: ", String.valueOf(response.length()));
+//                for (int i=0; i < response.length(); i++){
+//                    try {
+//                        Log.d("Try O: ", "Im in");
+//                        JSONObject jsonObjectRec1 = response.getJSONObject(i);
+//                        //ORDER DB
+//                        int idOrder = jsonObjectRec1.getInt("idOrder");
+//                        int orderItemTotalPrice = jsonObjectRec1.getInt("orderItemTotalPrice");
+//                        String orderStatus = jsonObjectRec1.getString("orderStatus");
+//                        int store_idstore = jsonObjectRec1.getInt("store_idstore");
+//                        int users_id = jsonObjectRec1.getInt("users_id");
+//
+//                        temp_order_item = new ArrayList<>();
+//                        for(int j=0; j < order_item_list.size(); j++){
+//                            if(idOrder == order_item_list.get(j).getOrder_idOrder()){
+//                                temp_order_item.add(order_item_list.get(j));
+//                                Log.d("TEMP LIST: ", String.valueOf(i));
+//                            }
+//                        }
+//                        OrderModel orderModel = new OrderModel(idOrder, orderItemTotalPrice, orderStatus, store_idstore, users_id, temp_order_item);
+//
+//                        order_list.add(orderModel);
+//                        Log.d("ORDER LIST: ", "Just added #" + i);
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Log.d("Order Size" , String.valueOf(order_list.size()));
+//                    orderAdapter = new OrderAdapter(getActivity(), order_list, recyclerViewInterface);
+//                    rv_orders.setAdapter(orderAdapter);
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("OnError O: ", String.valueOf(error));
+//            }
+//        });
+//        requestQueue3.add(jsonArrayRequestRec3);
+//    }
 
-        JsonArrayRequest jsonArrayRequestRec3 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testO.php", null, new Response.Listener<JSONArray>() {
+    //Order DB
+    public void extractOrders(){
+        Log.d("extractOrders", "Called");
+        JsonArrayRequest jsonArrayRequestRec3 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testAll.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                Log.e("Bug", String.valueOf(response));
                 Log.d("Response Order: ", String.valueOf(response.length()));
                 for (int i=0; i < response.length(); i++){
                     try {
                         Log.d("Try O: ", "Im in");
                         JSONObject jsonObjectRec1 = response.getJSONObject(i);
+
+                        //USERS DB
+                        String name = jsonObjectRec1.getString("name");
+
                         //ORDER DB
                         int idOrder = jsonObjectRec1.getInt("idOrder");
                         int orderItemTotalPrice = jsonObjectRec1.getInt("orderItemTotalPrice");
                         String orderStatus = jsonObjectRec1.getString("orderStatus");
                         int store_idstore = jsonObjectRec1.getInt("store_idstore");
-                        int users_id = jsonObjectRec1.getInt("users_id");
 
-                        temp_order_item = new ArrayList<>();
-                        for(int j=0; j < order_item_list.size(); j++){
-                            if(idOrder == order_item_list.get(j).getOrder_idOrder()){
-                                temp_order_item.add(order_item_list.get(j));
-                                Log.d("TEMP LIST: ", String.valueOf(i));
+                        //OrderItem DB
+                        int idItem = jsonObjectRec1.getInt("idItem");
+                        Log.d("Test", String.valueOf(idItem));
+                        int product_idProduct = jsonObjectRec1.getInt("product_idProduct");
+                        int order_idOrder = jsonObjectRec1.getInt("order_idOrder");
+                        float ItemPrice = (float) jsonObjectRec1.getDouble("ItemPrice");
+                        int ItemQuantity = jsonObjectRec1.getInt("ItemQuantity");
+
+                        //PRODUCT DB
+                        String productName = jsonObjectRec1.getString("productName");
+
+
+                        OrderItemModel orderItemModel = new OrderItemModel(idItem, product_idProduct, (float) ItemPrice, ItemQuantity, order_idOrder, productName);
+
+                        order_item_list.add(orderItemModel);
+                        Log.d("ORDER ITEM LIST: ", String.valueOf(order_item_list.get(i).getIdItem()));
+                        temp_order_item.add(order_item_list.get(i));
+
+                        OrderModel orderModel = new OrderModel(idOrder, orderItemTotalPrice, orderStatus, store_idstore, name, temp_order_item);
+                        temp_order.add(orderModel);
+
+                        if((idOrder != temp_idOrder && idOrder != 0) || response.length() == 1 || i == response.length()-1){
+                            Log.d("Inside If", String.valueOf(order_item_list.size()));
+                            temp_order_item = new ArrayList<>();
+                            for(int j=0; j < order_item_list.size(); j++){
+                                Log.d("Inside For", String.valueOf(order_item_list.size()));
+                                if((temp_idOrder == order_item_list.get(j).getOrder_idOrder()) || (response.length() == 1)){
+                                    Log.d("Inside If", String.valueOf(order_item_list.size()));
+                                    temp_order_item.add(order_item_list.get(j));
+                                    Log.d("TEMP LIST: ", String.valueOf(i));
+                                }
                             }
-                        }
-                        OrderModel orderModel = new OrderModel(idOrder, orderItemTotalPrice, orderStatus, store_idstore, users_id, temp_order_item);
 
-                        order_list.add(orderModel);
-                        Log.d("ORDER LIST: ", "Just added #" + i);
+//                            Log.d("TEMP LIST: ", temp_order_item.get(i).getProductName());
+                            if(i != 0){
+                                OrderModel orderModel2 = new OrderModel(temp_order.get(i-1).getIdOrder(), temp_order.get(i-1).getOrderItemTotalPrice(), temp_order.get(i-1).getOrderStatus(), temp_order.get(i-1).getStore_idstore(), temp_order.get(i-1).getUsers_name(), temp_order_item);
+                                order_list.add(orderModel2);
+                            }
+                            if(response.length()==1 || i == response.length()-1){
+                                if (i == response.length()-1 && temp_idOrder != idOrder){
+                                    OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), Collections.singletonList(order_item_list.get(i)));
+                                    order_list.add(orderModel2);
+                                }else{
+                                    OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), temp_order_item);
+                                    order_list.add(orderModel2);
+                                }
+
+                            }
+                            Log.d("ORDER LIST: ", "Just added #" + i);
+//                            if(i!=0){
+//                                Log.d("ORDER MODEL: ", String.valueOf(order_list.get(i).getIdOrder()));
+//                            }
+
+                        }
+                        temp_idOrder = idOrder;
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Log.d("Order Size" , String.valueOf(order_list.size()));
-                    orderAdapter = new OrderAdapter(getActivity(), order_list, recyclerViewInterface);
-                    rv_orders.setAdapter(orderAdapter);
+                    Log.d("Order Size" , String.valueOf(temp_order.size()));
+                    if(i != 0){
+                        orderAdapter = new OrderAdapter(getActivity(), order_list, recyclerViewInterface);
+                        rv_orders.setAdapter(orderAdapter);
+                    }
+
                 }
             }
         }, new Response.ErrorListener() {
@@ -287,5 +397,4 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
         });
         requestQueue3.add(jsonArrayRequestRec3);
     }
-
 }

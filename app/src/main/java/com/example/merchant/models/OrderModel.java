@@ -13,15 +13,15 @@ public class OrderModel implements Parcelable {
     float orderItemTotalPrice;
     String orderStatus;
     int store_idstore;
-    int users_id;
+    String users_name;
     List<OrderItemModel> orderItem_list;
 
-    public OrderModel(int idOrder, float orderItemTotalPrice, String orderStatus, int store_idstore, int users_id, List<OrderItemModel> orderItem_list) {
+    public OrderModel(int idOrder, float orderItemTotalPrice, String orderStatus, int store_idstore, String users_name, List<OrderItemModel> orderItem_list) {
         this.idOrder = idOrder;
         this.orderItemTotalPrice = orderItemTotalPrice;
         this.orderStatus = orderStatus;
         this.store_idstore = store_idstore;
-        this.users_id = users_id;
+        this.users_name = users_name;
         this.orderItem_list = orderItem_list;
     }
 
@@ -54,7 +54,7 @@ public class OrderModel implements Parcelable {
         orderItemTotalPrice = in.readFloat();
         orderStatus = in.readString();
         store_idstore = in.readInt();
-        users_id = in.readInt();
+        users_name = in.readString();
         orderItem_list = in.createTypedArrayList(OrderItemModel.CREATOR);
     }
 
@@ -102,12 +102,12 @@ public class OrderModel implements Parcelable {
         this.store_idstore = store_idstore;
     }
 
-    public int getUsers_id() {
-        return users_id;
+    public String getUsers_name() {
+        return users_name;
     }
 
-    public void setUsers_id(int users_id) {
-        this.users_id = users_id;
+    public void setUsers_name(String users_name) {
+        this.users_name = users_name;
     }
 
     public List<OrderItemModel> getOrderItem_list() {
@@ -129,7 +129,7 @@ public class OrderModel implements Parcelable {
         dest.writeFloat(orderItemTotalPrice);
         dest.writeString(orderStatus);
         dest.writeInt(store_idstore);
-        dest.writeInt(users_id);
+        dest.writeString(users_name);
         dest.writeTypedList(orderItem_list);
     }
 }

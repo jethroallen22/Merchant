@@ -35,10 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private String testUser = "test";
     private String testPass = "test";
     //School IP
-    private static String URL_LOGIN = "http://192.168.68.114/mosibus_php/merchant/";
-
-    //Workspace IP
-    //private static String URL_LOGIN = "http://192.168.68.109/android_register_login/login.php";
+    private static String URL_LOGIN = "http://10.172.156.111/mosibus_php/merchant/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 String mEmail = login_email_text_input.getText().toString().trim();
                 String mPass = login_password_text_input.getText().toString().trim();
 
-                if (mEmail.isEmpty() || mPass.isEmpty()){
-                    if (mEmail.isEmpty())
-                        login_email_text_input.setError("Please insert Email!");
-                    if (mPass.isEmpty())
-                        login_password_text_input.setError("Please insert Password!");
-                } else if(mEmail == testUser && mPass == testPass){
-                    Intent intent = new Intent(getApplicationContext(), Home.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    MainActivity.this.startActivity(intent);
-                } else {
-                    LogIn(mEmail, mPass);
-                }
+//                if (mEmail.isEmpty() || mPass.isEmpty()){
+//                    if (mEmail.isEmpty())
+//                        login_email_text_input.setError("Please insert Email!");
+//                    if (mPass.isEmpty())
+//                        login_password_text_input.setError("Please insert Password!");
+//                } else if(mEmail == testUser && mPass == testPass){
+//                    Intent intent = new Intent(getApplicationContext(), Home.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    MainActivity.this.startActivity(intent);
+//                } else {
+//                    LogIn(mEmail, mPass);
+                    LogIn("lohm0@soup.io", "test");
+//                }
 
 //                Intent intent = new Intent(getApplicationContext(), Home.class);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);

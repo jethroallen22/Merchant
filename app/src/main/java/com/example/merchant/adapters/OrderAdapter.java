@@ -1,7 +1,6 @@
 package com.example.merchant.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,27 +40,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         String text = "";
         if(list.size() != 0) {
             int i, j = 0;
-//            Log.d("ORDER ADAPTER: ", String.valueOf(list.size()));
-//            Log.d("ORDER ADAPTER: ", String.valueOf(position));
-
-//            if (list.get(position).getIdOrder() == list.get(position).getOrderItem_list().get().getOrder_idOrder())
-            //text = String.join(", ", list.get(position).getOrderItem_list().get(i).getProduct_name());
-            for (i = 0; i < list.get(position).getOrderItem_list().size(); i++) {
-//                Log.d("INSIDE FOR LOOP", String.valueOf(i));
-//                Log.d("Order_idOrder", String.valueOf(list.get(position).getOrderItem_list().get(i).getOrder_idOrder()));
-
-                    if (i == list.get(position).getOrderItem_list().size() - 1) {
-                        text += list.get(position).getOrderItem_list().get(i).getProductName();
-//                    Log.d("INSIDE if", String.valueOf(i));
-//                        Log.d("INSIDE if", text);
-                    } else {
-                        text += list.get(position).getOrderItem_list().get(i).getProductName() + ", ";
-//                        Log.d("INSIDE else", text);
-                    }
-
-
-            }
-            holder.tv_order_info.setText(text);
+//            //text = String.join(", ", list.get(position).getOrderItem_list().get(i).getProduct_name());
+//            for (i = 0; i < list.get(position).getOrderItem_list().size(); i++) {
+//                if (i == list.get(position).getOrderItem_list().size() - 1) {
+//                    text += list.get(position).getOrderItem_list().get(i).getProductName();
+//                } else {
+//                    text += list.get(position).getOrderItem_list().get(i).getProductName() + ", ";
+//                }
+//            }
+            holder.tv_order_info.setText(list.get(position).getUsers_name());
             holder.tv_order_item_info.setText("Qty: " + list.get(position).getOrderItem_list().size());
         }
     }

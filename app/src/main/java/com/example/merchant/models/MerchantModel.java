@@ -1,6 +1,7 @@
 package com.example.merchant.models;
 
-public class MerchantModel {
+public class
+MerchantModel {
     int idMerchant;
     String name, email, contact,password;
 

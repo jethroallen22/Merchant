@@ -44,7 +44,7 @@ public class OrderSummaryFragment extends Fragment {
     OrderItemsAdapter orderItemsAdapter;
     TextView tv_order_id, tv_name, tv_total_price;
     Button btn_complete_order, btn_cancel_order;
-    private static String JSON_URL_MERCHANT="http://192.168.68.114/mosibus_php/merchant/";
+    private static String JSON_URL_MERCHANT="http://10.172.156.111/mosibus_php/merchant/";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,7 +67,7 @@ public class OrderSummaryFragment extends Fragment {
             order = bundle.getParcelable("Order");
         }
         tv_order_id.setText(String.valueOf(order.getIdOrder()));
-        tv_name.setText(String.valueOf(order.getUsers_id()));
+        tv_name.setText(String.valueOf(order.getUsers_name()));
         tv_total_price.setText(String.valueOf(order.getOrderItemTotalPrice()));
         //tv_address.setText(order.getAddress());
         //tv_distance.setText("Distance from you: " + order.getDistance() + "km");
