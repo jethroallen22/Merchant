@@ -1,62 +1,55 @@
 package com.example.merchant.models;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
 public class StoreModel implements Parcelable {
-    int idStore;
-    String storeName, storeDescription, storeLocation, storeCategory, storeImage;
-    Float storeRating, storePopularity;
-    String storeStartTime, storeEndTime;
+    long store_id;
+    String store_image;
+    String store_name;
+    String store_description;
+    String store_location;
+    String store_category;
+    Float store_rating;
+    Float store_popularity;
+    String store_open;
+    String store_closing;
 
-    public StoreModel(int idStore, String storeName, String storeDescription, String storeLocation, String storeCategory, String storeImage, Float storeRating, Float storePopularity, String storeStartTime, String storeEndTime) {
-        this.idStore = idStore;
-        this.storeName = storeName;
-        this.storeDescription = storeDescription;
-        this.storeLocation = storeLocation;
-        this.storeCategory = storeCategory;
-        this.storeImage = storeImage;
-        this.storeRating = storeRating;
-        this.storePopularity = storePopularity;
-        this.storeStartTime = storeStartTime;
-        this.storeEndTime = storeEndTime;
+    public StoreModel(long store_id, String store_image, String store_name, String store_description,
+                      String store_location, String store_category, Float store_rating, Float store_popularity,String store_open,
+                      String store_closing) {
+        this.store_id = store_id;
+        this.store_image = store_image;
+        this.store_name = store_name;
+        this.store_description = store_description;
+        this.store_location = store_location;
+        this.store_category = store_category;
+        this.store_rating = store_rating;
+        this.store_popularity = store_popularity;
+        this.store_open = store_open;
+        this.store_closing = store_closing;
     }
 
-    public StoreModel(String storeName, String storeDescription, String storeLocation, String storeCategory, String storeImage, Float storeRating, Float storePopularity, String storeStartTime, String storeEndTime) {
-        this.storeName = storeName;
-        this.storeDescription = storeDescription;
-        this.storeLocation = storeLocation;
-        this.storeCategory = storeCategory;
-        this.storeImage = storeImage;
-        this.storeRating = storeRating;
-        this.storePopularity = storePopularity;
-        this.storeStartTime = storeStartTime;
-        this.storeEndTime = storeEndTime;
+    public StoreModel(){
+
     }
 
-    public StoreModel(){}
-
-    protected StoreModel(Parcel in) {
-        idStore = in.readInt();
-        storeName = in.readString();
-        storeDescription = in.readString();
-        storeLocation = in.readString();
-        storeCategory = in.readString();
-        storeImage = in.readString();
-
-        if (in.readByte() == 0) {
-            storeRating = null;
-        } else {
-            storeRating = in.readFloat();
-        } if (in.readByte() == 0) {
-            storePopularity = null;
-        } else {
-            storePopularity = in.readFloat();
-        }
-        storeStartTime = in.readString();
-        storeStartTime = in.readString();
+    public StoreModel(Parcel in) {
+        store_id = in.readLong();
+        store_image = in.readString();
+        store_name = in.readString();
+        store_description = in.readString();
+        store_location = in.readString();
+        store_category = in.readString();
+        store_rating = in.readFloat();
+        store_popularity = in.readFloat();
+        store_open = in.readString();
+        store_closing = in.readString();
     }
 
     public static final Creator<StoreModel> CREATOR = new Creator<StoreModel>() {
@@ -71,85 +64,91 @@ public class StoreModel implements Parcelable {
         }
     };
 
-    public int getIdStore() {
-        return idStore;
+    public long getStore_id() {
+        return store_id;
     }
 
-    public void setIdStore(int idStore) {
-        this.idStore = idStore;
+    public void setStore_id(long store_id) {
+        this.store_id = store_id;
     }
 
-    public String getStoreStartTime() {
-        return storeStartTime;
+    public String getStore_image() {
+        return store_image;
     }
 
-    public void setStoreStartTime(String storeStartTime) {
-        this.storeStartTime = storeStartTime;
+    public void setStore_image(String store_image) {
+        this.store_image = store_image;
     }
 
-    public String getStoreEndTime() {
-        return storeEndTime;
+    public String getStore_name() {
+        return store_name;
     }
 
-    public void setStoreEndTime(String storeEndTime) {
-        this.storeEndTime = storeEndTime;
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
     }
 
-    public String getStoreName() {
-        return storeName;
+    public String getStore_description() {
+        return store_description;
     }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
+    public void setStore_description(String store_description) {
+        this.store_description = store_description;
     }
 
-    public String getStoreDescription() {
-        return storeDescription;
+    public String getStore_location() {
+        return store_location;
     }
 
-    public void setStoreDescription(String storeDescription) {
-        this.storeDescription = storeDescription;
+    public void setStore_location(String store_location) {
+        this.store_location = store_location;
     }
 
-    public String getStoreLocation() {
-        return storeLocation;
+    public String getStore_category() {
+        return store_category;
     }
 
-    public void setStoreLocation(String storeLocation) {
-        this.storeLocation = storeLocation;
+    public void setStore_category(String store_category) {
+        this.store_category = store_category;
     }
 
-    public String getStoreCategory() {
-        return storeCategory;
+    public Float getStore_rating() {
+        return store_rating;
     }
 
-    public void setStoreCategory(String storeCategory) {
-        this.storeCategory = storeCategory;
+    public void setStore_rating(Float store_rating) {
+        this.store_rating = store_rating;
     }
 
-    public String getStoreImage() {
-        return storeImage;
+    public Float getStore_popularity() {
+        return store_popularity;
     }
 
-    public void setStoreImage(String storeImage) {
-        this.storeImage = storeImage;
+    public void setStore_popularity(Float store_popularity) {
+        this.store_popularity = store_popularity;
     }
 
-    public Float getStoreRating() {
-        return storeRating;
+    public String getStore_open() {
+        return store_open;
     }
 
-    public void setStoreRating(Float storeRating) {
-        this.storeRating = storeRating;
+    public void setStore_open(String store_open) {
+        this.store_open = store_open;
     }
 
-    public Float getStorePopularity() {
-        return storePopularity;
+    public String getStore_closing() {
+        return store_closing;
     }
 
-    public void setStorePopularity(Float storePopularity) {
-        this.storePopularity = storePopularity;
+    public void setStore_closing(String store_closing) {
+        this.store_closing = store_closing;
     }
+
+    public Bitmap getBitmapImage(){
+        byte[] byteArray = Base64.decode(store_image, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
+        return bitmap;
+    };
 
     @Override
     public int describeContents() {
@@ -157,26 +156,17 @@ public class StoreModel implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeInt(idStore);
-        parcel.writeString(storeName);
-        parcel.writeString(storeDescription);
-        parcel.writeString(storeLocation);
-        parcel.writeString(storeCategory);
-        parcel.writeString(storeImage);
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeLong(store_id);
+        dest.writeString(store_image);
+        dest.writeString(store_name);
+        dest.writeString(store_description);
+        dest.writeString(store_location);
+        dest.writeString(store_category);
+        dest.writeFloat(store_rating);
+        dest.writeFloat(store_popularity);
+        dest.writeString(store_open);
+        dest.writeString(store_closing);
 
-        if (storeRating == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeFloat(storeRating);
-        } if (storePopularity == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeFloat(storePopularity);
-        }
-        parcel.writeString(storeStartTime);
-        parcel.writeString(storeEndTime);
     }
 }

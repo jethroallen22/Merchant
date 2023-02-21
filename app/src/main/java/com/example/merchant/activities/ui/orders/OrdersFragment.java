@@ -56,7 +56,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     OrderItemsAdapter orderItemsAdapter;
     RecyclerViewInterface recyclerViewInterface = this;
     private RequestQueue requestQueue1, requestQueue2, requestQueue3;
-    private static String JSON_URL_MERCHANT="http://10.172.156.111/mosibus_php/merchant/";
+    private static String JSON_URL_MERCHANT="http://10.154.162.184/mosibus_php/merchant/";
     int temp_idOrder = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -170,9 +170,9 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                         String productTag = jsonObjectRec1.getString("productTag");
                         int productPrepTime = jsonObjectRec1.getInt("productPrepTime");
 
-                        ProductModel productModel = new ProductModel(idProduct, store_idStore, productName, productDescription, (float) productPrice, productImage, productServingSize, productTag, productPrepTime);
+                        //ProductModel productModel = new ProductModel(idProduct, store_idStore, productName, productDescription, (float) productPrice, productImage, productServingSize, productTag, productPrepTime);
 
-                        product_list.add(productModel);
+                        //product_list.add(productModel);
 
 
                     } catch (JSONException e) {

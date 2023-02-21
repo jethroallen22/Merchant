@@ -16,10 +16,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
+import com.example.merchant.interfaces.Singleton;
+import com.example.merchant.models.ProductModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,11 +36,13 @@ public class Register extends AppCompatActivity {
             register_confpassword_text_input;
     private Button signup_btn;
     private TextView tv_login_btn;
+    private RequestQueue requestQueue1;
+    int merchantId = 0;
 
     //Workspace IP
-    private static String URL_SIGNUP = "http://192.168.68.106/android_register_login/register.php";
-    private static String URL_SIGNUP1 = "http://192.168.68.106/android_register_login/resgister1.php";
-    private static String URL_CHECK = "http://192.168.68.109/android_register_login/apiusers.php";
+    private static String URL_SIGNUP = "http://10.154.162.184/android_register_login/register.php";
+    private static String URL_SIGNUP1 = "http://10.154.162.184/android_register_login/resgister1.php";
+    private static String URL_CHECK = "http://10.154.162.184/android_register_login/apiusers.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,10 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        requestQueue1 = Singleton.getsInstance(this).getRequestQueue();
+        extractMerchantId();
+
+
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +87,7 @@ public class Register extends AppCompatActivity {
 //
 //                }
                 Intent intent = new Intent(getApplicationContext(), StoreRegister.class);
+                intent.putExtra("idMerchant", merchantId);
                 intent.putExtra("Name", rname);
                 intent.putExtra("Email", remail);
                 intent.putExtra("Number", rnumber);
@@ -140,6 +151,35 @@ public class Register extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
+    }
+
+    public void extractMerchantId(){
+//        Log.d("JSON_URL_MERCHANT: ", JSON_URL_MERCHANT);
+
+        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, URL_SIGNUP1 + "getId.php", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("Response Product: ", String.valueOf(response.length()));
+
+                    try {
+                        Log.d("Try P: ", "Im in");
+                        JSONObject jsonObjectRec1 = response.getJSONObject(0);
+
+                        //PRODUCT DB
+                        int idMerchant = jsonObjectRec1.getInt("idMerchant");
+
+                        merchantId = idMerchant;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("OnError P: ", String.valueOf(error));
+            }
+        });
+        requestQueue1.add(jsonArrayRequestRec1);
     }
 
     private void Check(String register_email_text_input, String register_number_text_input, String inputEmail, String inputNumber){

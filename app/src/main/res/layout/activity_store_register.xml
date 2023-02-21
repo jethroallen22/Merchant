@@ -169,63 +169,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/category_text" />
 
             <TextView
-                android:id="@+id/servesize_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/robotomedium"
-                android:text="Rating"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/category_text_input"
-                app:layout_constraintTop_toBottomOf="@+id/category_text_input" />
-
-            <EditText
-                android:id="@+id/rating_text_input"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Rating"
-                android:inputType="number"
-                android:minHeight="48dp"
-                android:textColorHint="#A5A5A5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.504"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/servesize_text" />
-
-            <TextView
-                android:id="@+id/price_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/robotomedium"
-                android:text="Popularity"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/rating_text_input"
-                app:layout_constraintTop_toBottomOf="@+id/rating_text_input" />
-
-            <EditText
-                android:id="@+id/popularity_text_input"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Popularity"
-                android:inputType="number"
-                android:minHeight="48dp"
-                android:textColorHint="#A5A5A5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/price_text" />
-
-            <TextView
                 android:id="@+id/start_time_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/robotomedium"
                 android:text="Start Time"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/popularity_text_input"
-                app:layout_constraintTop_toBottomOf="@+id/popularity_text_input" />
+                app:layout_constraintStart_toStartOf="@+id/category_text"
+                app:layout_constraintTop_toBottomOf="@+id/category_text_input" />
 
             <EditText
                 android:id="@+id/start_time_text_input"

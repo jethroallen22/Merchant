@@ -64,7 +64,7 @@ public class EditProductFragment extends Fragment {
         preptime_text_input.setText(String.valueOf(productModel.getProductPrepTime()));
         category_text_input.setText(productModel.getProductTag());
         servesize_text_input.setText(productModel.getProductServingSize());
-        price_text_input.setText(productModel.getProductPrice().toString());
+        price_text_input.setText((int) productModel.getProductPrice());
 
         btn_edit_product.setOnClickListener(new View.OnClickListener() {
             @Override

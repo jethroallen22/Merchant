@@ -1,7 +1,10 @@
 package com.example.merchant.models;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
@@ -15,7 +18,11 @@ public class ProductModel implements Parcelable {
     String productImage;
     String productServingSize;
     String productTag;
-    int productPrepTime;
+    String productPrepTime;
+    String productRestoName;
+    String productRestoImage;
+
+
 
 //    public ProductModel(Long product_id, String product_image, String product_name, String product_description, String store_name, Float product_price, int product_calories) {
 //        this.product_id = product_id;
@@ -37,7 +44,7 @@ public class ProductModel implements Parcelable {
 //    }
 
 
-    public ProductModel(int idProduct, int store_idStore, String productName, String productDescription, Float productPrice, String productImage, String productServingSize, String productTag, int productPrepTime) {
+    public ProductModel(int idProduct, int store_idStore, String productName, String productDescription, Float productPrice, String productImage, String productServingSize, String productTag, String productPrepTime, String productRestoName, String productRestoImage) {
         this.idProduct = idProduct;
         this.store_idStore = store_idStore;
         this.productName = productName;
@@ -47,16 +54,8 @@ public class ProductModel implements Parcelable {
         this.productServingSize = productServingSize;
         this.productTag = productTag;
         this.productPrepTime = productPrepTime;
-    }
-
-    public ProductModel(String productName, String productDescription, Float productPrice, String productServingSize, String productTag, int productPrepTime) {
-        this.productName = productName;
-        this.productDescription = productDescription;
-        this.productPrice = productPrice;
-        this.productImage = productImage;
-        this.productServingSize = productServingSize;
-        this.productTag = productTag;
-        this.productPrepTime = productPrepTime;
+        this.productRestoName = productRestoName;
+        this.productRestoImage = productRestoImage;
     }
 
     public ProductModel(){}
@@ -74,7 +73,9 @@ public class ProductModel implements Parcelable {
         productImage = in.readString();
         productServingSize = in.readString();
         productTag = in.readString();
-        productPrepTime = in.readInt();
+        productPrepTime = in.readString();
+        productRestoName = in.readString();
+        productRestoImage = in.readString();
     }
 
     public static final Creator<ProductModel> CREATOR = new Creator<ProductModel>() {
@@ -121,7 +122,8 @@ public class ProductModel implements Parcelable {
         this.productDescription = productDescription;
     }
 
-    public Float getProductPrice() {
+
+    public float getProductPrice() {
         return productPrice;
     }
 
@@ -153,13 +155,35 @@ public class ProductModel implements Parcelable {
         this.productTag = productTag;
     }
 
-    public int getProductPrepTime() {
+    public String getProductPrepTime() {
         return productPrepTime;
     }
 
-    public void setProductPrepTime(int productPrepTime) {
+    public void setProductPrepTime(String productPrepTime) {
         this.productPrepTime = productPrepTime;
     }
+
+    public String getProductRestoName() {
+        return productRestoName;
+    }
+
+    public void setProductRestoName(String productRestoName) {
+        this.productRestoName = productRestoName;
+    }
+
+    public String getProductRestoImage() {
+        return productRestoImage;
+    }
+
+    public void setProductRestoImage(String productRestoImage) {
+        this.productRestoImage = productRestoImage;
+    }
+
+    public Bitmap getBitmapImage(){
+        byte[] byteArray = Base64.decode(productImage, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
+        return bitmap;
+    };
 
     @Override
     public int describeContents() {
@@ -181,6 +205,8 @@ public class ProductModel implements Parcelable {
         parcel.writeString(productImage);
         parcel.writeString(productServingSize);
         parcel.writeString(productTag);
-        parcel.writeInt(productPrepTime);
+        parcel.writeString(productPrepTime);
+        parcel.writeString(productRestoName);
+        parcel.writeString(productRestoImage);
     }
 }

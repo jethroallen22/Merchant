@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StoreRegister extends AppCompatActivity {
-    EditText name_text_input, description_text_input, location_text_input, category_text_input, rating_text_input, popularity_text_input, start_time_text_input, end_time_text_input;
+    EditText name_text_input, description_text_input, location_text_input, category_text_input, start_time_text_input, end_time_text_input;
     Button btn_upload, btn_register_store;
     ImageView iv_store_img;
 
@@ -35,8 +35,9 @@ public class StoreRegister extends AppCompatActivity {
     Float rating, popularity;
     String start_time, end_time;
     String uname, email, number, password;
+    int merch_id;
 
-    private static String JSON_URL_MERCHANT= "http://192.168.68.114/mosibus_php/merchant/";
+    private static String JSON_URL_MERCHANT= "http://10.154.162.184/mosibus_php/merchant/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class StoreRegister extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null){
+            merch_id = intent.getIntExtra("idMerchant", 0);
             uname = intent.getStringExtra("Name");
             email = intent.getStringExtra("Email");
             number = intent.getStringExtra("Number");
@@ -60,20 +62,20 @@ public class StoreRegister extends AppCompatActivity {
             description = String.valueOf(description_text_input.getText());
             location = String.valueOf(location_text_input.getText());
             category = String.valueOf(category_text_input.getText());
-            rating = Float.parseFloat(String.valueOf(rating_text_input.getText()));
-            popularity = Float.parseFloat(String.valueOf(popularity_text_input.getText()));
+            rating = 0.0F;
+            popularity = 0.0F;
             start_time = String.valueOf(start_time_text_input.getText());
             end_time = String.valueOf(end_time_text_input.getText());
 
             StoreModel store = new StoreModel();
-            store.setStoreName(name);
-            store.setStoreDescription(description);
-            store.setStoreLocation(location);
-            store.setStoreCategory(category);
-            store.setStoreRating(rating);
-            store.setStorePopularity(popularity);
-            store.setStoreStartTime(start_time);
-            store.setStoreEndTime(end_time);
+            store.setStore_name(name);
+            store.setStore_description(description);
+            store.setStore_location(location);
+            store.setStore_category(category);
+            store.setStore_rating(rating);
+            store.setStore_popularity(popularity);
+            store.setStore_open(start_time);
+            store.setStore_closing(end_time);
 
             Intent intent2 = new Intent(getApplicationContext(),Home.class);
             intent2.putExtra("Username", uname);
@@ -95,8 +97,6 @@ public class StoreRegister extends AppCompatActivity {
         description_text_input = findViewById(R.id.description_text_input);
         location_text_input = findViewById(R.id.location_text_input);
         category_text_input = findViewById(R.id.category_text_input);
-        rating_text_input = findViewById(R.id.rating_text_input);
-        popularity_text_input = findViewById(R.id.popularity_text_input);
         start_time_text_input = findViewById(R.id.start_time_text_input);
         end_time_text_input = findViewById(R.id.end_time_text_input);
         iv_store_img = findViewById(R.id.iv_store_img);
@@ -188,7 +188,7 @@ public class StoreRegister extends AppCompatActivity {
                         Toast.makeText(StoreRegister.this, "Email/Contact has been used ",Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
-                    Log.d("REGISTER:", "catch" );
+                    Log.d("REGISTER:", e.toString() );
                     Toast.makeText(StoreRegister.this, "Catch ",Toast.LENGTH_SHORT).show();
                 }
 
@@ -202,6 +202,7 @@ public class StoreRegister extends AppCompatActivity {
         {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("idStore", String.valueOf(merch_id + 1));
                 params.put("storeName", name_text_input);
                 params.put("storeDescription", description_text_input);
                 params.put("storeLocation", location_text_input);

@@ -55,7 +55,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.tv_product_calories.setText(list.get(position).getProductPrepTime() +
                 "min | " + list.get(position).getProductServingSize() +
                 " | " + list.get(position).getProductTag());
-        holder.tv_product_price.setText("P" + list.get(position).getProductPrice().toString());
+        holder.tv_product_price.setText("P" + list.get(position).getProductPrice());
     }
 
     @Override
