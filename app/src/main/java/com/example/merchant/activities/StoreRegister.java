@@ -15,11 +15,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
+import com.example.merchant.interfaces.Singleton;
 import com.example.merchant.models.StoreModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,9 +38,10 @@ public class StoreRegister extends AppCompatActivity {
     Float rating, popularity;
     String start_time, end_time;
     String uname, email, number, password;
-    int merch_id;
+    private RequestQueue requestQueue1;
+    int merchantId=0;
 
-    private static String JSON_URL_MERCHANT= "http://10.154.162.184/mosibus_php/merchant/";
+    private static String JSON_URL_MERCHANT= "http://10.172.156.111/mosibus_php/merchant/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +52,14 @@ public class StoreRegister extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null){
-            merch_id = intent.getIntExtra("idMerchant", 0);
             uname = intent.getStringExtra("Name");
             email = intent.getStringExtra("Email");
             number = intent.getStringExtra("Number");
             password = intent.getStringExtra("Password");
             Log.d("USER", "UN: " + uname);
         }
+        requestQueue1 = Singleton.getsInstance(this).getRequestQueue();
+        extractMerchantId(uname);
 
         btn_register_store.setOnClickListener(v -> {
 
@@ -85,7 +90,6 @@ public class StoreRegister extends AppCompatActivity {
             intent2.putExtra("Store",store);
             intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            SignUpMerchant(uname, email, number, password);
             SignUpStore(name,description,location,category,rating,popularity,start_time,end_time,image);
 
             startActivity(intent2);
@@ -104,10 +108,100 @@ public class StoreRegister extends AppCompatActivity {
         btn_upload = findViewById(R.id.btn_upload);
     }
 
-    private void SignUpMerchant(String uname,  String email,
-                        String number, String password){
+//    public void extractMerchantId(String uname){
+////        Log.d("JSON_URL_MERCHANT: ", JSON_URL_MERCHANT);
+//
+//        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.POST, JSON_URL_MERCHANT + "getId.php", null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                Log.d("ExtractID: ", "After Response");
+//                try {
+//                    Log.d("ExtractID: ", "Im in");
+//                    JSONObject jsonObjectRec1 = response.getJSONObject(0);
+//
+//                    int idMerchant = jsonObjectRec1.getInt("idMerchant");
+//
+//                    Log.d("idMerchant", String.valueOf(idMerchant));
+//                    if (idMerchant != 0){
+//                        merchantId = idMerchant;
+//                        Log.d("MerchantID", String.valueOf(merchantId));
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("OnError P: ", String.valueOf(error));
+//            }
+//        })
+//        {
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("name", uname);
+//                return params;
+//            }
+//        };
+//        requestQueue1.add(jsonArrayRequestRec1);
+////        RequestQueue requestQueue = Volley.newRequestQueue(this);
+////        requestQueue.add(stringRequest);
+//    }
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "testM.php", new Response.Listener<String>() {
+    private void extractMerchantId(String uname){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "getId.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String result) {
+                try {
+                    Log.d("REGISTER: success= ", result);
+                    JSONArray jsonArray = new JSONArray(result);
+                    Log.d("REGISTER: success= ", "3" );
+//                    String success = jsonObject.getString("success");
+//
+//                    Log.d("REGISTER: success= ", success );
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                    int idMerchant = jsonObject.getInt("idMerchant");
+
+                    Log.d("idMerchant", String.valueOf(idMerchant));
+                    if (idMerchant != 0){
+                        merchantId = idMerchant;
+                        Log.d("MerchantID", String.valueOf(merchantId));
+                    }
+                } catch (JSONException e) {
+                    Log.d("ID catch:", String.valueOf(e));
+                    Toast.makeText(StoreRegister.this, "Catch ",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(StoreRegister.this, "Error! "+ error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        })
+        {
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("name", uname);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void SignUpStore(String name_text_input,  String description_text_input,
+                                String location_text_input, String category_text_input,
+                             float rating_text_input, float popularity_text_input,
+                             String start_time_text_input, String end_time_text_input,
+                             String iv_store_img){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "testS.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String result) {
                 Log.d("1 ", result );
@@ -140,69 +234,7 @@ public class StoreRegister extends AppCompatActivity {
         {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", uname);
-                params.put("email", email);
-                params.put("contact", number);
-                params.put("password", password);
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-    }
-
-    private void SignUpStore(String name_text_input,  String description_text_input,
-                                String location_text_input, String category_text_input,
-                             float rating_text_input, float popularity_text_input,
-                             String start_time_text_input, String end_time_text_input,
-                             String iv_store_img){
-
-//        name_text_input = findViewById(R.id.name_text_input);
-//        description_text_input = findViewById(R.id.description_text_input);
-//        location_text_input = findViewById(R.id.location_text_input);
-//        category_text_input = findViewById(R.id.category_text_input);
-//        rating_text_input = findViewById(R.id.rating_text_input);
-//        popularity_text_input = findViewById(R.id.popularity_text_input);
-//        start_time_text_input = findViewById(R.id.start_time_text_input);
-//        end_time_text_input = findViewById(R.id.end_time_text_input);
-//        iv_store_img = findViewById(R.id.iv_store_img);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "testS.php", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String result) {
-                Log.d("1 ", result );
-                try {
-                    Log.d("REGISTER: success= ", result);
-                    JSONObject jsonObject = new JSONObject(result);
-                    Log.d("REGISTER: success= ", "3" );
-                    String success = jsonObject.getString("success");
-
-                    Log.d("REGISTER: success= ", success );
-                    if (success.equals("1")){
-                        Intent intent = new Intent(getApplicationContext(), StoreRegister.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        StoreRegister.this.startActivity(intent);
-                    } else {
-                        Toast.makeText(StoreRegister.this, "Email/Contact has been used ",Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    Log.d("REGISTER:", e.toString() );
-                    Toast.makeText(StoreRegister.this, "Catch ",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(StoreRegister.this, "Error! "+ error.toString(),Toast.LENGTH_SHORT).show();
-            }
-        })
-        {
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("idStore", String.valueOf(merch_id + 1));
+                params.put("idStore", String.valueOf(merchantId));
                 params.put("storeName", name_text_input);
                 params.put("storeDescription", description_text_input);
                 params.put("storeLocation", location_text_input);
