@@ -49,6 +49,8 @@ import com.example.merchant.databinding.FragmentAddProductBinding;
 import com.example.merchant.databinding.FragmentDashboardBinding;
 import com.example.merchant.models.ProductModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
@@ -62,6 +64,7 @@ public class AddProductFragment extends Fragment {
     EditText name_text_input, description_text_input, preptime_text_input,category_text_input, servesize_text_input, price_text_input;
     Button btn_add_product, btn_upload;
     ImageView iv_product_img;
+    private static String JSON_URL = "http://10.154.162.184/mosibus_php/merchant/";
 
     private String product_name, description, category, servesize, prep_time, prep_time_tmp, price_tmp;
     float price = 0;
@@ -109,96 +112,100 @@ public class AddProductFragment extends Fragment {
             activityResultLauncher.launch(intent);
         });
 
-        binding.btnAddProduct.setOnClickListener(v ->  {
+        binding.btnAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ByteArrayOutputStream byteArrayOutputStream;
+                byteArrayOutputStream = new ByteArrayOutputStream();
+                if(bitmap != null){
 
-            ByteArrayOutputStream byteArrayOutputStream;
-            byteArrayOutputStream = new ByteArrayOutputStream();
-            if(bitmap != null){
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                byte[] bytes = byteArrayOutputStream.toByteArray();
-                final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
-//                final String name = "";
-//                final String description = "";
-//                final String prep_time = "";
-//                final String category = "";
-//                final String servesize = "";
-//                final float price = 0.0F;
+                    product_name = String.valueOf(name_text_input.getText());
+                    description = String.valueOf(name_text_input.getText());
+                    category = String.valueOf(category_text_input.getText());
+                    servesize = String.valueOf(servesize_text_input.getText());
+                    prep_time_tmp = String.valueOf(preptime_text_input.getText());
+                    price_tmp = String.valueOf((price_text_input.getText()));
 
-                product_name = String.valueOf(name_text_input.getText());
-                description = String.valueOf(name_text_input.getText());
-                category = String.valueOf(category_text_input.getText());
-                servesize = String.valueOf(servesize_text_input.getText());
-                prep_time_tmp = String.valueOf(preptime_text_input.getText());
-                price_tmp = String.valueOf(Float.parseFloat(String.valueOf(price_text_input.getText())));
+                    if (product_name.isEmpty() || description.isEmpty() || category.isEmpty() || servesize.isEmpty()
+                            || prep_time_tmp.isEmpty() || price_tmp.isEmpty()){
+                        if (product_name.isEmpty())
+                            name_text_input.setError("Please insert Product Name!");
+                        if (description.isEmpty())
+                            description_text_input.setError("Please insert Description!");
+                        if (category.isEmpty())
+                            category_text_input.setError("Please insert Category!");
+                        if (servesize.isEmpty())
+                            servesize_text_input.setError("Please insert Serving Size!");
+                        if (prep_time_tmp.isEmpty())
+                            preptime_text_input.setError("Please insert Preparation Time!");
+                        if (price_tmp.isEmpty())
+                            price_text_input.setError("Please insert Price!");
+                    } else {
 
-                if (product_name.isEmpty() || description.isEmpty() || category.isEmpty() || servesize.isEmpty()
-                        || prep_time_tmp.isEmpty() || price_tmp.isEmpty()){
-                    if (product_name.isEmpty())
-                        name_text_input.setError("Please insert Product Name!");
-                    if (description.isEmpty())
-                        description_text_input.setError("Please insert Description!");
-                    if (category.isEmpty())
-                        category_text_input.setError("Please insert Category!");
-                    if (servesize.isEmpty())
-                        servesize_text_input.setError("Please insert Serving Size!");
-                    if (prep_time_tmp.isEmpty())
-                        preptime_text_input.setError("Please insert Preparation Time!");
-                    if (price_tmp.isEmpty())
-                        price_text_input.setError("Please insert Price!");
-                } else {
-                    ProductModel productModel = new ProductModel();
-                    prep_time = prep_time_tmp;
-                    price = Float.parseFloat(price_tmp);
-                    productModel.setProductImage(base64Image);
-                    productModel.setStore_idStore(1);
-                    productModel.setProductName(product_name);
-                    productModel.setProductDescription(description);
-                    productModel.setProductPrepTime(prep_time);
-                    productModel.setProductTag(category);
-                    productModel.setProductServingSize(servesize);
-                    productModel.setProductPrice(price);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("product", productModel);
-                    ProductsFragment productsFragment = new ProductsFragment();
-                    productsFragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,productsFragment).commit();
-                }
+                        prep_time = prep_time_tmp;
+                        price = Float.parseFloat(price_tmp);
+                    }
 
-                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-                String url ="";
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                    byte[] bytes = byteArrayOutputStream.toByteArray();
+                    final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
+                    final int idStore = 4;
+                    final String pname = product_name;
+                    final String pdesc = description;
+                    final String ptag = category;
+                    final String pservesize = servesize;
+                    final String ppreptime = prep_time_tmp;
+                    final Float pprice = Float.valueOf(price_tmp);
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
+
+                        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "add_prod.php",
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String result) {
+                                        Log.d("QueryResult", result );
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(result);
+                                            String success = jsonObject.getString("success");
+
+                                            if (success.equals("1")){
+                                                Log.d("TEMP CART INSERT", "success");
+                                            } else {
+                                                Toast.makeText(getContext(), "Not Inserted",Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException e) {
+                                            Log.d("TEMP CART", "catch" );
+//                                            Toast.makeText(getContext(), "Catch ",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
                             @Override
-                            public void onResponse(String response) {
-                                if(response.equals("success")){
-                                    Toast.makeText(getActivity().getApplicationContext(), "Image uploaded!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Failed to upload image!", Toast.LENGTH_SHORT).show();
-                                }
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getActivity().getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity().getApplicationContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }){
-                    protected Map<String, String> getParams(){
-                        Map<String, String> paramV = new HashMap<>();
-                        paramV.put("image", base64Image);
-                        paramV.put("name", product_name);
-                        paramV.put("description",description);
-                        paramV.put("category", category);
-                        paramV.put("servesize", servesize);
-                        paramV.put("prep_time_tmp",prep_time_tmp);
-                        paramV.put("price_tmp",price_tmp);
-                        return paramV;
-                    }
-                };
-                queue.add(stringRequest);
+                        }) {
+                            protected Map<String, String> getParams() {
+                                Map<String, String> paramV = new HashMap<>();
+                                paramV.put("idStore", String.valueOf(idStore));
+                                paramV.put("productImage", base64Image);
+                                paramV.put("productName", pname);
+                                paramV.put("productDescription", pdesc);
+                                paramV.put("productTag", ptag);
+                                paramV.put("productServingSize", pservesize);
+                                paramV.put("productPrice", String.valueOf(pprice));
+                                paramV.put("productPrepTime", ppreptime);
+                                return paramV;
+                            }
+                        };
 
-            } else
-                Toast.makeText(getActivity().getApplicationContext(),"Please select an image first!", Toast.LENGTH_SHORT).show();
+                        queue.add(stringRequest);
+                } else
+                    Toast.makeText(getActivity().getApplicationContext(),"Please select an image first!", Toast.LENGTH_SHORT).show();
+
+                ProductsFragment productsFragment = new ProductsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home, productsFragment).commit();
+            }
         });
 
         return root;

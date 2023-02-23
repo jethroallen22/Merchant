@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("login");
                     int id = 0;
                     String name = "";
+                    String email = "";
 
                     Log.d("OnRespo: ", success);
                     if (success.equals("1")){
@@ -113,32 +114,20 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject object = jsonArray.getJSONObject(i);
 
                             name = object.getString("name").trim();
-                            String email = object.getString("email").trim();
-//                            id = object.getInt("id");
+                            email = object.getString("email").trim();
+                            id = object.getInt("idMerchant");
 
                             Toast.makeText(MainActivity.this, "Success Login. \nYour Name : "
                                     + name + "\nYour Email : "
-                                    + email, Toast.LENGTH_SHORT).show();
+                                    + email + " ID: " + id, Toast.LENGTH_SHORT).show();
 
                             Log.d("HELLO", name + email);
-
-//                            final FragmentManager fragmentManager = getSupportFragmentManager();
-//                            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                            final HomeFragment homeFragment = new HomeFragment();
-
-//                            Log.d("before bundling: ", String.valueOf(id));
-//                            Bundle bundle = new Bundle();
-//                            bundle.putInt("id", id);
-//                            bundle.putString("name",name);
-//                            homeFragment.setArguments(bundle);
-//
-//                            fragmentTransaction.add(R.id.nav_host_fragment_content_home, homeFragment).commit();
-
                         }
                         Intent intent = new Intent(getApplicationContext(), Home.class);
-//                        intent.putExtra("name",name);
-//                        intent.putExtra("id",id);
-                        Log.d("NAME LOGIN: " , name);
+                        intent.putExtra("name",name);
+                        intent.putExtra("idMerchant",id);
+                        intent.putExtra("email",email);
+                        Log.d("NAME LOGIN: " , String.valueOf(id));
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }

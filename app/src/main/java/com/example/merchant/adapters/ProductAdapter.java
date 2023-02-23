@@ -51,6 +51,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 //        Glide.with(context)
 //                .load(list.get(position).getProductImage())
 //                .into(holder.iv_product_imagee2);
+        holder.iv_product_image.setImageBitmap(list.get(position).getBitmapImage());
         holder.tv_product_name.setText(list.get(position).getProductName());
         holder.tv_product_calories.setText(list.get(position).getProductPrepTime() +
                 "min | " + list.get(position).getProductServingSize() +
