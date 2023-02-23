@@ -36,13 +36,9 @@ public class Register extends AppCompatActivity {
             register_confpassword_text_input;
     private Button signup_btn;
     private TextView tv_login_btn;
-    private RequestQueue requestQueue1;
-    int merchantId = 0;
 
     //Workspace IP
-    private static String URL_SIGNUP = "http://10.154.162.184/android_register_login/register.php";
-    private static String URL_SIGNUP1 = "http://10.154.162.184/android_register_login/resgister1.php";
-    private static String URL_CHECK = "http://10.154.162.184/android_register_login/apiusers.php";
+    private static String JSON_URL_MERCHANT = "http://10.172.156.111/mosibus_php/merchant/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +62,6 @@ public class Register extends AppCompatActivity {
             }
         });
 
-        requestQueue1 = Singleton.getsInstance(this).getRequestQueue();
-        extractMerchantId();
-
 
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,14 +79,7 @@ public class Register extends AppCompatActivity {
 //                    SignUp(rname, remail, rnumber, rpassword);
 //
 //                }
-                Intent intent = new Intent(getApplicationContext(), StoreRegister.class);
-                intent.putExtra("idMerchant", merchantId);
-                intent.putExtra("Name", rname);
-                intent.putExtra("Email", remail);
-                intent.putExtra("Number", rnumber);
-                intent.putExtra("Password", rpassword);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                Register.this.startActivity(intent);
+                SignUpMerchant(rname, remail, rnumber, rpassword);
             }
         });
 
@@ -104,29 +90,33 @@ public class Register extends AppCompatActivity {
         tv_login_btn = (TextView) findViewById(R.id.tv_login_btn);
     }
 
-    private void SignUp(String register_name_text_input,  String register_email_text_input,
-                        String register_number_text_input, String register_password_text_input){
+    private void SignUpMerchant(String uname,  String email,
+                                String number, String password){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SIGNUP1, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "testM.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String result) {
                 Log.d("1 ", result );
                 try {
                     Log.d("REGISTER: success= ", result);
-                    JSONObject jsonObject = new JSONObject(result);
+//                    JSONObject jsonObject = new JSONObject(result);
                     Log.d("REGISTER: success= ", "3" );
-                    String success = jsonObject.getString("success");
+//                    String success = jsonObject.getString("success");
 
-                    Log.d("REGISTER: success= ", success );
-                    if (success.equals("1")){
+//                    Log.d("REGISTER: success= ", success );
+//                    if (success.equals("1")){
                         Intent intent = new Intent(getApplicationContext(), StoreRegister.class);
+                        intent.putExtra("Name", uname);
+                        intent.putExtra("Email", email);
+                        intent.putExtra("Number", number);
+                        intent.putExtra("Password", password);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         Register.this.startActivity(intent);
-                    } else {
-                        Toast.makeText(Register.this, "Email/Contact has been used ",Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                Log.d("REGISTER:", "catch" );
+//                    } else {
+//                        Toast.makeText(Register.this, "Email/Contact has been used ",Toast.LENGTH_SHORT).show();
+//                    }
+                } catch (Error e) {
+                    Log.d("REGISTER:", "catch" );
                     Toast.makeText(Register.this, "Catch ",Toast.LENGTH_SHORT).show();
                 }
 
@@ -140,46 +130,16 @@ public class Register extends AppCompatActivity {
         {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", register_name_text_input);
-                params.put("email", register_email_text_input);
-                params.put("contact", register_number_text_input);
-                params.put("password", register_password_text_input);
+                params.put("name", uname);
+                params.put("email", email);
+                params.put("contact", number);
+                params.put("password", password);
                 return params;
             }
         };
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
-    }
-
-    public void extractMerchantId(){
-//        Log.d("JSON_URL_MERCHANT: ", JSON_URL_MERCHANT);
-
-        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, URL_SIGNUP1 + "getId.php", null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Log.d("Response Product: ", String.valueOf(response.length()));
-
-                    try {
-                        Log.d("Try P: ", "Im in");
-                        JSONObject jsonObjectRec1 = response.getJSONObject(0);
-
-                        //PRODUCT DB
-                        int idMerchant = jsonObjectRec1.getInt("idMerchant");
-
-                        merchantId = idMerchant;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("OnError P: ", String.valueOf(error));
-            }
-        });
-        requestQueue1.add(jsonArrayRequestRec1);
     }
 
     private void Check(String register_email_text_input, String register_number_text_input, String inputEmail, String inputNumber){

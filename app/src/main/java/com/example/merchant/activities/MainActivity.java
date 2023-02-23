@@ -32,10 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText login_email_text_input, login_password_text_input;
     private Button login_btn;
     private TextView tv_register_btn;
-    private String testUser = "test";
-    private String testPass = "test";
     //School IP
-    private static String URL_LOGIN = "http://10.154.162.184/mosibus_php/merchant/";
+    private static String URL_LOGIN = "http://10.172.156.111/mosibus_php/merchant/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
