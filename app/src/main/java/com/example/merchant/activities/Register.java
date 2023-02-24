@@ -21,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.interfaces.Singleton;
+import com.example.merchant.models.IPModel;
 import com.example.merchant.models.ProductModel;
 
 import org.json.JSONArray;
@@ -38,13 +39,18 @@ public class Register extends AppCompatActivity {
     private TextView tv_login_btn;
 
     //Workspace IP
-    private static String JSON_URL_MERCHANT = "http://10.172.156.111/mosibus_php/merchant/";
+    private static String JSON_URL;
+    private IPModel ipModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
+
+        ipModel = new IPModel();
+        JSON_URL = ipModel.getURL();
+
         init();
 
         register_name_text_input = findViewById(R.id.name_text_input);
@@ -93,7 +99,7 @@ public class Register extends AppCompatActivity {
     private void SignUpMerchant(String uname,  String email,
                                 String number, String password){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "testM.php", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "testM.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String result) {
                 Log.d("1 ", result );

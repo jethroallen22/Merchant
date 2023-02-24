@@ -42,6 +42,7 @@ import com.example.merchant.activities.ui.Dashboard.DashboardViewModel;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.databinding.FragmentDashboardBinding;
 import com.example.merchant.databinding.FragmentEditProductBinding;
+import com.example.merchant.models.IPModel;
 import com.example.merchant.models.OrderModel;
 import com.example.merchant.models.ProductModel;
 
@@ -57,7 +58,8 @@ public class EditProductFragment extends Fragment {
 
     private FragmentEditProductBinding binding;
 
-    private static String JSON_URL = "http://10.154.162.184/mosibus_php/merchant/";
+    private static String JSON_URL;
+    private IPModel ipModel;
 
     EditText name_text_input, description_text_input, preptime_text_input,category_text_input, servesize_text_input, price_text_input;
     Button btn_edit_product, btn_upload;
@@ -78,6 +80,9 @@ public class EditProductFragment extends Fragment {
 
         binding = FragmentEditProductBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        ipModel = new IPModel();
+        JSON_URL = ipModel.getURL();
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {

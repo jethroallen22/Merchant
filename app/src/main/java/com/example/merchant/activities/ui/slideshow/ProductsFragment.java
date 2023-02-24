@@ -29,6 +29,7 @@ import com.example.merchant.adapters.ProductAdapter;
 import com.example.merchant.databinding.FragmentProductsBinding;
 import com.example.merchant.interfaces.RecyclerViewInterface;
 import com.example.merchant.interfaces.Singleton;
+import com.example.merchant.models.IPModel;
 import com.example.merchant.models.OrderItemModel;
 import com.example.merchant.models.OrderModel;
 import com.example.merchant.models.ProductModel;
@@ -47,14 +48,14 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
 
     private FragmentProductsBinding binding;
     private RequestQueue requestQueue;
-    private static String JSON_URL = "http://10.154.162.184/mosibus_php/merchant/";
+    private static String JSON_URL;
+    private IPModel ipModel;
     //Product List Recycler View
     RecyclerView rv_products;
     List<ProductModel> product_list;
     ProductAdapter productAdapter;
     RecyclerViewInterface recyclerViewInterface;
     TextView tv_product_namee2, tv_product_pricee2, tv_product_description2, tv_product_info;
-    ImageView iv_product_imagee2;
 
     public static String name = "";
     public static String email = "";
@@ -68,6 +69,9 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
         binding = FragmentProductsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        ipModel = new IPModel();
+        JSON_URL = ipModel.getURL();
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             name = bundle.getString("name");
@@ -78,29 +82,8 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
 
         rv_products = root.findViewById(R.id.rv_products);
         product_list = new ArrayList<>();
-//        product_list.add(new ProductModel(1,"Burger Mcdo", "Burger Mcdo test description lorem ipsum dolor", 45F, "test", "1pc", "Burger", "10"));
-////        product_list.add(new ProductModel("test", "Chicken Ala king", "Tasty delicious burger Mcdo", "Mcdo - Binondo", 45F, 350));
-//        productAdapter = new ProductAdapter(getActivity(), product_list, this);
-//        rv_products.setAdapter(productAdapter);
-
-        //Remove Product
-//        productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                product_list.remove(position);
-//                productAdapter.notifyItemRemoved(position);
-//            }
-//        });
-
-
-
-
-//        rv_products.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-//        rv_products.setHasFixedSize(true);
-//        rv_products.setNestedScrollingEnabled(false);
         requestQueue = Singleton.getsInstance(getActivity()).getRequestQueue();
         extractFoodforyou();
-
 
         binding.fabAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,13 +165,20 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-//                    productAdapter = new ProductAdapter(getActivity(),product_list,productsFragment);
-//                    rv_products.setAdapter(productAdapter);
-                    Log.d("LIST", String.valueOf(product_list.size()));
                     productAdapter = new ProductAdapter(getActivity(),product_list,ProductsFragment.this);
                     rv_products.setAdapter(productAdapter);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                     rv_products.setLayoutManager(layoutManager);
+
+                    //Remove Product
+                    productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            product_list.remove(position);
+                            productAdapter.notifyItemRemoved(position);
+                            deleteProduct(position);
+                        }
+                    });
                 }
             }
         }, new Response.ErrorListener() {
@@ -199,6 +189,10 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
         });
         requestQueue.add(jsonArrayRequestFoodforyou);
     }
+
+    public void deleteProduct(int position){
+
+    };
 
     @Override
     public void onItemClick(int position) {

@@ -47,6 +47,7 @@ import com.example.merchant.activities.ui.Dashboard.DashboardViewModel;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.databinding.FragmentAddProductBinding;
 import com.example.merchant.databinding.FragmentDashboardBinding;
+import com.example.merchant.models.IPModel;
 import com.example.merchant.models.ProductModel;
 
 import org.json.JSONException;
@@ -64,7 +65,8 @@ public class AddProductFragment extends Fragment {
     EditText name_text_input, description_text_input, preptime_text_input,category_text_input, servesize_text_input, price_text_input;
     Button btn_add_product, btn_upload;
     ImageView iv_product_img;
-    private static String JSON_URL = "http://10.154.162.184/mosibus_php/merchant/";
+    private static String JSON_URL;
+    private IPModel ipModel;
 
     private String product_name, description, category, servesize, prep_time, prep_time_tmp, price_tmp;
     float price = 0;
@@ -78,6 +80,9 @@ public class AddProductFragment extends Fragment {
 
         binding = FragmentAddProductBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        ipModel = new IPModel();
+        JSON_URL = ipModel.getURL();
 
         //Initialize
         name_text_input = root.findViewById(R.id.name_text_input);

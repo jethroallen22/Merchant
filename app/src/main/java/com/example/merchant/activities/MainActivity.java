@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
+import com.example.merchant.models.IPModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private Button login_btn;
     private TextView tv_register_btn;
     //School IP
-    private static String URL_LOGIN = "http://10.172.156.111/mosibus_php/merchant/";
+    private static String JSON_URL;
+    private IPModel ipModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
+        ipModel = new IPModel();
+        JSON_URL = ipModel.getURL();
         init();
 
         tv_register_btn.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     //Login
     private void LogIn(String login_email_text_input, String login_password_text_input){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN+"loginM.php", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL+"loginM.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {

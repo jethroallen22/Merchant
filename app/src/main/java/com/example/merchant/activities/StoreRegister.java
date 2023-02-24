@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.interfaces.Singleton;
+import com.example.merchant.models.IPModel;
 import com.example.merchant.models.StoreModel;
 
 import org.json.JSONArray;
@@ -41,13 +42,18 @@ public class StoreRegister extends AppCompatActivity {
     private RequestQueue requestQueue1;
     int merchantId=0;
 
-    private static String JSON_URL_MERCHANT= "http://10.172.156.111/mosibus_php/merchant/";
+    private static String JSON_URL;
+    private IPModel ipModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_register);
         getSupportActionBar().hide();
+
+        ipModel = new IPModel();
+        JSON_URL = ipModel.getURL();
+
         Initialize();
 
         Intent intent = getIntent();
@@ -151,7 +157,7 @@ public class StoreRegister extends AppCompatActivity {
 
     private void extractMerchantId(String uname){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "getId.php", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "getId.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String result) {
                 try {
@@ -201,7 +207,7 @@ public class StoreRegister extends AppCompatActivity {
                              String start_time_text_input, String end_time_text_input,
                              String iv_store_img){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "testS.php", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "testS.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String result) {
                 Log.d("1 ", result );
