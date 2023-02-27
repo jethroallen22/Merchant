@@ -56,7 +56,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     OrderItemsAdapter orderItemsAdapter;
     RecyclerViewInterface recyclerViewInterface = this;
     private RequestQueue requestQueue1, requestQueue2, requestQueue3;
-    private static String JSON_URL_MERCHANT="http://10.172.156.111/mosibus_php/merchant/";
+    private static String JSON_URL_MERCHANT="http://192.168.68.104/mosibus_php/merchant/";
     int temp_idOrder = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
