@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.activities.ui.addproduct.AddProductFragment;
 import com.example.merchant.activities.ui.editproduct.EditProductFragment;
@@ -42,7 +45,9 @@ import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductsFragment extends Fragment implements RecyclerViewInterface, ProductAdapter.OnItemClickListener {
 
@@ -174,8 +179,8 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                     productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position) {
-                            product_list.remove(position);
-                            productAdapter.notifyItemRemoved(position);
+//                            product_list.remove(position);
+//                            productAdapter.notifyItemRemoved(position);
                             deleteProduct(position);
                         }
                     });
@@ -191,8 +196,31 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
     }
 
     public void deleteProduct(int position){
+        Log.d("Delete Product", product_list.get(position).getProductName());
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-    };
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,JSON_URL+ "deleteProd.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String result) {
+                        Log.d("On Res", "inside on res");
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error", String.valueOf(error));
+            }
+        }){
+            protected Map<String, String> getParams(){
+                Map<String, String> paramV = new HashMap<>();
+                paramV.put("idProduct", String.valueOf(product_list.get(position).getIdProduct()));
+                Log.d("PARAM", product_list.get(position).getProductName());
+                return paramV;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
 
     @Override
     public void onItemClick(int position) {
