@@ -28,6 +28,7 @@ import com.example.merchant.adapters.OrderItemsAdapter;
 import com.example.merchant.databinding.FragmentOrdersBinding;
 import com.example.merchant.interfaces.RecyclerViewInterface;
 import com.example.merchant.interfaces.Singleton;
+import com.example.merchant.models.IPModel;
 import com.example.merchant.models.OrderItemModel;
 import com.example.merchant.models.OrderModel;
 import com.example.merchant.models.ProductModel;
@@ -56,7 +57,8 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     OrderItemsAdapter orderItemsAdapter;
     RecyclerViewInterface recyclerViewInterface = this;
     private RequestQueue requestQueue1, requestQueue2, requestQueue3;
-    private static String JSON_URL_MERCHANT="http://10.172.156.111/mosibus_php/merchant/";
+    private static String JSON_URL;
+    private IPModel ipModel;
     int temp_idOrder = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -66,6 +68,8 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
         binding = FragmentOrdersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ipModel = new IPModel();
+        JSON_URL = ipModel.getURL();
 
 //        order_item_list = new ArrayList<>();
 //        order_item_list.add(new OrderItemModel("Burger Mcdo", 2, 80F));
@@ -148,9 +152,9 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
     //PRODUCT DB
     public void extractProduct(){
-        Log.d("JSON_URL_MERCHANT: ", JSON_URL_MERCHANT);
+        Log.d("JSON_URL_MERCHANT: ", JSON_URL);
 
-        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testP.php", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, JSON_URL + "testP.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("Response Product: ", String.valueOf(response.length()));
@@ -199,9 +203,9 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
     //OrderItem DB
     public void extractOrderItem(){
-        Log.d("JSON_URL_MERCHANT: ", JSON_URL_MERCHANT);
+        Log.d("JSON_URL_MERCHANT: ", JSON_URL);
 
-        JsonArrayRequest jsonArrayRequestRec2 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testOI.php", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequestRec2 = new JsonArrayRequest(Request.Method.GET, JSON_URL + "testOI.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("Response OrderItem: ", String.valueOf(response.length()));
@@ -303,7 +307,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     //Order DB
     public void extractOrders(){
         Log.d("extractOrders", "Called");
-        JsonArrayRequest jsonArrayRequestRec3 = new JsonArrayRequest(Request.Method.GET, JSON_URL_MERCHANT + "testAll.php", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequestRec3 = new JsonArrayRequest(Request.Method.GET, JSON_URL + "testAll.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.e("Bug", String.valueOf(response));
