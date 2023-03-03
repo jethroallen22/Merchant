@@ -37,7 +37,8 @@ public class StoreRegister extends AppCompatActivity {
 
     String image, name, description, location, category;
     Float rating, popularity;
-    String start_time, end_time;
+    int start_time;
+    int end_time;
     String uname, email, number, password;
     private RequestQueue requestQueue1;
     int merchantId=0;
@@ -75,8 +76,8 @@ public class StoreRegister extends AppCompatActivity {
             category = String.valueOf(category_text_input.getText());
             rating = 0.0F;
             popularity = 0.0F;
-            start_time = String.valueOf(start_time_text_input.getText());
-            end_time = String.valueOf(end_time_text_input.getText());
+            start_time = Integer.parseInt(String.valueOf(start_time_text_input.getText()));
+            end_time = Integer.parseInt(String.valueOf(end_time_text_input.getText()));
 
             StoreModel store = new StoreModel();
             store.setStore_name(name);
@@ -204,7 +205,7 @@ public class StoreRegister extends AppCompatActivity {
     private void SignUpStore(String name_text_input,  String description_text_input,
                                 String location_text_input, String category_text_input,
                              float rating_text_input, float popularity_text_input,
-                             String start_time_text_input, String end_time_text_input,
+                             int start_time_text_input, int end_time_text_input,
                              String iv_store_img){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "testS.php", new Response.Listener<String>() {
@@ -248,8 +249,8 @@ public class StoreRegister extends AppCompatActivity {
                 params.put("storeRating", "0");
                 params.put("storePopularity", "0");
                 params.put("storeImage", "http://www.healitall.com/wp-content/uploads/2018/06/chicken.jpg");
-                params.put("storeStartTime", start_time_text_input);
-                params.put("storeEndTime", end_time_text_input);
+                params.put("storeStartTime", String.valueOf(start_time_text_input));
+                params.put("storeEndTime", String.valueOf(end_time_text_input));
                 return params;
             }
         };

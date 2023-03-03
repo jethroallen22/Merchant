@@ -17,12 +17,12 @@ public class StoreModel implements Parcelable {
     String store_category;
     Float store_rating;
     Float store_popularity;
-    String store_open;
-    String store_closing;
+    int store_open;
+    int store_closing;
 
     public StoreModel(long store_id, String store_image, String store_name, String store_description,
-                      String store_location, String store_category, Float store_rating, Float store_popularity,String store_open,
-                      String store_closing) {
+                      String store_location, String store_category, Float store_rating, Float store_popularity, int store_open,
+                      int store_closing) {
         this.store_id = store_id;
         this.store_image = store_image;
         this.store_name = store_name;
@@ -48,8 +48,8 @@ public class StoreModel implements Parcelable {
         store_category = in.readString();
         store_rating = in.readFloat();
         store_popularity = in.readFloat();
-        store_open = in.readString();
-        store_closing = in.readString();
+        store_open = in.readInt();
+        store_closing = in.readInt();
     }
 
     public static final Creator<StoreModel> CREATOR = new Creator<StoreModel>() {
@@ -128,19 +128,19 @@ public class StoreModel implements Parcelable {
         this.store_popularity = store_popularity;
     }
 
-    public String getStore_open() {
+    public int getStore_open() {
         return store_open;
     }
 
-    public void setStore_open(String store_open) {
+    public void setStore_open(int store_open) {
         this.store_open = store_open;
     }
 
-    public String getStore_closing() {
+    public int getStore_closing() {
         return store_closing;
     }
 
-    public void setStore_closing(String store_closing) {
+    public void setStore_closing(int store_closing) {
         this.store_closing = store_closing;
     }
 
@@ -165,8 +165,8 @@ public class StoreModel implements Parcelable {
         dest.writeString(store_category);
         dest.writeFloat(store_rating);
         dest.writeFloat(store_popularity);
-        dest.writeString(store_open);
-        dest.writeString(store_closing);
+        dest.writeInt(store_open);
+        dest.writeInt(store_closing);
 
     }
 }
