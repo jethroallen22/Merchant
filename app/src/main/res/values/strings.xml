@@ -12,4 +12,9 @@
     <string name="menu_orders">Orders</string>
     <string name="menu_products">Products</string>
     <string name="menu_ordersummary">OrderSummary</string>
+
+    <string-array name="weather">
+        <item>Hot</item>
+        <item>Cold</item>
+    </string-array>
 </resources>

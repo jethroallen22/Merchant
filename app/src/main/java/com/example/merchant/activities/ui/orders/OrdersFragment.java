@@ -337,7 +337,6 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                         //PRODUCT DB
                         String productName = jsonObjectRec1.getString("productName");
 
-
                         OrderItemModel orderItemModel = new OrderItemModel(idItem, product_idProduct, (float) ItemPrice, ItemQuantity, order_idOrder, productName);
 
                         order_item_list.add(orderItemModel);

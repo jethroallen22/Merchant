@@ -29,9 +29,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ import org.w3c.dom.Text;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class AddProductFragment extends Fragment {
@@ -68,10 +71,12 @@ public class AddProductFragment extends Fragment {
     private static String JSON_URL;
     private IPModel ipModel;
 
-    private String product_name, description, category, servesize, prep_time, prep_time_tmp, price_tmp;
+    private String product_name, description, category, servesize, prep_time, prep_time_tmp, price_tmp, weather_tmp;
     float price = 0;
     String path;
     Bitmap bitmap;
+
+    Spinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -94,6 +99,11 @@ public class AddProductFragment extends Fragment {
         btn_add_product = root.findViewById(R.id.btn_add_product);
         btn_upload = root.findViewById(R.id.btn_upload);
         iv_product_img = root.findViewById(R.id.iv_product_img);
+        spinner = root.findViewById(R.id.weather_spinner);
+
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(), R.array.weather, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner.setAdapter(adapter);
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -130,6 +140,7 @@ public class AddProductFragment extends Fragment {
                     servesize = String.valueOf(servesize_text_input.getText());
                     prep_time_tmp = String.valueOf(preptime_text_input.getText());
                     price_tmp = String.valueOf((price_text_input.getText()));
+                    weather_tmp = spinner.getSelectedItem().toString().toLowerCase();
 
                     if (product_name.isEmpty() || description.isEmpty() || category.isEmpty() || servesize.isEmpty()
                             || prep_time_tmp.isEmpty() || price_tmp.isEmpty()){
@@ -146,7 +157,6 @@ public class AddProductFragment extends Fragment {
                         if (price_tmp.isEmpty())
                             price_text_input.setError("Please insert Price!");
                     } else {
-
                         prep_time = prep_time_tmp;
                         price = Float.parseFloat(price_tmp);
                     }
@@ -160,7 +170,8 @@ public class AddProductFragment extends Fragment {
                     final String ptag = category;
                     final String pservesize = servesize;
                     final String ppreptime = prep_time_tmp;
-                    final Float pprice = Float.valueOf(price_tmp);
+                    final float pprice = Float.parseFloat(price_tmp);
+                    final String pweather = weather_tmp;
 
 
                         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -200,6 +211,7 @@ public class AddProductFragment extends Fragment {
                                 paramV.put("productServingSize", pservesize);
                                 paramV.put("productPrice", String.valueOf(pprice));
                                 paramV.put("productPrepTime", ppreptime);
+                                paramV.put("weather", pweather);
                                 return paramV;
                             }
                         };

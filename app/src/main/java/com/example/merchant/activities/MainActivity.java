@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 //                    MainActivity.this.startActivity(intent);
 //                } else {
 //                    LogIn(mEmail, mPass);
-                    LogIn("lohm0@soup.io", "test");
+                LogIn("lohm0@soup.io", "test");
 //                }
 
 //                Intent intent = new Intent(getApplicationContext(), Home.class);
@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String success = jsonObject.getString("success");
+                    Log.d("responseJson", String.valueOf(jsonObject));
 
 
                     JSONArray jsonArray = jsonObject.getJSONArray("login");
