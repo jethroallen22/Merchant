@@ -43,8 +43,8 @@ public class OrderSummaryFragment extends Fragment {
     List<OrderItemModel> order_item_list;
     OrderItemsAdapter orderItemsAdapter;
     TextView tv_order_id, tv_name, tv_total_price;
-    Button btn_complete_order, btn_cancel_order;
-    private static String JSON_URL_MERCHANT="http://10.154.162.184/mosibus_php/merchant/";
+    Button btn_complete_order, btn_cancel_order, btn_confirm_order;
+    private static String JSON_URL_MERCHANT="http://10.207.111.129/mosibus_php/merchant/";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class OrderSummaryFragment extends Fragment {
         tv_order_id = root.findViewById(R.id.tv_order_id);
         tv_name = root.findViewById(R.id.tv_name);
         tv_total_price = root.findViewById(R.id.tv_total_price);
+        btn_confirm_order = root.findViewById(R.id.btn_confirm_order);
         btn_cancel_order = root.findViewById(R.id.btn_cancel_order);
         btn_complete_order = root.findViewById(R.id.btn_complete_order);
 
@@ -82,11 +83,22 @@ public class OrderSummaryFragment extends Fragment {
         rv_order_items.setHasFixedSize(true);
         rv_order_items.setNestedScrollingEnabled(false);
 
+        btn_confirm_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("BTN IdOrder: ", String.valueOf(order.getIdOrder()));
+                UpdateStatus(order.getIdOrder(), "Preparing Order");
+                Log.d("TAG", "Success");
+                btn_confirm_order.setClickable(false);
+                btn_complete_order.setClickable(true);
+            }
+        });
+
         btn_complete_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("BTN IdOrder: ", String.valueOf(order.getIdOrder()));
-                UpdateStatus(order.getIdOrder(), "completed");
+                UpdateStatus(order.getIdOrder(), "Completed Order");
                 OrdersFragment fragment = new OrdersFragment();
                 Log.d("TAG", "Success");
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
