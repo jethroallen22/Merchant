@@ -180,6 +180,8 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                     productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position) {
+                            Log.d("Product List size", String.valueOf(product_list.size()));
+                            Log.d("Position", String.valueOf(position));
 //                            product_list.remove(position);
 //                            productAdapter.notifyItemRemoved(position);
                             deleteProduct(position);

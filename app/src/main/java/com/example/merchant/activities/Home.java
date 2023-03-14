@@ -12,11 +12,14 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.activities.ui.addproduct.AddProductFragment;
 import com.example.merchant.activities.ui.profile.ProfileFragment;
@@ -46,25 +49,28 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Home extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
+    private TextView tv_view_profile;
     public static String name = "";
     public static String email = "";
     public static int id;
+    List <StoreModel> storeList;
+    private RequestQueue requestQueue1;
 
     ImageView iv_user_image;
-    TextView tv_view_profile;
     TextView tv_user_name;
 
     //School IP
     private static String JSON_URL;
     private IPModel ipModel;
 
-    private RequestQueue requestQueue1;
     List<StoreModel> storeModelList;
     StoreModel storeModel;
     String image;
