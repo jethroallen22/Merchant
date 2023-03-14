@@ -12,12 +12,9 @@
     <string name="menu_orders">Orders</string>
     <string name="menu_products">Products</string>
     <string name="menu_ordersummary">OrderSummary</string>
-    <string name="row1col1">Order ID</string>
-    <string name="row1col2">Customer Name</string>
-    <string name="row1col3">Total Price</string>
-    <string name="row1col4">View Details</string>
-    <string name="row2col1">1</string>
-    <string name="row2col2">Ben</string>
-    <string name="row2col3">586.00</string>
-    <string name="row2col4"><![CDATA[<button>]]></string>
+
+    <string-array name="weather">
+        <item>Hot</item>
+        <item>Cold</item>
+    </string-array>
 </resources>

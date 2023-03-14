@@ -160,9 +160,10 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                             String productPrepTime = jsonObjectFoodforyou.getString("productPrepTime");
                             String storeName = jsonObjectFoodforyou.getString("storeName");
                             String storeImage = jsonObjectFoodforyou.getString("storeImage");
+                            String weather = jsonObjectFoodforyou.getString("weather");
 
                             ProductModel foodfyModel = new ProductModel(idProduct, idStore, productName, productDescription, productPrice, productImage,
-                                    productServingSize, productTag, productPrepTime, storeName, storeImage);
+                                    productServingSize, productTag, productPrepTime, storeName, storeImage, weather);
                             product_list.add(foodfyModel);
                             //list.add(productName);
                         }

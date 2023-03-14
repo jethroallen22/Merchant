@@ -148,6 +148,7 @@
                 android:id="@+id/category_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/robotomedium"
                 android:text="Category"
                 android:textSize="16sp"
@@ -169,14 +170,49 @@
                 app:layout_constraintTop_toBottomOf="@+id/category_text" />
 
             <TextView
-                android:id="@+id/servesize_text"
+                android:id="@+id/weather_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/robotomedium"
-                android:text="Serving Size"
+                android:text="Weather"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/category_text_input"
                 app:layout_constraintTop_toBottomOf="@+id/category_text_input" />
+            <TextView
+                android:id="@+id/weather_sub_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotomedium"
+                android:text="Please select the perfect weather for the product."
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/weather_text"
+                app:layout_constraintTop_toBottomOf="@+id/weather_text" />
+
+            <Spinner
+                android:id="@+id/weather_spinner"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:dropDownWidth="wrap_content"
+                android:ems="10"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:spinnerMode="dropdown"
+                android:textColorHint="#A5A5A5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weather_sub_text" />
+
+            <TextView
+                android:id="@+id/servesize_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/robotomedium"
+                android:text="Serving Size"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/weather_spinner"
+                app:layout_constraintTop_toBottomOf="@+id/weather_spinner" />
 
             <EditText
                 android:id="@+id/servesize_text_input"

@@ -14,14 +14,15 @@ public class ProductModel implements Parcelable {
     int store_idStore;
     String productName;
     String productDescription;
-    Float productPrice;
+    float productPrice;
     String productImage;
     String productServingSize;
     String productTag;
     String productPrepTime;
+    String weather;
 
 
-    public ProductModel(int idProduct, int store_idStore, String productName, String productDescription, Float productPrice, String productImage, String productServingSize, String productTag, String productPrepTime, String productRestoName, String productRestoImage) {
+    public ProductModel(int idProduct, int store_idStore, String productName, String productDescription, float productPrice, String productImage, String productServingSize, String productTag, String productPrepTime, String productRestoName, String productRestoImage, String weather) {
         this.idProduct = idProduct;
         this.store_idStore = store_idStore;
         this.productName = productName;
@@ -31,9 +32,10 @@ public class ProductModel implements Parcelable {
         this.productServingSize = productServingSize;
         this.productTag = productTag;
         this.productPrepTime = productPrepTime;
+        this.weather = weather;
     }
 
-    public ProductModel(int store_idStore, String productName, String productDescription, Float productPrice, String productImage, String productServingSize, String productTag, String productPrepTime) {
+    public ProductModel(int store_idStore, String productName, String productDescription, float productPrice, String productImage, String productServingSize, String productTag, String productPrepTime, String weather) {
         this.store_idStore = store_idStore;
         this.productName = productName;
         this.productDescription = productDescription;
@@ -42,6 +44,7 @@ public class ProductModel implements Parcelable {
         this.productServingSize = productServingSize;
         this.productTag = productTag;
         this.productPrepTime = productPrepTime;
+        this.weather = weather;
     }
 
     public ProductModel(){}
@@ -51,15 +54,12 @@ public class ProductModel implements Parcelable {
         store_idStore = in.readInt();
         productName = in.readString();
         productDescription = in.readString();
-        if (in.readByte() == 0) {
-            productPrice = null;
-        } else {
-            productPrice = in.readFloat();
-        }
+        productPrice = in.readFloat();
         productImage = in.readString();
         productServingSize = in.readString();
         productTag = in.readString();
         productPrepTime = in.readString();
+        weather = in.readString();
     }
 
     public static final Creator<ProductModel> CREATOR = new Creator<ProductModel>() {
@@ -111,7 +111,7 @@ public class ProductModel implements Parcelable {
         return productPrice;
     }
 
-    public void setProductPrice(Float productPrice) {
+    public void setProductPrice(float productPrice) {
         this.productPrice = productPrice;
     }
 
@@ -147,6 +147,14 @@ public class ProductModel implements Parcelable {
         this.productPrepTime = productPrepTime;
     }
 
+    public String getWeather() {
+        return weather;
+    }
+
+    public void setWeather(String weather) {
+        this.weather = weather;
+    }
+
     public Bitmap getBitmapImage(){
         byte[] byteArray = Base64.decode(productImage, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
@@ -164,15 +172,11 @@ public class ProductModel implements Parcelable {
         parcel.writeInt(store_idStore);
         parcel.writeString(productName);
         parcel.writeString(productDescription);
-        if (productPrice == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeFloat(productPrice);
-        }
+        parcel.writeFloat(productPrice);
         parcel.writeString(productImage);
         parcel.writeString(productServingSize);
         parcel.writeString(productTag);
         parcel.writeString(productPrepTime);
+        parcel.writeString(weather);
     }
 }
