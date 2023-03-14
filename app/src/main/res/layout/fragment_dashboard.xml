@@ -33,16 +33,15 @@
 
     <GridLayout
         android:id="@+id/gridLayout"
-        android:layout_width="411dp"
-        android:layout_height="186dp"
+        android:layout_width="369dp"
+        android:layout_height="179dp"
         android:columnCount="2"
         android:rowCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.39">
+        app:layout_constraintVertical_bias="0.409">
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
@@ -75,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Total Incoming Orders"
+                    android:text="Incoming Orders"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"></TextView>
@@ -113,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Total New Customers"
+                    android:text="New Customers"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"></TextView>
