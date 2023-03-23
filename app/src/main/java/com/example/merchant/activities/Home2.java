@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.merchant.R;
 import com.example.merchant.adapters.OrderAdapter;
@@ -30,6 +31,7 @@ public class Home2 extends AppCompatActivity {
         setContentView(R.layout.activity_home2);
         getSupportActionBar().hide();
 
+        Log.d("HOME2", "INSIDE");
         order_item_list = new ArrayList<>();
         //order_item_list.add(new OrderItemModel("Burger Mcdo", 2, 80F));
 

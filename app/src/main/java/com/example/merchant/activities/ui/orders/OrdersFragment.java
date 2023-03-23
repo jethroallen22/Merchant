@@ -2,6 +2,7 @@ package com.example.merchant.activities.ui.orders;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -61,6 +62,10 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     private IPModel ipModel;
     int temp_idOrder = 0;
 
+    public static String name = "";
+    public static String email = "";
+    public static int id;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         OrdersViewModel ordersViewModel =
@@ -71,10 +76,15 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
         ipModel = new IPModel();
         JSON_URL = ipModel.getURL();
 
-//        order_item_list = new ArrayList<>();
-//        order_item_list.add(new OrderItemModel("Burger Mcdo", 2, 80F));
-//        order_item_list.add(new OrderItemModel("Chicken Ala King",1,89F));
-//        order_item_list.add(new OrderItemModel("BFF Fries",2,79F));
+        Intent intent = getActivity().getIntent();
+        if(intent.getStringExtra("name") != null) {
+            name = intent.getStringExtra("name");
+            id = intent.getIntExtra("idMerchant",0);
+            email = intent.getStringExtra("email");
+            Log.d("Orders name", name + id + email);
+        } else {
+            Log.d("Orders name", "FAIL");
+        }
 
         rv_orders = root.findViewById(R.id.rv_orders);
 ////        order_list = new ArrayList<>();
@@ -337,49 +347,54 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                         //PRODUCT DB
                         String productName = jsonObjectRec1.getString("productName");
 
-                        OrderItemModel orderItemModel = new OrderItemModel(idItem, product_idProduct, (float) ItemPrice, ItemQuantity, order_idOrder, productName);
+                            OrderItemModel orderItemModel = new OrderItemModel(idItem, product_idProduct, (float) ItemPrice, ItemQuantity, order_idOrder, productName);
 
-                        order_item_list.add(orderItemModel);
-                        Log.d("ORDER ITEM LIST: ", String.valueOf(order_item_list.get(i).getIdItem()));
-                        temp_order_item.add(order_item_list.get(i));
+                            order_item_list.add(orderItemModel);
+//                            Log.d("ORDER ITEM LIST: ", String.valueOf(order_item_list.get(i).getIdItem()));
+                            temp_order_item.add(order_item_list.get(i));
 
-                        OrderModel orderModel = new OrderModel(idOrder, orderItemTotalPrice, orderStatus, store_idstore, name, temp_order_item);
-                        temp_order.add(orderModel);
+                            OrderModel orderModel = new OrderModel(idOrder, orderItemTotalPrice, orderStatus, store_idstore, name, temp_order_item);
+                            temp_order.add(orderModel);
 
-                        if((idOrder != temp_idOrder && idOrder != 0) || response.length() == 1 || i == response.length()-1){
-                            Log.d("Inside If", String.valueOf(order_item_list.size()));
-                            temp_order_item = new ArrayList<>();
-                            for(int j=0; j < order_item_list.size(); j++){
-                                Log.d("Inside For", String.valueOf(order_item_list.size()));
-                                if((temp_idOrder == order_item_list.get(j).getOrder_idOrder()) || (response.length() == 1)){
-                                    Log.d("Inside If", String.valueOf(order_item_list.size()));
-                                    temp_order_item.add(order_item_list.get(j));
-                                    Log.d("TEMP LIST: ", String.valueOf(i));
+                            if((idOrder != temp_idOrder && idOrder != 0) || response.length() == 1 || i == response.length()-1){
+                                Log.d("Inside If", String.valueOf(order_item_list.size()));
+                                temp_order_item = new ArrayList<>();
+                                for(int j=0; j < order_item_list.size(); j++){
+                                    Log.d("Inside For", String.valueOf(order_item_list.size()));
+                                    if((temp_idOrder == order_item_list.get(j).getOrder_idOrder()) || (response.length() == 1)){
+                                        Log.d("Inside If", String.valueOf(order_item_list.size()));
+                                        temp_order_item.add(order_item_list.get(j));
+                                        Log.d("TEMP LIST: ", String.valueOf(i));
+                                    }
                                 }
-                            }
 
 //                            Log.d("TEMP LIST: ", temp_order_item.get(i).getProductName());
-                            if(i != 0){
-                                OrderModel orderModel2 = new OrderModel(temp_order.get(i-1).getIdOrder(), temp_order.get(i-1).getOrderItemTotalPrice(), temp_order.get(i-1).getOrderStatus(), temp_order.get(i-1).getStore_idstore(), temp_order.get(i-1).getUsers_name(), temp_order_item);
-                                order_list.add(orderModel2);
-                            }
-                            if(response.length()==1 || i == response.length()-1){
-                                if (i == response.length()-1 && temp_idOrder != idOrder){
-                                    OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), Collections.singletonList(order_item_list.get(i)));
-                                    order_list.add(orderModel2);
-                                }else{
-                                    OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), temp_order_item);
-                                    order_list.add(orderModel2);
+                                if(i != 0){
+                                    if (temp_order.get(i-1).getStore_idstore() == id){
+                                        OrderModel orderModel2 = new OrderModel(temp_order.get(i-1).getIdOrder(), temp_order.get(i-1).getOrderItemTotalPrice(), temp_order.get(i-1).getOrderStatus(), temp_order.get(i-1).getStore_idstore(), temp_order.get(i-1).getUsers_name(), temp_order_item);
+                                        order_list.add(orderModel2);
+                                    }
                                 }
+                                if(response.length()==1 || i == response.length()-1){
+                                    if (i == response.length()-1 && temp_idOrder != idOrder && temp_order.get(i).getStore_idstore() == id){
+                                        OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), Collections.singletonList(order_item_list.get(i)));
+                                        order_list.add(orderModel2);
+                                    }else{
+                                        if (temp_order.get(i).getStore_idstore() == id){
+                                            OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), temp_order_item);
+                                            order_list.add(orderModel2);
+                                        }
 
-                            }
-                            Log.d("ORDER LIST: ", "Just added #" + i);
+                                    }
+
+                                }
+                                Log.d("ORDER LIST: ", "Just added #" + i);
 //                            if(i!=0){
 //                                Log.d("ORDER MODEL: ", String.valueOf(order_list.get(i).getIdOrder()));
 //                            }
 
-                        }
-                        temp_idOrder = idOrder;
+                            }
+                            temp_idOrder = idOrder;
 
                     } catch (JSONException e) {
                         e.printStackTrace();

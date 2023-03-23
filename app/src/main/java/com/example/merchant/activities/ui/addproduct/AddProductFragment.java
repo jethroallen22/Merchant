@@ -4,18 +4,13 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -34,7 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,21 +39,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.RealPathUtil;
-import com.example.merchant.activities.ui.Dashboard.DashboardViewModel;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.databinding.FragmentAddProductBinding;
-import com.example.merchant.databinding.FragmentDashboardBinding;
 import com.example.merchant.models.IPModel;
-import com.example.merchant.models.ProductModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class AddProductFragment extends Fragment {
@@ -93,7 +82,7 @@ public class AddProductFragment extends Fragment {
         name_text_input = root.findViewById(R.id.name_text_input);
         description_text_input = root.findViewById(R.id.description_text_input);
         preptime_text_input = root.findViewById(R.id.preptime_text_input);
-        category_text_input = root.findViewById(R.id.category_text_input);
+        category_text_input = root.findViewById(R.id.category_spinner);
         servesize_text_input = root.findViewById(R.id.servesize_text_input);
         price_text_input = root.findViewById(R.id.price_text_input);
         btn_add_product = root.findViewById(R.id.btn_add_product);

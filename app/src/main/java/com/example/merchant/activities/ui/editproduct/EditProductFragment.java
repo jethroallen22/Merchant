@@ -29,7 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -42,10 +41,8 @@ import com.example.merchant.R;
 import com.example.merchant.RealPathUtil;
 import com.example.merchant.activities.ui.Dashboard.DashboardViewModel;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
-import com.example.merchant.databinding.FragmentDashboardBinding;
 import com.example.merchant.databinding.FragmentEditProductBinding;
 import com.example.merchant.models.IPModel;
-import com.example.merchant.models.OrderModel;
 import com.example.merchant.models.ProductModel;
 
 import org.json.JSONException;
@@ -101,7 +98,7 @@ public class EditProductFragment extends Fragment {
         name_text_input = root.findViewById(R.id.name_text_input);
         description_text_input = root.findViewById(R.id.description_text_input);
         preptime_text_input = root.findViewById(R.id.preptime_text_input);
-        category_text_input = root.findViewById(R.id.category_text_input);
+        category_text_input = root.findViewById(R.id.category_spinner);
         servesize_text_input = root.findViewById(R.id.servesize_text_input);
         price_text_input = root.findViewById(R.id.price_text_input);
         btn_edit_product = root.findViewById(R.id.btn_edit_product);

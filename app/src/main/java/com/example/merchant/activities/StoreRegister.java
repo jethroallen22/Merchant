@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -15,7 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
@@ -34,6 +35,8 @@ public class StoreRegister extends AppCompatActivity {
     EditText name_text_input, description_text_input, location_text_input, category_text_input, start_time_text_input, end_time_text_input;
     Button btn_upload, btn_register_store;
     ImageView iv_store_img;
+
+    Spinner category_spinner;
 
     String image, name, description, location, category;
     Float rating, popularity;
@@ -57,6 +60,10 @@ public class StoreRegister extends AppCompatActivity {
 
         Initialize();
 
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        category_spinner.setAdapter(adapter);
+
         Intent intent = getIntent();
         if (intent != null){
             uname = intent.getStringExtra("Name");
@@ -73,7 +80,7 @@ public class StoreRegister extends AppCompatActivity {
             name = String.valueOf(name_text_input.getText());
             description = String.valueOf(description_text_input.getText());
             location = String.valueOf(location_text_input.getText());
-            category = String.valueOf(category_text_input.getText());
+            category = category_spinner.getSelectedItem().toString().toLowerCase();
             rating = 0.0F;
             popularity = 0.0F;
             start_time = Integer.parseInt(String.valueOf(start_time_text_input.getText()));
@@ -107,7 +114,7 @@ public class StoreRegister extends AppCompatActivity {
         name_text_input = findViewById(R.id.name_text_input);
         description_text_input = findViewById(R.id.description_text_input);
         location_text_input = findViewById(R.id.location_text_input);
-        category_text_input = findViewById(R.id.category_text_input);
+        category_spinner = findViewById(R.id.category_spinner);
         start_time_text_input = findViewById(R.id.start_time_text_input);
         end_time_text_input = findViewById(R.id.end_time_text_input);
         iv_store_img = findViewById(R.id.iv_store_img);
