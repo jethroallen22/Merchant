@@ -25,7 +25,7 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:fontFamily="@font/robotobold"
             android:gravity="center_horizontal|center_vertical"
-            android:text="Admin Dashboard"
+            android:text="Merchant Dashboard"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -124,6 +124,7 @@
     </GridLayout>
 
     <TableLayout
+        android:id="@+id/tl_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
@@ -137,9 +138,8 @@
         <TableRow android:background="@color/mosibusPrimary">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="@string/row1col1"
@@ -147,9 +147,8 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="@string/row1col2"
@@ -158,13 +157,14 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="@string/row1col3"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -172,136 +172,6 @@
                 android:gravity="center_horizontal"
                 android:padding="10sp"
                 android:text="@string/row1col4"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-        </TableRow>
-
-        <TableRow android:background="@color/white">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col1"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col2"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col3"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col4"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-        </TableRow>
-        <TableRow android:background="@color/white">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col1"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col2"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col3"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col4"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-        </TableRow>
-        <TableRow android:background="@color/white">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col1"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col2"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col3"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:padding="10sp"
-                android:text="@string/row2col4"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
@@ -323,4 +193,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

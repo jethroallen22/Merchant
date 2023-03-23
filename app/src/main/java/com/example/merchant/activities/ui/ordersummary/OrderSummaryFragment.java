@@ -26,6 +26,7 @@ import com.example.merchant.activities.ui.orders.OrdersFragment;
 import com.example.merchant.activities.ui.slideshow.ProductsViewModel;
 import com.example.merchant.adapters.OrderItemsAdapter;
 import com.example.merchant.databinding.FragmentOrderSummaryBinding;
+import com.example.merchant.models.IPModel;
 import com.example.merchant.models.OrderItemModel;
 import com.example.merchant.models.OrderModel;
 
@@ -44,12 +45,18 @@ public class OrderSummaryFragment extends Fragment {
     OrderItemsAdapter orderItemsAdapter;
     TextView tv_order_id, tv_name, tv_total_price;
     Button btn_complete_order, btn_cancel_order, btn_confirm_order;
-    private static String JSON_URL_MERCHANT="http://10.207.111.129/mosibus_php/merchant/";
+
+    //School IP
+    private static String JSON_URL;
+    private IPModel ipModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ProductsViewModel productsViewModel =
                 new ViewModelProvider(this).get(ProductsViewModel.class);
+
+        ipModel = new IPModel();
+        JSON_URL = ipModel.getURL();
 
         binding = FragmentOrderSummaryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -83,14 +90,20 @@ public class OrderSummaryFragment extends Fragment {
         rv_order_items.setHasFixedSize(true);
         rv_order_items.setNestedScrollingEnabled(false);
 
+        if (order.getOrderStatus().equals("preparing")){
+            Log.d("INSIDE IF", "it is preparing already");
+            btn_confirm_order.setEnabled(false);
+            btn_complete_order.setEnabled(true);
+        }
+
         btn_confirm_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("BTN IdOrder: ", String.valueOf(order.getIdOrder()));
-                UpdateStatus(order.getIdOrder(), "Preparing Order");
+                UpdateStatus(order.getIdOrder(), "preparing");
                 Log.d("TAG", "Success");
-                btn_confirm_order.setClickable(false);
-                btn_complete_order.setClickable(true);
+                btn_confirm_order.setEnabled(false);
+                btn_complete_order.setEnabled(true);
             }
         });
 
@@ -98,7 +111,7 @@ public class OrderSummaryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("BTN IdOrder: ", String.valueOf(order.getIdOrder()));
-                UpdateStatus(order.getIdOrder(), "Completed Order");
+                UpdateStatus(order.getIdOrder(), "completed");
                 OrdersFragment fragment = new OrdersFragment();
                 Log.d("TAG", "Success");
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
@@ -108,7 +121,11 @@ public class OrderSummaryFragment extends Fragment {
         btn_cancel_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Log.d("BTN IdOrder: ", String.valueOf(order.getIdOrder()));
+                UpdateStatus(order.getIdOrder(), "canceled");
+                OrdersFragment fragment = new OrdersFragment();
+                Log.d("TAG", "Success");
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
             }
         });
 
@@ -123,7 +140,7 @@ public class OrderSummaryFragment extends Fragment {
 
     private void UpdateStatus(int idOrder, String status){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL_MERCHANT + "testO.php", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "testO.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Response", response);
