@@ -118,7 +118,7 @@
             android:id="@+id/btn_confirm_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#009688"
+            android:backgroundTint="@color/teal_700"
             android:text="Confirm Order"
             android:textAllCaps="false"
             android:textSize="16sp" />
