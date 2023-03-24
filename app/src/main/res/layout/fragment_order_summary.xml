@@ -118,8 +118,17 @@
             android:id="@+id/btn_confirm_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/teal_700"
-            android:text="Confirm Order"
+            android:backgroundTint="#67335F"
+            android:text="Confirm"
+            android:textAllCaps="false"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_pickup_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#E09F3E"
+            android:text="Pickup"
             android:textAllCaps="false"
             android:textSize="16sp" />
 
@@ -127,10 +136,11 @@
             android:id="@+id/btn_complete_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#009688"
+            android:backgroundTint="#335C67"
             android:enabled="false"
-            android:text="Mark as complete"
+            android:text="Complete"
             android:textAllCaps="false"
+            android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
         <Button
@@ -138,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/mosibusOffWhite"
-            android:text="Cancel order"
+            android:text="Cancel"
             android:textAllCaps="false"
             android:textColor="#CF3200"
             android:textSize="16sp" />

@@ -44,7 +44,7 @@ public class OrderSummaryFragment extends Fragment {
     List<OrderItemModel> order_item_list;
     OrderItemsAdapter orderItemsAdapter;
     TextView tv_order_id, tv_name, tv_total_price;
-    Button btn_complete_order, btn_cancel_order, btn_confirm_order;
+    Button btn_complete_order, btn_cancel_order, btn_confirm_order, btn_pickup_order;
 
     //School IP
     private static String JSON_URL;
@@ -68,6 +68,7 @@ public class OrderSummaryFragment extends Fragment {
         btn_confirm_order = root.findViewById(R.id.btn_confirm_order);
         btn_cancel_order = root.findViewById(R.id.btn_cancel_order);
         btn_complete_order = root.findViewById(R.id.btn_complete_order);
+        btn_pickup_order = root.findViewById(R.id.btn_pickup_order);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -90,10 +91,11 @@ public class OrderSummaryFragment extends Fragment {
         rv_order_items.setHasFixedSize(true);
         rv_order_items.setNestedScrollingEnabled(false);
 
-        if (order.getOrderStatus().equals("preparing")){
+        if (order.getOrderStatus().equals("pending")){
             Log.d("INSIDE IF", "it is preparing already");
-            btn_confirm_order.setEnabled(false);
-            btn_complete_order.setEnabled(true);
+            btn_confirm_order.setEnabled(true);
+            btn_pickup_order.setEnabled(false);
+            btn_complete_order.setEnabled(false);
         }
 
         btn_confirm_order.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +105,20 @@ public class OrderSummaryFragment extends Fragment {
                 UpdateStatus(order.getIdOrder(), "preparing");
                 Log.d("TAG", "Success");
                 btn_confirm_order.setEnabled(false);
+                btn_pickup_order.setEnabled(true);
+                btn_complete_order.setEnabled(false);
+                btn_cancel_order.setEnabled(false);
+            }
+        });
+
+        btn_pickup_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateStatus(order.getIdOrder(), "pickup");
+                btn_confirm_order.setEnabled(false);
+                btn_pickup_order.setEnabled(false);
                 btn_complete_order.setEnabled(true);
+                btn_cancel_order.setEnabled(false);
             }
         });
 
