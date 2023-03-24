@@ -117,8 +117,6 @@ public class DashboardFragment extends Fragment {
         newCust(String.valueOf(id));
         extractOrders();
 
-        final TextView textView = binding.textHome;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

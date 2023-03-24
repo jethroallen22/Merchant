@@ -78,6 +78,8 @@ public class AddProductFragment extends Fragment {
         ipModel = new IPModel();
         JSON_URL = ipModel.getURL();
 
+
+
         //Initialize
         name_text_input = root.findViewById(R.id.name_text_input);
         description_text_input = root.findViewById(R.id.description_text_input);
@@ -201,6 +203,7 @@ public class AddProductFragment extends Fragment {
                                 paramV.put("productPrice", String.valueOf(pprice));
                                 paramV.put("productPrepTime", ppreptime);
                                 paramV.put("weather", pweather);
+                                paramV.put("status", "pending");
                                 return paramV;
                             }
                         };
