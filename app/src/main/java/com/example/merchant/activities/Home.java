@@ -122,7 +122,8 @@ public class Home extends AppCompatActivity {
 
         requestQueue1 = Singleton.getsInstance(this).getRequestQueue();
 
-//        store_profile();
+        storeModelList = new ArrayList<>();
+        store_profile();
 
 //        for (int i = 0 ; i < storeModelList.size() ; i++){
 //            if(id == storeModelList.get(i).getStore_id()) {
@@ -192,15 +193,18 @@ public class Home extends AppCompatActivity {
     }
 
     public void store_profile(){
-
+        Log.d("Store Profile", "called");
         JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, JSON_URL + "api.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("Response Product: ", String.valueOf(response.length()));
+                Log.d("Store Profile Resp: ", String.valueOf(response.length()));
+                Log.d("Store Profile id", String.valueOf(id));
                 for (int i=0; i < response.length(); i++){
                     try {
                         JSONObject jsonObjectRec1 = response.getJSONObject(i);
+                        Log.d("Store Profile idStore", String.valueOf(jsonObjectRec1.getInt("idStore")));
                         if (id == jsonObjectRec1.getInt("idStore")){
+                            Log.d("Store Profile", "inside if");
                             name = jsonObjectRec1.getString("storeName");
                             image = jsonObjectRec1.getString("storeImage");
                             byte[] byteArray = Base64.decode(image, Base64.DEFAULT);
@@ -208,22 +212,25 @@ public class Home extends AppCompatActivity {
                             iv_user_image.setImageBitmap(bitmap2);
                             Log.d("IMAGE", String.valueOf(bitmap));
                             tv_user_name.setText(name);
+
+                            Log.d("Store Profile", "after set");
+                            long r_id = jsonObjectRec1.getLong("idStore");
+                            String r_image = jsonObjectRec1.getString("storeImage");
+                            String r_name = jsonObjectRec1.getString("storeName");
+                            String r_description = jsonObjectRec1.getString("storeDescription");
+                            String r_location = jsonObjectRec1.getString("storeLocation");
+                            String r_category = jsonObjectRec1.getString("storeCategory");
+                            float r_rating = (float) jsonObjectRec1.getDouble("storeRating");
+                            int r_open = jsonObjectRec1.getInt("storeStartTime");
+                            int r_close = jsonObjectRec1.getInt("storeEndTime");
+
+                            StoreModel storeModel = new StoreModel(r_id,r_image,r_name,r_description,r_location,r_category,
+                                    r_rating, r_open, r_close);
+                            storeModelList.add(storeModel);
+                            Log.d("Store Profile", "list added");
+                            Log.d("Store Profile", String.valueOf(storeModelList.size()));
+                            break;
                         }
-                        long r_id = jsonObjectRec1.getLong("idStore");
-                        String r_image = jsonObjectRec1.getString("storeImage");
-                        String r_name = jsonObjectRec1.getString("storeName");
-                        String r_description = jsonObjectRec1.getString("storeDescription");
-                        String r_location = jsonObjectRec1.getString("storeLocation");
-                        String r_category = jsonObjectRec1.getString("storeCategory");
-                        float r_rating = (float) jsonObjectRec1.getDouble("storeRating");
-                        float r_popularity = (float) jsonObjectRec1.getDouble("storePopularity");
-                        int r_open = jsonObjectRec1.getInt("storeStartTime");
-                        int r_close = jsonObjectRec1.getInt("storeEndTime");
-
-                        StoreModel storeModel = new StoreModel(r_id,r_image,r_name,r_description,r_location,r_category,
-                                r_rating, r_popularity, r_open, r_close);
-                        storeModelList.add(storeModel);
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

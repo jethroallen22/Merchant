@@ -67,6 +67,10 @@ public class AddProductFragment extends Fragment {
 
     Spinner spinner;
 
+    public static String name = "";
+    public static String email = "";
+    public static int id;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         AddProductViewModel addProductViewModel =
@@ -78,7 +82,13 @@ public class AddProductFragment extends Fragment {
         ipModel = new IPModel();
         JSON_URL = ipModel.getURL();
 
-
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            name = bundle.getString("name");
+            id = bundle.getInt("id");
+            email = bundle.getString("email");
+            Log.d("Merchant", name + " " + id + " " + email);
+        }
 
         //Initialize
         name_text_input = root.findViewById(R.id.name_text_input);
@@ -155,7 +165,7 @@ public class AddProductFragment extends Fragment {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                     byte[] bytes = byteArrayOutputStream.toByteArray();
                     final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
-                    final int idStore = 4;
+                    final int idStore = id;
                     final String pname = product_name;
                     final String pdesc = description;
                     final String ptag = category;

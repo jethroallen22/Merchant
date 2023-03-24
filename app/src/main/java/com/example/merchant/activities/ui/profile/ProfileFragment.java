@@ -100,7 +100,6 @@ public class ProfileFragment extends Fragment {
                     storeLocation = storeModelList.get(i).getStore_location();
                     storeCategory = storeModelList.get(i).getStore_category();
                     storeRating = storeModelList.get(i).getStore_rating();
-                    storePopularity = storeModelList.get(i).getStore_popularity();
                     bitmap = storeModelList.get(i).getBitmapImage();
                     storeStartTime = storeModelList.get(i).getStore_open();
                     storeEndTime = storeModelList.get(i).getStore_closing();

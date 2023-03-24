@@ -93,9 +93,12 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
         binding.fabAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putInt("id", id);
+                bundle.putString("email", email);
                 AddProductFragment fragment = new AddProductFragment();
+                fragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
 
             }

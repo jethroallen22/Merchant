@@ -16,12 +16,11 @@ public class StoreModel implements Parcelable {
     String store_location;
     String store_category;
     Float store_rating;
-    Float store_popularity;
     int store_open;
     int store_closing;
 
     public StoreModel(long store_id, String store_image, String store_name, String store_description,
-                      String store_location, String store_category, Float store_rating, Float store_popularity, int store_open,
+                      String store_location, String store_category, Float store_rating, int store_open,
                       int store_closing) {
         this.store_id = store_id;
         this.store_image = store_image;
@@ -30,7 +29,6 @@ public class StoreModel implements Parcelable {
         this.store_location = store_location;
         this.store_category = store_category;
         this.store_rating = store_rating;
-        this.store_popularity = store_popularity;
         this.store_open = store_open;
         this.store_closing = store_closing;
     }
@@ -47,7 +45,6 @@ public class StoreModel implements Parcelable {
         store_location = in.readString();
         store_category = in.readString();
         store_rating = in.readFloat();
-        store_popularity = in.readFloat();
         store_open = in.readInt();
         store_closing = in.readInt();
     }
@@ -120,14 +117,6 @@ public class StoreModel implements Parcelable {
         this.store_rating = store_rating;
     }
 
-    public Float getStore_popularity() {
-        return store_popularity;
-    }
-
-    public void setStore_popularity(Float store_popularity) {
-        this.store_popularity = store_popularity;
-    }
-
     public int getStore_open() {
         return store_open;
     }
@@ -164,7 +153,6 @@ public class StoreModel implements Parcelable {
         dest.writeString(store_location);
         dest.writeString(store_category);
         dest.writeFloat(store_rating);
-        dest.writeFloat(store_popularity);
         dest.writeInt(store_open);
         dest.writeInt(store_closing);
 

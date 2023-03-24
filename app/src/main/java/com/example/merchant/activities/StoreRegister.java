@@ -82,7 +82,6 @@ public class StoreRegister extends AppCompatActivity {
             location = String.valueOf(location_text_input.getText());
             category = category_spinner.getSelectedItem().toString().toLowerCase();
             rating = 0.0F;
-            popularity = 0.0F;
             start_time = Integer.parseInt(String.valueOf(start_time_text_input.getText()));
             end_time = Integer.parseInt(String.valueOf(end_time_text_input.getText()));
 
@@ -92,7 +91,6 @@ public class StoreRegister extends AppCompatActivity {
             store.setStore_location(location);
             store.setStore_category(category);
             store.setStore_rating(rating);
-            store.setStore_popularity(popularity);
             store.setStore_open(start_time);
             store.setStore_closing(end_time);
 
@@ -104,7 +102,7 @@ public class StoreRegister extends AppCompatActivity {
             intent2.putExtra("Store",store);
             intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            SignUpStore(name,description,location,category,rating,popularity,start_time,end_time,image);
+            SignUpStore(name,description,location,category,rating,start_time,end_time,image, "pending");
 
             startActivity(intent2);
         });
@@ -211,9 +209,9 @@ public class StoreRegister extends AppCompatActivity {
 
     private void SignUpStore(String name_text_input,  String description_text_input,
                                 String location_text_input, String category_text_input,
-                             float rating_text_input, float popularity_text_input,
+                             float rating_text_input,
                              int start_time_text_input, int end_time_text_input,
-                             String iv_store_img){
+                             String iv_store_img, String status){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "testS.php", new Response.Listener<String>() {
             @Override
@@ -254,10 +252,10 @@ public class StoreRegister extends AppCompatActivity {
                 params.put("storeLocation", location_text_input);
                 params.put("storeCategory", category_text_input);
                 params.put("storeRating", "0");
-                params.put("storePopularity", "0");
                 params.put("storeImage", "http://www.healitall.com/wp-content/uploads/2018/06/chicken.jpg");
                 params.put("storeStartTime", String.valueOf(start_time_text_input));
                 params.put("storeEndTime", String.valueOf(end_time_text_input));
+                params.put("status", status);
                 return params;
             }
         };
