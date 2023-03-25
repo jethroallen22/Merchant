@@ -1,6 +1,7 @@
 package com.example.merchant.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 //                }
 //            }
             holder.tv_order_info.setText(list.get(position).getUsers_name());
+//            Log.d("ReponseOrderID", String.valueOf(list.get(position).getIdOrder()));
+//            Log.d("ReponseItemSize", String.valueOf(list.get(position).getOrderItem_list().size()));
             holder.tv_order_item_info.setText("Qty: " + list.get(position).getOrderItem_list().size());
+            holder.tv_order_id2.setText("OID: " + list.get(position).getIdOrder());
         }
     }
 
@@ -59,13 +63,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_order_info, tv_order_item_info;
+        TextView tv_order_info, tv_order_item_info, tv_order_id2;
 
         public ViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             tv_order_info = itemView.findViewById(R.id.tv_order_info);
             tv_order_item_info = itemView.findViewById(R.id.tv_order_item_info);
+            tv_order_id2 = itemView.findViewById(R.id.tv_order_id2);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override

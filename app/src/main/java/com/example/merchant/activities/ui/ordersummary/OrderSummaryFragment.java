@@ -75,7 +75,7 @@ public class OrderSummaryFragment extends Fragment {
             order = new OrderModel();
             order = bundle.getParcelable("Order");
         }
-        tv_order_id.setText(String.valueOf(order.getIdOrder()));
+        tv_order_id.setText("Order ID: " + String.valueOf(order.getIdOrder()));
         tv_name.setText(String.valueOf(order.getUsers_name()));
         tv_total_price.setText(String.valueOf(order.getOrderItemTotalPrice()));
         //tv_address.setText(order.getAddress());

@@ -155,7 +155,7 @@ public class DashboardFragment extends Fragment {
                         Log.d("Store ID", String.valueOf(store_idstore));
                         Log.d("Merch ID", String.valueOf(id));
 
-                            OrderItemModel orderItemModel = new OrderItemModel(idItem, product_idProduct, (float) ItemPrice, ItemQuantity, order_idOrder, productName);
+                            OrderItemModel orderItemModel = new OrderItemModel(product_idProduct, (float) ItemPrice, ItemQuantity, order_idOrder, productName);
 
                             order_item_list.add(orderItemModel);
 //                            Log.d("ORDER ITEM LIST: ", String.valueOf(order_item_list.get(i).getIdItem()));
@@ -169,7 +169,7 @@ public class DashboardFragment extends Fragment {
                                 temp_order_item = new ArrayList<>();
                                 for(int j=0; j < order_item_list.size(); j++){
                                     Log.d("Inside For", String.valueOf(order_item_list.size()));
-                                    if((temp_idOrder == order_item_list.get(j).getOrder_idOrder()) || (response.length() == 1)){
+                                    if((temp_idOrder == order_item_list.get(j).getIdOrder()) || (response.length() == 1)){
                                         Log.d("Inside If", String.valueOf(order_item_list.size()));
                                         temp_order_item.add(order_item_list.get(j));
                                         Log.d("TEMP LIST: ", String.valueOf(i));
