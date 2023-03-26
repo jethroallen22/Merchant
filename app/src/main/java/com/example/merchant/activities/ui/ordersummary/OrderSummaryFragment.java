@@ -126,7 +126,7 @@ public class OrderSummaryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d("BTN IdOrder: ", String.valueOf(order.getIdOrder()));
-                UpdateStatus(order.getIdOrder(), "completed");
+                UpdateStatus(order.getIdOrder(), "complete");
                 OrdersFragment fragment = new OrdersFragment();
                 Log.d("TAG", "Success");
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();

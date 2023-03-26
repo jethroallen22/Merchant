@@ -117,6 +117,15 @@ public class DashboardFragment extends Fragment {
         newCust(String.valueOf(id));
         extractOrders();
 
+//        root.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                extractOrder();
+//                //Log.d("OrderStatus", order.getOrderStatus());
+//                root.postDelayed(this, 10000);
+//            }
+//        }, 0);
+
         return root;
     }
 
