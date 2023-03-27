@@ -74,16 +74,13 @@ public class OrderSummaryFragment extends Fragment {
         if (bundle != null) {
             order = new OrderModel();
             order = bundle.getParcelable("Order");
+            Log.d("Bundle orderStat", order.getOrderStatus());
         }
         tv_order_id.setText("Order ID: " + String.valueOf(order.getIdOrder()));
         tv_name.setText(String.valueOf(order.getUsers_name()));
         tv_total_price.setText(String.valueOf(order.getOrderItemTotalPrice()));
-        //tv_address.setText(order.getAddress());
-        //tv_distance.setText("Distance from you: " + order.getDistance() + "km");
 
         order_item_list = new ArrayList<>();
-//        order_item_list.add(new OrderModel("Juan Dela Cruz", "Tondo, Manila", String.valueOf(LocalDateTime.now().getHour()), "3.5", order_item_list, order_item_list.size(), 123F));
-//        order_item_list.add(new OrderModel("Juan Dela Cruz", "Tondo, Manila", String.valueOf(LocalDateTime.now().getHour()), "3.5", order_item_list, order_item_list.size(), 123F));
 
         orderItemsAdapter = new OrderItemsAdapter(getActivity(), order.getOrderItem_list());
         rv_order_items.setAdapter(orderItemsAdapter);
@@ -96,6 +93,20 @@ public class OrderSummaryFragment extends Fragment {
             btn_confirm_order.setEnabled(true);
             btn_pickup_order.setEnabled(false);
             btn_complete_order.setEnabled(false);
+        }
+
+        if (order.getOrderStatus().equals("preparing")){
+            btn_confirm_order.setEnabled(false);
+            btn_pickup_order.setEnabled(true);
+            btn_complete_order.setEnabled(false);
+            btn_cancel_order.setEnabled(false);
+        }
+
+        if (order.getOrderStatus().equals("pickup")){
+            btn_confirm_order.setEnabled(false);
+            btn_pickup_order.setEnabled(false);
+            btn_complete_order.setEnabled(true);
+            btn_cancel_order.setEnabled(false);
         }
 
         btn_confirm_order.setOnClickListener(new View.OnClickListener() {

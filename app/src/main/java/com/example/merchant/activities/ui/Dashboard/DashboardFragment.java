@@ -255,7 +255,7 @@ public class DashboardFragment extends Fragment {
 
                         String orderStatus = jsonObject.getString("orderStatus");
 
-                        if (orderStatus.equals("pending") || orderStatus.equals("preparing")){
+                        if (orderStatus.equals("pending") || orderStatus.equals("preparing") || orderStatus.equals("pickup")){
                             newcust_count++;
                             Log.d("NewCust Count", String.valueOf(newcust_count));
                         }
