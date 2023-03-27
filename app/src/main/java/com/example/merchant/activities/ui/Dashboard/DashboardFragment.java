@@ -317,7 +317,7 @@ public class DashboardFragment extends Fragment {
             tbrow.addView(tv_totalPrice);
 
             TextView tv_viewDetails = new TextView(getActivity());
-            tv_viewDetails.setText("thisbut");
+            tv_viewDetails.setText("view");
             tv_viewDetails.setTextColor(Color.BLACK);
             tv_viewDetails.setGravity(Gravity.CENTER);
             tv_viewDetails.setPadding(60,60,60,60);

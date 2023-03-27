@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +61,7 @@ public class StoreRegister extends AppCompatActivity {
     private RequestQueue requestQueue1;
     int merchantId=0;
 
-    String path;
+    String path, base64Image;
     Bitmap bitmap;
 
     private static String JSON_URL;
@@ -122,6 +124,13 @@ public class StoreRegister extends AppCompatActivity {
             rating = 0.0F;
             start_time = Integer.parseInt(String.valueOf(start_time_text_input.getText()));
             end_time = Integer.parseInt(String.valueOf(end_time_text_input.getText()));
+
+            ByteArrayOutputStream byteArrayOutputStream;
+            byteArrayOutputStream = new ByteArrayOutputStream();
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+            base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
 
             StoreModel store = new StoreModel();
             store.setStore_name(name);
@@ -258,7 +267,6 @@ public class StoreRegister extends AppCompatActivity {
                 try {
                     Log.d("REGISTER: success= ", result);
                     JSONObject jsonObject = new JSONObject(result);
-                    Log.d("REGISTER: success= ", "3" );
                     String success = jsonObject.getString("success");
 
                     Log.d("REGISTER: success= ", success );
@@ -290,7 +298,7 @@ public class StoreRegister extends AppCompatActivity {
                 params.put("storeLocation", location_text_input);
                 params.put("storeCategory", category_text_input);
                 params.put("storeRating", "0");
-                params.put("storeImage", "http://www.healitall.com/wp-content/uploads/2018/06/chicken.jpg");
+                params.put("storeImage", base64Image);
                 params.put("storeStartTime", String.valueOf(start_time_text_input));
                 params.put("storeEndTime", String.valueOf(end_time_text_input));
                 params.put("status", status);

@@ -140,6 +140,7 @@ public class Register extends AppCompatActivity {
                 params.put("email", email);
                 params.put("contact", number);
                 params.put("password", password);
+                params.put("status", "pending");
                 return params;
             }
         };
