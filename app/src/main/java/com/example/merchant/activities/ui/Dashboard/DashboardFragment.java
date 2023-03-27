@@ -212,7 +212,7 @@ public class DashboardFragment extends Fragment {
 //                            }
 
                             }
-                            if((orderStatus.equals("preparing") || orderStatus.equals("pending")) && store_idstore == id){
+                            if((orderStatus.equals("pending")) && store_idstore == id){
                                 incoming_count++;
                                 Log.d("Incoming Count", String.valueOf(incoming_count));
                             }
