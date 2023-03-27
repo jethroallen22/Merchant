@@ -1,7 +1,7 @@
 package com.example.merchant.models;
 
 public class IPModel {
-    private String URL = "http://10.172.156.111/mosibus_php/merchant/";
+    private String URL = "http://10.154.162.184/mosibus_php/merchant/";
 
     public IPModel() {
     }
