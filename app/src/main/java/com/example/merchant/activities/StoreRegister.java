@@ -1,9 +1,20 @@
 package com.example.merchant.activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
+import com.example.merchant.RealPathUtil;
 import com.example.merchant.interfaces.Singleton;
 import com.example.merchant.models.IPModel;
 import com.example.merchant.models.StoreModel;
@@ -28,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +58,9 @@ public class StoreRegister extends AppCompatActivity {
     String uname, email, number, password;
     private RequestQueue requestQueue1;
     int merchantId=0;
+
+    String path;
+    Bitmap bitmap;
 
     private static String JSON_URL;
     private IPModel ipModel;
@@ -74,6 +90,28 @@ public class StoreRegister extends AppCompatActivity {
         }
         requestQueue1 = Singleton.getsInstance(this).getRequestQueue();
         extractMerchantId(uname);
+
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode() == Activity.RESULT_OK){
+                    Intent data = result.getData();
+                    Uri uri = data.getData();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), uri);
+                        iv_store_img.setImageBitmap(bitmap);
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        btn_upload.setOnClickListener(v -> {
+            Intent intent2 = new Intent(Intent.ACTION_PICK);
+            intent2.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            activityResultLauncher.launch(intent2);
+        });
 
         btn_register_store.setOnClickListener(v -> {
 
@@ -263,5 +301,18 @@ public class StoreRegister extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 10 && resultCode == Activity.RESULT_OK){
+            Uri uri = data.getData();
+            Context context = this;
+            path = RealPathUtil.getRealPath(context, uri);
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            iv_store_img.setImageBitmap(bitmap);
+            Log.d("IMAGE" , String.valueOf(iv_store_img.getDrawable()));
+        }
     }
 }
