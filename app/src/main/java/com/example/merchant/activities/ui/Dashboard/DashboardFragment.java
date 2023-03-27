@@ -299,28 +299,29 @@ public class DashboardFragment extends Fragment {
             tv_orderID.setText(String.valueOf(i+1));
             tv_orderID.setTextColor(Color.BLACK);
             tv_orderID.setGravity(Gravity.CENTER);
-            tv_orderID.setPadding(60,60,60,60);
+            tv_orderID.setPadding(0,60,0,60);
             tbrow.addView(tv_orderID);
 
             TextView tv_custName = new TextView(getActivity());
+            tv_custName.setWidth(100);
             tv_custName.setText(order_list.get(i).getUsers_name());
             tv_custName.setTextColor(Color.BLACK);
             tv_custName.setGravity(Gravity.CENTER);
-            tv_custName.setPadding(60,60,60,60);
+            tv_custName.setPadding(0,60,0,60);
             tbrow.addView(tv_custName);
 
             TextView tv_totalPrice = new TextView(getActivity());
             tv_totalPrice.setText(String.valueOf(order_list.get(i).getOrderItemTotalPrice()));
             tv_totalPrice.setTextColor(Color.BLACK);
             tv_totalPrice.setGravity(Gravity.CENTER);
-            tv_totalPrice.setPadding(60,60,60,60);
+            tv_totalPrice.setPadding(0,60,0,60);
             tbrow.addView(tv_totalPrice);
 
             TextView tv_viewDetails = new TextView(getActivity());
             tv_viewDetails.setText("view");
             tv_viewDetails.setTextColor(Color.BLACK);
             tv_viewDetails.setGravity(Gravity.CENTER);
-            tv_viewDetails.setPadding(60,60,60,60);
+            tv_viewDetails.setPadding(0,60,0,60);
             tv_viewDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
