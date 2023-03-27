@@ -61,7 +61,7 @@ public class EditProductFragment extends Fragment {
     private IPModel ipModel;
 
     EditText name_text_input, description_text_input, preptime_text_input,category_text_input, servesize_text_input, price_text_input;
-    Button btn_edit_product, btn_upload;
+    Button btn_edit_product, btn_upload, btn_cancel_edit;
     ImageView iv_product_img;
 
     Spinner spinner;
@@ -102,9 +102,10 @@ public class EditProductFragment extends Fragment {
         servesize_text_input = root.findViewById(R.id.servesize_text_input);
         price_text_input = root.findViewById(R.id.price_text_input);
         btn_edit_product = root.findViewById(R.id.btn_edit_product);
+        btn_cancel_edit = root.findViewById(R.id.btn_cancel_edit);
         btn_upload = root.findViewById(R.id.btn_upload);
         iv_product_img = root.findViewById(R.id.iv_edit_product_img);
-        spinner = root.findViewById(R.id.weather_spinner);
+        spinner = root.findViewById(R.id.weather_spinner2);
 
 
         name_text_input.setText(productModel.getProductName());
@@ -113,6 +114,10 @@ public class EditProductFragment extends Fragment {
         category_text_input.setText(productModel.getProductTag());
         servesize_text_input.setText(productModel.getProductServingSize());
         price_text_input.setText(String.valueOf(productModel.getProductPrice()));
+
+        byte[] byteArray = Base64.decode(productModel.getProductImage(), Base64.DEFAULT);
+        Bitmap bitmapOld = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
+        iv_product_img.setImageBitmap(bitmapOld);
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(), R.array.weather, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -159,7 +164,7 @@ public class EditProductFragment extends Fragment {
                 /////////////////// UPDATE DB//////////////////
                 ByteArrayOutputStream byteArrayOutputStream;
                 byteArrayOutputStream = new ByteArrayOutputStream();
-                if(bitmap != null){
+                if(bitmap != null || bitmapOld != null){
 
                     product_name = String.valueOf(name_text_input.getText());
                     description = String.valueOf(name_text_input.getText());
@@ -169,9 +174,14 @@ public class EditProductFragment extends Fragment {
                     price_tmp = String.valueOf(price_text_input.getText());
                     weather_tmp = spinner.getSelectedItem().toString().toLowerCase();
 
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                    byte[] bytes = byteArrayOutputStream.toByteArray();
-                    final String base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
+                    final String base64Image;
+                    if (bitmap != null){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                        byte[] bytes = byteArrayOutputStream.toByteArray();
+                        base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
+                    } else {
+                        base64Image = productModel.getProductImage();
+                    }
                     final int pid = idProduct;
                     final int psid = idStore;
                     final String pname = product_name;
@@ -235,6 +245,14 @@ public class EditProductFragment extends Fragment {
 
                 } else
                     Toast.makeText(getActivity().getApplicationContext(),"Please select an image first!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btn_cancel_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProductsFragment fragment = new ProductsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
             }
         });
 

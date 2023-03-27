@@ -88,7 +88,16 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
         rv_products = root.findViewById(R.id.rv_products);
         product_list = new ArrayList<>();
         requestQueue = Singleton.getsInstance(getActivity()).getRequestQueue();
-        extractFoodforyou();
+
+        root.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                product_list = new ArrayList<>();
+                extractFoodforyou();
+                root.postDelayed(this, 10000);
+            }
+        }, 0);
+
 
         binding.fabAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
