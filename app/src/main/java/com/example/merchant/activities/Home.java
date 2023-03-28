@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -83,6 +84,8 @@ public class Home extends AppCompatActivity {
     int incoming_count = 0;
     int newcust_count = 0;
 
+    Handler root;
+
     ImageView iv_user_image;
     TextView tv_user_name;
 
@@ -117,21 +120,16 @@ public class Home extends AppCompatActivity {
             Log.d("HOME FRAG name", "FAIL");
         }
 
-        //Initialize
-
-
         requestQueue1 = Singleton.getsInstance(this).getRequestQueue();
 
-        storeModelList = new ArrayList<>();
-        store_profile();
-
-//        for (int i = 0 ; i < storeModelList.size() ; i++){
-//            if(id == storeModelList.get(i).getStore_id()) {
-//                name = storeModel.getStore_name();
-//                bitmap = storeModelList.get(i).getBitmapImage();
-//            }
-//        }
-
+        root = new Handler();
+        root.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                store_profile();
+                root.postDelayed(this, 10000);
+            }
+        }, 0);
 
 
         setSupportActionBar(binding.appBarHome.toolbar);
@@ -163,8 +161,8 @@ public class Home extends AppCompatActivity {
                 //Bundle bundle = new Bundle()
                 Bundle bundle = new Bundle();
                 bundle.putInt("id",id);
-                bundle.putSerializable("stores", (Serializable) storeModelList);
-                Log.d("USERTEST: ", String.valueOf(storeModelList.size()));
+                Log.d("view prof click", storeModel.getStore_name());
+                bundle.putParcelable("stores", storeModel);
 
                 ProfileFragment fragment = new ProfileFragment();
                 fragment.setArguments(bundle);
@@ -205,6 +203,7 @@ public class Home extends AppCompatActivity {
                         Log.d("Store Profile idStore", String.valueOf(jsonObjectRec1.getInt("idStore")));
                         if (id == jsonObjectRec1.getInt("idStore")){
                             Log.d("Store Profile", "inside if");
+                            Log.d("Store Profile", jsonObjectRec1.getString("storeName"));
                             name = jsonObjectRec1.getString("storeName");
                             image = jsonObjectRec1.getString("storeImage");
                             byte[] byteArray = Base64.decode(image, Base64.DEFAULT);
@@ -224,17 +223,23 @@ public class Home extends AppCompatActivity {
                             int r_open = jsonObjectRec1.getInt("storeStartTime");
                             int r_close = jsonObjectRec1.getInt("storeEndTime");
 
-                            StoreModel storeModel = new StoreModel(r_id,r_image,r_name,r_description,r_location,r_category,
+                            storeModel = new StoreModel(r_id,r_image,r_name,r_description,r_location,r_category,
                                     r_rating, r_open, r_close);
-                            storeModelList.add(storeModel);
-                            Log.d("Store Profile", "list added");
-                            Log.d("Store Profile", String.valueOf(storeModelList.size()));
+                            Log.d("Store Profile", storeModel.getStore_name());
+//                            storeModelList.add(storeModel);
+//                            Log.d("Store Profile", "list added");
+//                            Log.d("Store Profile", String.valueOf(storeModelList.size()));
                             break;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+                if(storeModel.getBitmapImage() != null) {
+                    iv_user_image.setImageBitmap(storeModel.getBitmapImage());
+                } else
+                    iv_user_image.setImageResource(R.drawable.logo);
+                tv_user_name.setText(storeModel.getStore_name());
             }
         }, new Response.ErrorListener() {
             @Override

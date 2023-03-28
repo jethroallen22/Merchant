@@ -74,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
 //                    MainActivity.this.startActivity(intent);
 //                } else {
 //                    LogIn(mEmail, mPass);
-//                LogIn("lohm0@soup.io", "test");
-                LogIn("braun.hubert@green.com", "test");
+                LogIn("nathan83@yahoo.com", "test");
 //                }
 
 //                Intent intent = new Intent(getApplicationContext(), Home.class);

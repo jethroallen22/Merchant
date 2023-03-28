@@ -34,6 +34,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
@@ -90,22 +91,22 @@ public class ProfileFragment extends Fragment {
         storeModelList = new ArrayList<>();
         Bundle bundle = getArguments();
         if (bundle != null) {
-            storeModelList = (List<StoreModel>) bundle.getSerializable("stores");
-            Log.d("LISTSIZE", String.valueOf(storeModelList.size()));
-            idStore = bundle.getInt("id");
-            for (int i = 0 ; i < storeModelList.size() ; i++){
-                if(idStore == storeModelList.get(i).getStore_id()){
-                    storeName = storeModelList.get(i).getStore_name();
-                    storeDescription = storeModelList.get(i).getStore_description();
-                    storeLocation = storeModelList.get(i).getStore_location();
-                    storeCategory = storeModelList.get(i).getStore_category();
-                    storeRating = storeModelList.get(i).getStore_rating();
-                    bitmap = storeModelList.get(i).getBitmapImage();
-                    storeStartTime = storeModelList.get(i).getStore_open();
-                    storeEndTime = storeModelList.get(i).getStore_closing();
-                    Log.d("TESTNAME: ", storeModelList.get(i).getStore_name());
-                }
-            }
+            storeModel = bundle.getParcelable("stores");
+//            Log.d("LISTSIZE", String.valueOf(storeModel.getStore_id()));
+                    idStore = bundle.getInt("id");
+//            for (int i = 0 ; i < storeModelList.size() ; i++){
+//                if(idStore == storeModelList.get(i).getStore_id()){
+                    storeName = storeModel.getStore_name();
+                    storeDescription = storeModel.getStore_description();
+                    storeLocation = storeModel.getStore_location();
+                    storeCategory = storeModel.getStore_category();
+                    storeRating = storeModel.getStore_rating();
+                    bitmap = storeModel.getBitmapImage();
+                    storeStartTime = storeModel.getStore_open();
+                    storeEndTime = storeModel.getStore_closing();
+                    Log.d("TESTNAME: ", storeModel.getStore_name());
+//                }
+//            }
 
         }
 
@@ -133,6 +134,8 @@ public class ProfileFragment extends Fragment {
         tv_edit_close.setEnabled(false);
 
         //Set default profile image
+//        byte[] byteArray = Base64.decode(, Base64.DEFAULT);
+//        Bitmap bitmapOld = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
         iv_image_placeholder.setImageBitmap(bitmap);
 
         //Set edit text hints
@@ -248,15 +251,7 @@ public class ProfileFragment extends Fragment {
                                 @Override
                                 public void onResponse(String response) {
                                     try {
-//                                            Intent intent = new Intent(getContext(), Home.class);
-//                                            intent.putExtra("name",name2);
-//                                            intent.putExtra("id",id);
-//                                            intent.putExtra("image", base64Image);
-//                                            intent.putExtra("email", email2);
-//                                            intent.putExtra("contact", contact2);
-//                                            intent.putExtra("password", password2);
-//                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                            startActivity(intent);
+//
 //                                        }
                                     }
                                     catch (Throwable e) {
@@ -302,6 +297,55 @@ public class ProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+//    public void store_profile(){
+//        Log.d("Store Profile", "called");
+//        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, JSON_URL + "api.php", null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                for (int i=0; i < response.length(); i++){
+//                    try {
+//                        JSONObject jsonObjectRec1 = response.getJSONObject(i);
+//                        Log.d("Store Profile idStore", String.valueOf(jsonObjectRec1.getInt("idStore")));
+//                        if (idStore == jsonObjectRec1.getInt("idStore")){
+//                            Log.d("Store Profile", "inside if");
+//                            storeName = jsonObjectRec1.getString("storeName");
+//                            storeImage = jsonObjectRec1.getString("storeImage");
+//                            byte[] byteArray = Base64.decode(storeImage, Base64.DEFAULT);
+//                            Bitmap bitmap2 = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
+//                            iv_image_placeholder.setImageBitmap(bitmap2);
+//
+//                            Log.d("Store Profile", "after set");
+//                            long r_id = jsonObjectRec1.getLong("idStore");
+//                            String r_image = jsonObjectRec1.getString("storeImage");
+//                            String r_name = jsonObjectRec1.getString("storeName");
+//                            String r_description = jsonObjectRec1.getString("storeDescription");
+//                            String r_location = jsonObjectRec1.getString("storeLocation");
+//                            String r_category = jsonObjectRec1.getString("storeCategory");
+//                            float r_rating = (float) jsonObjectRec1.getDouble("storeRating");
+//                            int r_open = jsonObjectRec1.getInt("storeStartTime");
+//                            int r_close = jsonObjectRec1.getInt("storeEndTime");
+//
+//                            StoreModel storeModel = new StoreModel(r_id,r_image,r_name,r_description,r_location,r_category,
+//                                    r_rating, r_open, r_close);
+//                            storeModelList.add(storeModel);
+//                            Log.d("Store Profile", "list added");
+//                            Log.d("Store Profile", String.valueOf(storeModelList.size()));
+//                            break;
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("OnError P: ", String.valueOf(error));
+//            }
+//        });
+//        requestQueue1.add(jsonArrayRequestRec1);
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
