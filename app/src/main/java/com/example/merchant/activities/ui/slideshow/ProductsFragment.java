@@ -62,6 +62,8 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
     RecyclerViewInterface recyclerViewInterface;
     TextView tv_product_namee2, tv_product_pricee2, tv_product_description2, tv_product_info;
 
+    ImageView iv_product_imagee2;
+
     public static String name = "";
     public static String email = "";
     public static int id;
@@ -134,11 +136,13 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                         R.layout.product_bottom_sheet_layout,
                         getActivity().findViewById(R.id.product_bottomSheet_container)
                 );
+        iv_product_imagee2 = bottomSheetView.findViewById(R.id.iv_product_imagee2);
         tv_product_namee2 = bottomSheetView.findViewById(R.id.tv_product_namee2);
         tv_product_pricee2 = bottomSheetView.findViewById(R.id.tv_product_pricee2);
         tv_product_description2 = bottomSheetView.findViewById(R.id.tv_product_description2);
         tv_product_info = bottomSheetView.findViewById(R.id.tv_product_info);
 
+        iv_product_imagee2.setImageBitmap(product_list.get(position).getBitmapImage());
         tv_product_namee2.setText(product_list.get(position).getProductName());
         tv_product_pricee2.setText("P "+ product_list.get(position).getProductPrice());
         tv_product_description2.setText(product_list.get(position).getProductDescription());
