@@ -63,19 +63,15 @@ public class MainActivity extends AppCompatActivity {
                 String mEmail = login_email_text_input.getText().toString().trim();
                 String mPass = login_password_text_input.getText().toString().trim();
 
-//                if (mEmail.isEmpty() || mPass.isEmpty()){
-//                    if (mEmail.isEmpty())
-//                        login_email_text_input.setError("Please insert Email!");
-//                    if (mPass.isEmpty())
-//                        login_password_text_input.setError("Please insert Password!");
-//                } else if(mEmail == testUser && mPass == testPass){
-//                    Intent intent = new Intent(getApplicationContext(), Home.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    MainActivity.this.startActivity(intent);
-//                } else {
-//                    LogIn(mEmail, mPass);
-                LogIn("nathan83@yahoo.com", "test");
-//                }
+                if (mEmail.isEmpty() || mPass.isEmpty()){
+                    if (mEmail.isEmpty())
+                        login_email_text_input.setError("Please insert Email!");
+                    if (mPass.isEmpty())
+                        login_password_text_input.setError("Please insert Password!");
+                } else {
+                    LogIn(mEmail, mPass);
+//                LogIn("nathan83@yahoo.com", "test");
+                }
 
 //                Intent intent = new Intent(getApplicationContext(), Home.class);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
