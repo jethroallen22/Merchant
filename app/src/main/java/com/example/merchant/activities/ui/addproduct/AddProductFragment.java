@@ -136,7 +136,7 @@ public class AddProductFragment extends Fragment {
                 if(bitmap != null){
 
                     product_name = String.valueOf(name_text_input.getText());
-                    description = String.valueOf(name_text_input.getText());
+                    description = String.valueOf(description_text_input.getText());
                     category = String.valueOf(category_text_input.getText());
                     servesize = String.valueOf(servesize_text_input.getText());
                     prep_time_tmp = String.valueOf(preptime_text_input.getText());
