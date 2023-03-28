@@ -96,7 +96,7 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
             public void run() {
                 product_list = new ArrayList<>();
                 extractFoodforyou();
-                root.postDelayed(this, 10000);
+                root.postDelayed(this, 1000);
             }
         }, 0);
 

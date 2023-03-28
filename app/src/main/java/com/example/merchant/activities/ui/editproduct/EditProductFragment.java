@@ -176,10 +176,12 @@ public class EditProductFragment extends Fragment {
 
                     final String base64Image;
                     if (bitmap != null){
+                        Log.d("BITMAP", " change");
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                         byte[] bytes = byteArrayOutputStream.toByteArray();
                         base64Image = Base64.encodeToString(bytes, Base64.DEFAULT);
                     } else {
+                        Log.d("BITMAP", "no change");
                         base64Image = productModel.getProductImage();
                     }
                     final int pid = idProduct;
