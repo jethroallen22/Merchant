@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -62,6 +64,9 @@ public class AddProductFragment extends Fragment {
 
     private String product_name, description, category, servesize, prep_time, prep_time_tmp, price_tmp, weather_tmp;
     float price = 0;
+
+    private CheckBox checkBoxHot, checkBoxCold, checkBoxAmerican, checkBoxChinese, checkBoxFilipino, checkBoxJapanese, checkBoxThai,
+            checkBoxBreakfast, checkBoxLunch, checkBoxDessert;
     String path;
     Bitmap bitmap;
 
@@ -101,6 +106,16 @@ public class AddProductFragment extends Fragment {
         btn_upload = root.findViewById(R.id.btn_upload);
         iv_product_img = root.findViewById(R.id.iv_product_img);
         spinner = root.findViewById(R.id.weather_spinner);
+        checkBoxHot = root.findViewById(R.id.checkBoxHot);
+        checkBoxCold = root.findViewById(R.id.checkBoxCold);
+        checkBoxAmerican = root.findViewById(R.id.checkBoxAmerican);
+        checkBoxChinese = root.findViewById(R.id.checkBoxChinese);
+        checkBoxFilipino = root.findViewById(R.id.checkBoxFilipino);
+        checkBoxJapanese = root.findViewById(R.id.checkBoxJapanese);
+        checkBoxThai = root.findViewById(R.id.checkBoxThai);
+        checkBoxBreakfast = root.findViewById(R.id.checkBoxBreakfast);
+        checkBoxLunch = root.findViewById(R.id.checkBoxLunch);
+        checkBoxDessert = root.findViewById(R.id.checkBoxDessert);
 
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(), R.array.weather, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -118,6 +133,104 @@ public class AddProductFragment extends Fragment {
                     } catch (IOException e){
                         e.printStackTrace();
                     }
+                }
+            }
+        });
+
+        checkBoxHot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkBoxCold.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxCold.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkBoxHot.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxAmerican.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() > 2){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    compoundButton.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxChinese.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() > 2){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    compoundButton.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxFilipino.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() > 2){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    compoundButton.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxJapanese.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() > 2){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    compoundButton.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxThai.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() > 2){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    compoundButton.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxBreakfast.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkBoxLunch.setChecked(false);
+                    checkBoxDessert.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxLunch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkBoxBreakfast.setChecked(false);
+                    checkBoxDessert.setChecked(false);
+                }
+            }
+        });
+
+        checkBoxDessert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkBoxBreakfast.setChecked(false);
+                    checkBoxLunch.setChecked(false);
                 }
             }
         });
@@ -249,6 +362,31 @@ public class AddProductFragment extends Fragment {
         }
     }
 
+    public int counterCheckBox() {
+        int countCheckBox = 0;
 
+        if (checkBoxAmerican.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Am", String.valueOf(countCheckBox));
+        }
+        if (checkBoxChinese.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Chin", String.valueOf(countCheckBox));
+        }
+        if (checkBoxFilipino.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Fil", String.valueOf(countCheckBox));
+        }
+        if (checkBoxJapanese.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Jap", String.valueOf(countCheckBox));
+        }
+        if (checkBoxThai.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Thai", String.valueOf(countCheckBox));
+        }
+
+        return countCheckBox;
+    }
 
 }

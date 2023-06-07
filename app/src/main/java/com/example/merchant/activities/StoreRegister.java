@@ -167,47 +167,6 @@ public class StoreRegister extends AppCompatActivity {
         btn_upload = findViewById(R.id.btn_upload);
     }
 
-//    public void extractMerchantId(String uname){
-////        Log.d("JSON_URL_MERCHANT: ", JSON_URL_MERCHANT);
-//
-//        JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.POST, JSON_URL_MERCHANT + "getId.php", null, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                Log.d("ExtractID: ", "After Response");
-//                try {
-//                    Log.d("ExtractID: ", "Im in");
-//                    JSONObject jsonObjectRec1 = response.getJSONObject(0);
-//
-//                    int idMerchant = jsonObjectRec1.getInt("idMerchant");
-//
-//                    Log.d("idMerchant", String.valueOf(idMerchant));
-//                    if (idMerchant != 0){
-//                        merchantId = idMerchant;
-//                        Log.d("MerchantID", String.valueOf(merchantId));
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("OnError P: ", String.valueOf(error));
-//            }
-//        })
-//        {
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("name", uname);
-//                return params;
-//            }
-//        };
-//        requestQueue1.add(jsonArrayRequestRec1);
-////        RequestQueue requestQueue = Volley.newRequestQueue(this);
-////        requestQueue.add(stringRequest);
-//    }
-
     private void extractMerchantId(String uname){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "getId.php", new Response.Listener<String>() {

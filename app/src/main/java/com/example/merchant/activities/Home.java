@@ -235,11 +235,11 @@ public class Home extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                if(storeModel.getBitmapImage() != null) {
-                    iv_user_image.setImageBitmap(storeModel.getBitmapImage());
-                } else
-                    iv_user_image.setImageResource(R.drawable.logo);
-                tv_user_name.setText(storeModel.getStore_name());
+//                if(storeModel.getBitmapImage() != null) {
+//                    iv_user_image.setImageBitmap(storeModel.getBitmapImage());
+//                } else
+//                    iv_user_image.setImageResource(R.drawable.logo);
+//                tv_user_name.setText(storeModel.getStore_name());
             }
         }, new Response.ErrorListener() {
             @Override
