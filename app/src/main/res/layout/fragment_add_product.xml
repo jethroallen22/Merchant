@@ -432,7 +432,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxThai" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxFish" />
 
             <TextView
                 android:id="@+id/textView16"
@@ -508,11 +508,10 @@
                 android:id="@+id/checkBoxNoodles"
                 android:layout_width="29dp"
                 android:layout_height="29dp"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text=""
-                app:layout_constraintStart_toStartOf="@+id/checkBoxFish"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxFish" />
+                app:layout_constraintStart_toStartOf="@+id/textView31"
+                app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
             <TextView
                 android:id="@+id/textView19"
@@ -563,11 +562,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="19dp"
+                android:layout_marginTop="8dp"
                 android:text="Noodles"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/checkBoxNoodles"
-                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+                app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
             <CheckBox
                 android:id="@+id/checkBoxPizza"
@@ -684,6 +683,16 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/checkBoxThai"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxThai" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotomedium"
+                android:text="Noodles"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/checkBoxDessert"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxDessert" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
