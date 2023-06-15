@@ -40,6 +40,8 @@ import com.example.merchant.models.StoreModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osmdroid.views.MapController;
+import org.osmdroid.views.MapView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

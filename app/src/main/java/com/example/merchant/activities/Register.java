@@ -2,6 +2,7 @@ package com.example.merchant.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,13 @@ import com.example.merchant.models.ProductModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapController;
+import org.osmdroid.views.MapView;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +48,9 @@ public class Register extends AppCompatActivity {
     //Workspace IP
     private static String JSON_URL;
     private IPModel ipModel;
+
+    private MapView mMapView;
+    private MapController mMapController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,20 @@ public class Register extends AppCompatActivity {
         register_password_text_input = findViewById(R.id.calories_text_input);
         register_confpassword_text_input = findViewById(R.id.price_text_input);
 
+        org.osmdroid.config.IConfigurationProvider osmConf = org.osmdroid.config.Configuration.getInstance();
+
+        File tileCache = new File(getCacheDir().getAbsolutePath(), "tile");
+        osmConf.setOsmdroidTileCache(tileCache);
+
+        Configuration.getInstance().load(getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+
+//        mMapView = findViewById(R.id.mapView);
+//        mMapView.setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE);
+//        mMapView.setBuiltInZoomControls(true);
+//        mMapController = (MapController) mMapView.getController();
+//        mMapController.setZoom(13);
+//        GeoPoint gPt = new GeoPoint(29.624471, 52.523935);
+//        mMapController.setCenter(gPt);
         tv_login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
