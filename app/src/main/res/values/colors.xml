@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="mosibusPrimary">#7EE2DA</color>
     <color name="mosibusOffWhite">#F7F7F7</color>
+    <color name="chipDefault">#E4E4E4</color>
 </resources>

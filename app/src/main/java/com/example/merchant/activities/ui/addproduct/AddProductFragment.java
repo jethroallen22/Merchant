@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -44,6 +45,8 @@ import com.example.merchant.RealPathUtil;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.databinding.FragmentAddProductBinding;
 import com.example.merchant.models.IPModel;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -51,6 +54,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +78,8 @@ public class AddProductFragment extends Fragment {
 
     List<String> checkboxes_list;
     List<String> checkboxes_special;
+
+    List<String> category_list;
 //    private int c;
     String path;
     Bitmap bitmap;
@@ -83,6 +89,10 @@ public class AddProductFragment extends Fragment {
     public static String name = "";
     public static String email = "";
     public static int id;
+
+    ChipGroup cg_product;
+    int maxSelectableChips = 1;
+     String categorySelected;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -130,6 +140,7 @@ public class AddProductFragment extends Fragment {
         checkBoxNoodles = root.findViewById(R.id.checkBoxNoodles);
         checkBoxHalal = root.findViewById(R.id.checkBoxHalal);
         checkBoxVegan = root.findViewById(R.id.checkBoxVegan);
+        cg_product=root.findViewById(R.id.cg_product);
 
         checkboxes_list = new ArrayList<>();
 
@@ -420,7 +431,63 @@ public class AddProductFragment extends Fragment {
             }
         });
 
-        binding.btnAddProduct.setOnClickListener(new View.OnClickListener() {
+        category_list = new ArrayList<>();
+        category_list.add("American");
+        category_list.add("Chinese");
+        category_list.add("Filipino");
+        category_list.add("Japanese");
+        category_list.add("Thai");
+        category_list.add("Breakfast");
+        category_list.add("Lunch");
+        category_list.add("Dessert");
+        category_list.add("Pork");
+        category_list.add("Beef");
+        category_list.add("Fish");
+
+
+        //FOR CATEGORY CHIP GROUP
+//        for(String str : category_list) {
+//            Chip chip = new Chip(getActivity());
+//            chip.setText(str);
+//            cg_product.addView(chip);
+//        }
+
+//        for (String str : category_list) {
+//            Chip chip = new Chip(getActivity());
+//            chip.setText(str);
+//            cg_product.addView(chip);
+//        }
+
+        for (String str : category_list) {
+            final Chip chip = new Chip(getActivity());
+            chip.setText(str);
+            chip.setClickable(true);
+            chip.setChipBackgroundColorResource(R.color.chipDefault);
+            chip.setTextColor(getResources().getColor(R.color.black));
+
+            chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (int i = 0; i < cg_product.getChildCount(); i++) {
+                        Chip currentChip = (Chip) cg_product.getChildAt(i);
+                        if (currentChip != chip) {
+                            currentChip.setChipBackgroundColorResource(R.color.chipDefault);
+                            currentChip.setTextColor(getResources().getColor(R.color.black));
+                        }
+                    }
+                    chip.setChipBackgroundColorResource(R.color.mosibusPrimary);
+                    chip.setTextColor(getResources().getColor(android.R.color.white));
+                    categorySelected = (String) chip.getText();
+                    Log.d("chups", categorySelected);
+                }
+            });
+
+            cg_product.addView(chip);
+        }
+
+
+
+                binding.btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ByteArrayOutputStream byteArrayOutputStream;
