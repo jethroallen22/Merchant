@@ -2,6 +2,8 @@ package com.example.merchant.activities;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,8 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.merchant.R;
 
-import org.osmdroid.api.IMapController;
-import org.osmdroid.api.IMapView;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -18,7 +18,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.Overlay;
 
 import java.util.Map;
 
@@ -27,8 +26,10 @@ public class OSMFragment extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private MapView mapView;
-    private IMapController mapController;
+    private Button btn_confirm_marker;
     int m=0;
+    double rlat;
+    double rlong;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +37,8 @@ public class OSMFragment extends AppCompatActivity {
 
         Configuration.getInstance().load(getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
 
+        btn_confirm_marker = findViewById(R.id.btn_confirm_marker);
         mapView = findViewById(R.id.mapView);
-//        mapView.setTileSource(new OpenStreetMapTileSource());
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setBuiltInZoomControls(true);
         mapView.getController().setCenter(new GeoPoint(14.56610, 120.99244));
@@ -55,25 +56,20 @@ public class OSMFragment extends AppCompatActivity {
                     Log.d("Marker", marker.getTitle() + " Lat:"+p.getLatitude()+"+Long:"+p.getLongitude());
                     mapView.getOverlays().add(marker);
                     m++;
-                } else {
+                    rlat = p.getLatitude();
+                    rlong = p.getLongitude();
+                } else if (m==1){
                     Log.d("Marker", "INSIDE ELSE");
-
-//                    marker.
                     mapView.getOverlays().remove(1);
                     marker.setPosition(new GeoPoint(p.getLatitude(), p.getLongitude()));
                     marker.setTitle("Store");
                     Log.d("Marker", marker.getTitle() + " Lat:"+p.getLatitude()+"+Long:"+p.getLongitude());
                     mapView.getOverlays().add(marker);
-                    m--;
-                    Log.d("M", String.valueOf(m));
+                    rlat = p.getLatitude();
+                    rlong = p.getLongitude();
                 }
-
-//                }
-
                 Log.d("Lat and Long", "Lat:"+p.getLatitude()+"+Long:"+p.getLongitude());
                 Toast.makeText(getApplicationContext(), String.valueOf(p.getLatitude()) +" "+ String.valueOf(p.getLongitude()) , Toast.LENGTH_LONG);
-//                Toast.makeText(getApplicationContext(), String.valueOf(p.getLongitude()), Toast.LENGTH_LONG);
-//                et_long.setHint(String.valueOf(p.getLongitude()));
                 return false;
             }
 
@@ -82,38 +78,14 @@ public class OSMFragment extends AppCompatActivity {
                 return false;
             }
         }));
-//        setContentView(R.layout.fragment_osm);
-//
-//        // Create a new MapView object and set the map's properties
-//        mapView = (MapView) findViewById(R.id.mapView);
-//        mapView.setTileSource(TileSourceFactory.MAPNIK);
-//        mapView.setBuiltInZoomControls(true);
-//
-//        // Create a new OSMdroid object and set the map's properties
-//        OSMdroid osmdroid = this;
-//        osmdroid.setMapView(mapView);
-//
-//        // Add a marker to the map
-//        Marker marker = new Marker(mapView);
-//        marker.setPosition(new GeoPoint(51.5, -0.1));
-//        marker.setTitle("London");
-//        mapView.getOverlays().add(marker);
-//
-//        // Set the map's center to London
-//        mapController = mapView.getController();
-//        mapController.setCenter(new GeoPoint(51.5, -0.1));
-//        mapController.setZoom(15);
+
+        btn_confirm_marker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Lat and Long", "Lat:"+rlat+"+Long:"+rlong);
+            }
+        });
     }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        mapView.onResume();
-//    }
-//
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        mapView.onPause();
-//    }
+
+
 }

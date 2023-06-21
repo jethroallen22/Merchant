@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getApplicationContext(), Register.class);
-                Intent intent = new Intent(getApplicationContext(), OSMFragment.class);
+                Intent intent = new Intent(getApplicationContext(), StoreRegister.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 MainActivity.this.startActivity(intent);
             }

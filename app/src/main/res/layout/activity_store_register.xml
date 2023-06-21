@@ -127,8 +127,8 @@
                 android:fontFamily="@font/robotomedium"
                 android:text="Location"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/description_text_input"
-                app:layout_constraintTop_toBottomOf="@+id/description_text_input" />
+                app:layout_constraintStart_toStartOf="@+id/end_time_text_input"
+                app:layout_constraintTop_toBottomOf="@+id/end_time_text_input" />
 
             <EditText
                 android:id="@+id/location_text_input"
@@ -152,8 +152,8 @@
                 android:fontFamily="@font/robotomedium"
                 android:text="Category"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/location_text_input"
-                app:layout_constraintTop_toBottomOf="@+id/location_text_input" />
+                app:layout_constraintStart_toStartOf="@+id/description_text_input"
+                app:layout_constraintTop_toBottomOf="@+id/description_text_input" />
 
             <TextView
                 android:id="@+id/start_time_text"
@@ -214,7 +214,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/end_time_text_input" />
+                app:layout_constraintTop_toBottomOf="@+id/mapViewNew" />
 
             <Spinner
                 android:id="@+id/category_spinner"
@@ -223,6 +223,26 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/category_text" />
+
+            <org.osmdroid.views.MapView
+                android:id="@+id/mapViewNew"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Please Place a Marker in Your Location"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/location_text_input" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

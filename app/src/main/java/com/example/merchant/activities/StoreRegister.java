@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -40,8 +41,13 @@ import com.example.merchant.models.StoreModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.osmdroid.views.MapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.events.MapEventsReceiver;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.MapEventsOverlay;
+import org.osmdroid.views.overlay.Marker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -61,13 +67,15 @@ public class StoreRegister extends AppCompatActivity {
     int end_time;
     String uname, email, number, password;
     private RequestQueue requestQueue1;
-    int merchantId=0;
+    int merchantId=0, m=0;
 
     String path, base64Image;
     Bitmap bitmap;
 
     private static String JSON_URL;
     private IPModel ipModel;
+    private MapView mapView;
+    double rlat, rlong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +118,47 @@ public class StoreRegister extends AppCompatActivity {
                 }
             }
         });
+        Configuration.getInstance().load(getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+
+        mapView = findViewById(R.id.mapViewNew);
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setBuiltInZoomControls(true);
+        mapView.getController().setCenter(new GeoPoint(14.56610, 120.99244));
+        mapView.getController().setZoom(20);
+        mapView.invalidate();
+
+        mapView.getOverlays().add(new MapEventsOverlay(new MapEventsReceiver() {
+            @Override
+            public boolean singleTapConfirmedHelper(GeoPoint p) {
+                Marker marker = new Marker(mapView);
+                if(m==0){
+                    marker.setPosition(new GeoPoint(p.getLatitude(), p.getLongitude()));
+                    marker.setTitle("Store");
+                    Log.d("Marker", marker.getTitle() + " Lat:"+p.getLatitude()+"+Long:"+p.getLongitude());
+                    mapView.getOverlays().add(marker);
+                    m++;
+                    rlat = p.getLatitude();
+                    rlong = p.getLongitude();
+                } else if (m==1){
+                    Log.d("Marker", "INSIDE ELSE");
+                    mapView.getOverlays().remove(1);
+                    marker.setPosition(new GeoPoint(p.getLatitude(), p.getLongitude()));
+                    marker.setTitle("Store");
+                    Log.d("Marker", marker.getTitle() + " Lat:"+p.getLatitude()+"+Long:"+p.getLongitude());
+                    mapView.getOverlays().add(marker);
+                    rlat = p.getLatitude();
+                    rlong = p.getLongitude();
+                }
+                Log.d("Lat and Long", "Lat:"+p.getLatitude()+"+Long:"+p.getLongitude());
+                Toast.makeText(getApplicationContext(), String.valueOf(p.getLatitude()) +" "+ String.valueOf(p.getLongitude()) , Toast.LENGTH_LONG);
+                return false;
+            }
+
+            @Override
+            public boolean longPressHelper(GeoPoint p) {
+                return false;
+            }
+        }));
 
         btn_upload.setOnClickListener(v -> {
             Intent intent2 = new Intent(Intent.ACTION_PICK);
@@ -151,7 +200,7 @@ public class StoreRegister extends AppCompatActivity {
             intent2.putExtra("Store",store);
             intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            SignUpStore(name,description,location,category,rating,start_time,end_time,image, "pending");
+            SignUpStore(name,description,location,category,rating,start_time,end_time,image, rlat, rlong, "pending");
 
             startActivity(intent2);
         });
@@ -219,7 +268,7 @@ public class StoreRegister extends AppCompatActivity {
                                 String location_text_input, String category_text_input,
                              float rating_text_input,
                              int start_time_text_input, int end_time_text_input,
-                             String iv_store_img, String status){
+                             String iv_store_img, double rlat, double rlong, String status){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "testS.php", new Response.Listener<String>() {
             @Override
@@ -262,6 +311,8 @@ public class StoreRegister extends AppCompatActivity {
                 params.put("storeImage", base64Image);
                 params.put("storeStartTime", String.valueOf(start_time_text_input));
                 params.put("storeEndTime", String.valueOf(end_time_text_input));
+                params.put("storeLat", String.valueOf(rlat));
+                params.put("storeLong", String.valueOf(rlong));
                 params.put("status", status);
                 return params;
             }

@@ -420,20 +420,6 @@
                 app:layout_constraintStart_toStartOf="@+id/checkBoxLunch"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxLunch" />
 
-
-            <Button
-                android:id="@+id/btn_add_product"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/mosibusPrimary"
-                android:text="Add product"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxFish" />
-
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
@@ -639,8 +625,8 @@
                 android:fontFamily="@font/robotomedium"
                 android:text="Tags"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/price_text_input"
-                app:layout_constraintTop_toBottomOf="@+id/price_text_input" />
+                app:layout_constraintStart_toStartOf="@+id/cg_product"
+                app:layout_constraintTop_toBottomOf="@+id/cg_product" />
 
             <TextView
                 android:id="@+id/textView27"
@@ -672,7 +658,7 @@
                 android:text="Cuisine"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/textView27"
-                app:layout_constraintTop_toBottomOf="@+id/price_text_input" />
+                app:layout_constraintTop_toBottomOf="@+id/cg_product" />
 
             <TextView
                 android:id="@+id/textView30"
@@ -693,6 +679,92 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/checkBoxDessert"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxDessert" />
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/robotomedium"
+                android:text="Apply for a Special Tag?"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxFish" />
+
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotomedium"
+                android:text="*If selected, a fee of 100 will be taken"
+                android:textColor="#B85555"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+            <CheckBox
+                android:id="@+id/checkBoxHalal"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxNoodles"
+                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+            <TextView
+                android:id="@+id/textView37"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="Halal"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxHalal"
+                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+            <CheckBox
+                android:id="@+id/checkBoxVegan"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxFish"
+                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+            <TextView
+                android:id="@+id/textView38"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:text="Vegan"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxVegan"
+                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_product"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                tools:layout_editor_absoluteY="400dp"
+                app:layout_constraintStart_toStartOf="@+id/price_text_input"
+                app:layout_constraintTop_toBottomOf="@+id/price_text_input">
+            </com.google.android.material.chip.ChipGroup>
+
+            <Button
+                android:id="@+id/btn_add_product"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/mosibusPrimary"
+                android:text="Add product"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxHalal" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

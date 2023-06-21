@@ -69,9 +69,11 @@ public class AddProductFragment extends Fragment {
     float price = 0;
 
     private CheckBox checkBoxHot, checkBoxCold, checkBoxAmerican, checkBoxChinese, checkBoxFilipino, checkBoxJapanese, checkBoxThai,
-            checkBoxBreakfast, checkBoxLunch, checkBoxDessert, checkBoxPork, checkBoxBeef, checkBoxFish, checkBoxNoodles;
+            checkBoxBreakfast, checkBoxLunch, checkBoxDessert, checkBoxPork, checkBoxBeef, checkBoxFish, checkBoxNoodles,
+            checkBoxHalal, checkBoxVegan;
 
     List<String> checkboxes_list;
+    List<String> checkboxes_special;
 //    private int c;
     String path;
     Bitmap bitmap;
@@ -126,6 +128,8 @@ public class AddProductFragment extends Fragment {
         checkBoxBeef = root.findViewById(R.id.checkBoxBeef);
         checkBoxFish = root.findViewById(R.id.checkBoxFish);
         checkBoxNoodles = root.findViewById(R.id.checkBoxNoodles);
+        checkBoxHalal = root.findViewById(R.id.checkBoxHalal);
+        checkBoxVegan = root.findViewById(R.id.checkBoxVegan);
 
         checkboxes_list = new ArrayList<>();
 
@@ -397,6 +401,25 @@ public class AddProductFragment extends Fragment {
             activityResultLauncher.launch(intent);
         });
 
+        //FOR SPECIAL TAGS
+        checkBoxHalal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkboxes_special.add("Halal");
+                    for (int i=0;i<checkboxes_special.size();i++){
+                        Log.d("CheckList", checkboxes_special.get(i));
+                    }
+                }else {
+                    for (int i=0;i<checkboxes_special.size();i++){
+                        if (checkboxes_special.get(i).equals("Halal")){
+                            checkboxes_special.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
         binding.btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -445,6 +468,7 @@ public class AddProductFragment extends Fragment {
 
 
                         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                        RequestQueue queue2 = Volley.newRequestQueue(getActivity().getApplicationContext());
 
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "add_prod.php",
                                 new Response.Listener<String>() {
@@ -492,37 +516,10 @@ public class AddProductFragment extends Fragment {
 
                         queue.add(stringRequest);
 
-//                    RequestQueue queue1 = Volley.newRequestQueue(getActivity().getApplicationContext());
-//
-//                    for (int c=0; c<checkboxes_list.size();c++){
-//                        int finalC = c;
-//                        StringRequest checkList = new StringRequest(Request.Method.POST, JSON_URL + "addTags.php",
-//                                new Response.Listener<String>() {
-//                                    @Override
-//                                    public void onResponse(String result) {
-//                                        Log.d("CheckList Result", result );
-//
-//                                    }
-//                                }, new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                error.printStackTrace();
-//                            }
-//                        }) {
-//                            protected Map<String, String> getParams() {
-//                                Map<String, String> paramV = new HashMap<>();
-//                                paramV.put("idStore", String.valueOf(idStore));
-////                                Gson gson = new Gson();
-////                                String jsonArray = gson.toJson(checkboxes_list);
-////                                paramV.put("data", jsonArray);
-//                                Log.d("C", String.valueOf(finalC));
-//                                paramV.put("tagname", checkboxes_list.get(finalC));
-//                                return paramV;
-//                            }
-//                        };
-//
-//                        queue1.add(checkList);
-//                    }
+                        //FOR SPECIAL
+                    if(checkboxes_special.isEmpty()){
+                        
+                    }
                 } else
                     Toast.makeText(getActivity().getApplicationContext(),"Please select an image first!", Toast.LENGTH_SHORT).show();
 
