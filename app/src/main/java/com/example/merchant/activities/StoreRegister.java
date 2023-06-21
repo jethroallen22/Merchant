@@ -160,24 +160,6 @@ public class StoreRegister extends AppCompatActivity {
             public boolean longPressHelper(GeoPoint p) {
                 return false;
             }
-            public boolean onTouchEvent(MotionEvent ev){
-                int action = ev.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        mapView.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        // Allow ScrollView to intercept touch events.
-                        mapView.requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-
-                // Handle MapView's touch events.
-                onTouchEvent(ev);
-                return true;
-            }
 
         }));
         mapView.setOnTouchListener(new View.OnTouchListener() {
