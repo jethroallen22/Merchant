@@ -26,7 +26,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="130dp"
                 android:background="@color/mosibusPrimary"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="horizontal">
@@ -36,10 +36,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:fontFamily="@font/robotobold"
+                    android:fontFamily="@font/robotomedium"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="Merchant Dashboard"
-                    android:textColor="@color/black"
+                    android:textColor="@color/cardview_dark_background"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -49,11 +49,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:rowCount="3">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="150dp"
+                    android:layout_height="120dp"
                     android:layout_row="1"
                     android:layout_rowWeight="1"
                     android:layout_column="0"
@@ -90,7 +92,7 @@
                                 android:text="366"
                                 android:textColor="@color/mosibusPrimary"
                                 android:textSize="30sp"
-                                android:textStyle="bold"></TextView>
+                                android:textStyle="normal"></TextView>
                         </LinearLayout>
 
                         <TextView
@@ -100,13 +102,13 @@
                             android:text="Incoming Orders"
                             android:textColor="@color/black"
                             android:textSize="16sp"
-                            android:textStyle="bold"></TextView>
+                            android:textStyle="normal"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="150dp"
+                    android:layout_height="120dp"
                     android:layout_row="1"
                     android:layout_rowWeight="1"
                     android:layout_column="1"
@@ -142,7 +144,7 @@
                                 android:text="128"
                                 android:textColor="@color/mosibusPrimary"
                                 android:textSize="30sp"
-                                android:textStyle="bold"></TextView>
+                                android:textStyle="normal"></TextView>
                         </LinearLayout>
 
                         <TextView
@@ -152,7 +154,7 @@
                             android:text="New Customers"
                             android:textColor="@color/black"
                             android:textSize="16sp"
-                            android:textStyle="bold"></TextView>
+                            android:textStyle="normal"></TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -181,7 +183,7 @@
                         android:padding="10sp"
                         android:text="@string/row1col1"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="100dp"
@@ -189,7 +191,7 @@
                         android:gravity="center_horizontal"
                         android:text="@string/row1col2"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="80dp"
@@ -197,7 +199,7 @@
                         android:gravity="center_horizontal"
                         android:text="@string/row1col3"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="100dp"
@@ -206,7 +208,7 @@
                         android:padding="10sp"
                         android:text="@string/row1col4"
                         android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                 </TableRow>
 
