@@ -431,10 +431,10 @@
                 android:id="@+id/checkBoxBeverages"
                 android:layout_width="29dp"
                 android:layout_height="29dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text=""
-                app:layout_constraintStart_toStartOf="@+id/checkBoxNoodles"
-                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                app:layout_constraintStart_toStartOf="@+id/checkBoxRamen"
+                app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
             <CheckBox
                 android:id="@+id/checkBoxPork"
@@ -477,11 +477,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:text="Beverages"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/checkBoxBeverages"
-                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
             <TextView
                 android:id="@+id/textView20"
@@ -662,7 +662,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxFish" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxPizza" />
 
             <TextView
                 android:id="@+id/textView36"
@@ -675,6 +675,56 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+            <CheckBox
+                android:id="@+id/checkBoxPasta"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="10dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxNoodles"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxNoodles" />
+
+            <TextView
+                android:id="@+id/textView39"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="17dp"
+                android:text="Pasta"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxNoodles"
+                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+            <CheckBox
+                android:id="@+id/checkBoxRamen"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="10dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxPasta"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxPasta" />
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="17dp"
+                android:text="Ramen"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxRamen"
+                app:layout_constraintTop_toBottomOf="@+id/textView39" />
+
+            <TextView
+                android:id="@+id/textView41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotomedium"
+                android:text="Beverages"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/checkBoxRamen"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxRamen" />
 
             <CheckBox
                 android:id="@+id/checkBoxHalal"

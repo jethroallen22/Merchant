@@ -333,8 +333,8 @@ public class StoreRegister extends AppCompatActivity {
                 params.put("storeImage", base64Image);
                 params.put("storeStartTime", String.valueOf(start_time_text_input));
                 params.put("storeEndTime", String.valueOf(end_time_text_input));
-                params.put("storeLat", String.valueOf(rlat));
-                params.put("storeLong", String.valueOf(rlong));
+                params.put("latitude", String.valueOf(rlat));
+                params.put("longitude", String.valueOf(rlong));
                 params.put("status", status);
                 return params;
             }
