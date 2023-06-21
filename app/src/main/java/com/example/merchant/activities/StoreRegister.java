@@ -18,6 +18,8 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -158,7 +160,27 @@ public class StoreRegister extends AppCompatActivity {
             public boolean longPressHelper(GeoPoint p) {
                 return false;
             }
+
         }));
+        mapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int action = motionEvent.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        mapView.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        mapView.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                onTouchEvent(motionEvent);
+                return false;
+            }
+        });
 
         btn_upload.setOnClickListener(v -> {
             Intent intent2 = new Intent(Intent.ACTION_PICK);
