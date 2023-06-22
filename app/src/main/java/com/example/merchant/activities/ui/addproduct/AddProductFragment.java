@@ -432,11 +432,6 @@ public class AddProductFragment extends Fragment {
         });
 
         category_list = new ArrayList<>();
-        category_list.add("American");
-        category_list.add("Chinese");
-        category_list.add("Filipino");
-        category_list.add("Japanese");
-        category_list.add("Thai");
         category_list.add("Breakfast");
         category_list.add("Lunch");
         category_list.add("Dessert");
