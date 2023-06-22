@@ -32,6 +32,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -64,6 +65,7 @@ public class AddProductFragment extends Fragment {
 
     private FragmentAddProductBinding binding;
     EditText name_text_input, description_text_input, preptime_text_input,category_text_input, servesize_text_input, price_text_input;
+    TextView tv_categ_status;
     Button btn_add_product, btn_upload;
     ImageView iv_product_img;
     private static String JSON_URL;
@@ -117,7 +119,7 @@ public class AddProductFragment extends Fragment {
         name_text_input = root.findViewById(R.id.name_text_input);
         description_text_input = root.findViewById(R.id.description_text_input);
         preptime_text_input = root.findViewById(R.id.preptime_text_input);
-//        category_text_input = root.findViewById(R.id.category_spinner);
+        tv_categ_status = root.findViewById(R.id.tv_categ_status);
         servesize_text_input = root.findViewById(R.id.servesize_text_input);
         price_text_input = root.findViewById(R.id.price_text_input);
         btn_add_product = root.findViewById(R.id.btn_add_product);
@@ -504,7 +506,7 @@ public class AddProductFragment extends Fragment {
                         if (description.isEmpty())
                             description_text_input.setError("Please insert Description!");
                         if (categorySelected.isEmpty())
-//                            category_text_input.setError("Please insert Category!"); Choose 1 add blank tv
+                            tv_categ_status.setError("Please Choose a Category!");
                         if (servesize.isEmpty())
                             servesize_text_input.setError("Please insert Serving Size!");
                         if (prep_time_tmp.isEmpty())
