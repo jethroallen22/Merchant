@@ -117,7 +117,7 @@ public class AddProductFragment extends Fragment {
         name_text_input = root.findViewById(R.id.name_text_input);
         description_text_input = root.findViewById(R.id.description_text_input);
         preptime_text_input = root.findViewById(R.id.preptime_text_input);
-        category_text_input = root.findViewById(R.id.category_spinner);
+//        category_text_input = root.findViewById(R.id.category_spinner);
         servesize_text_input = root.findViewById(R.id.servesize_text_input);
         price_text_input = root.findViewById(R.id.price_text_input);
         btn_add_product = root.findViewById(R.id.btn_add_product);
@@ -496,20 +496,20 @@ public class AddProductFragment extends Fragment {
 
                     product_name = String.valueOf(name_text_input.getText());
                     description = String.valueOf(description_text_input.getText());
-                    category = String.valueOf(category_text_input.getText());
+//                    category = String.valueOf(category_text_input.getText());
                     servesize = String.valueOf(servesize_text_input.getText());
                     prep_time_tmp = String.valueOf(preptime_text_input.getText());
                     price_tmp = String.valueOf((price_text_input.getText()));
                     weather_tmp = spinner.getSelectedItem().toString().toLowerCase();
 
-                    if (product_name.isEmpty() || description.isEmpty() || category.isEmpty() || servesize.isEmpty()
+                    if (product_name.isEmpty() || description.isEmpty() || categorySelected.isEmpty() || servesize.isEmpty()
                             || prep_time_tmp.isEmpty() || price_tmp.isEmpty()){
                         if (product_name.isEmpty())
                             name_text_input.setError("Please insert Product Name!");
                         if (description.isEmpty())
                             description_text_input.setError("Please insert Description!");
-                        if (category.isEmpty())
-                            category_text_input.setError("Please insert Category!");
+                        if (categorySelected.isEmpty())
+//                            category_text_input.setError("Please insert Category!"); Choose 1 add blank tv
                         if (servesize.isEmpty())
                             servesize_text_input.setError("Please insert Serving Size!");
                         if (prep_time_tmp.isEmpty())
@@ -527,7 +527,7 @@ public class AddProductFragment extends Fragment {
                     final int idStore = id;
                     final String pname = product_name;
                     final String pdesc = description;
-                    final String ptag = category;
+                    final String ptag = categorySelected;
                     final String pservesize = servesize;
                     final String ppreptime = prep_time_tmp;
                     final float pprice = Float.parseFloat(price_tmp);
