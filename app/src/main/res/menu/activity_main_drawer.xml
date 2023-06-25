@@ -16,5 +16,9 @@
             android:id="@+id/nav_products"
             android:icon="@drawable/ic_baseline_fastfood_24"
             android:title="@string/menu_products" />
+        <item
+            android:id="@+id/nav_special"
+            android:icon="@drawable/ic_price_tag"
+            android:title="Special Tags" />
     </group>
 </menu>

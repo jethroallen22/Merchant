@@ -30,6 +30,8 @@ import com.example.merchant.R;
 import com.example.merchant.activities.ui.addproduct.AddProductFragment;
 import com.example.merchant.activities.ui.profile.ProfileFragment;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
+import com.example.merchant.activities.ui.special.SpecialFragment;
+import com.example.merchant.activities.ui.special.SpecialStatusFragment;
 import com.example.merchant.adapters.OrderAdapter;
 import com.example.merchant.databinding.ActivityHomeBinding;
 import com.example.merchant.interfaces.RecyclerViewInterface;
@@ -58,8 +60,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +79,7 @@ public class Home extends AppCompatActivity {
     public static int id;
     OrderAdapter orderAdapter;
     List <StoreModel> storeList;
-    private RequestQueue requestQueue1,requestQueue3;
+    private RequestQueue requestQueue1,requestQueue3, requestQueue;
     List<OrderItemModel> order_item_list;
     List<OrderItemModel> temp_order_item;
     List<OrderModel> order_list;
@@ -95,8 +99,9 @@ public class Home extends AppCompatActivity {
 
     List<StoreModel> storeModelList;
     StoreModel storeModel;
-    String image;
+    String image, endDate, formattedDateTime;
     Bitmap bitmap;
+    Date currDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +113,9 @@ public class Home extends AppCompatActivity {
         ipModel = new IPModel();
         JSON_URL = ipModel.getURL();
 
+        currDate = new Date();
         Log.d("HOME", "Inside Home");
+        Log.d("HOME DATE", String.valueOf(currDate));
 
         Intent intent = getIntent();
         if(intent.getStringExtra("name") != null) {
@@ -121,6 +128,13 @@ public class Home extends AppCompatActivity {
         }
 
         requestQueue1 = Singleton.getsInstance(this).getRequestQueue();
+        requestQueue = Singleton.getsInstance(this).getRequestQueue();
+
+        // Format the date and time.
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        formattedDateTime = dateFormat.format(currDate);
+        getEndDate();
+
 
         root = new Handler();
         root.postDelayed(new Runnable() {
@@ -139,7 +153,7 @@ public class Home extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_dashboard, R.id.nav_orders, R.id.nav_products)
+                R.id.nav_dashboard, R.id.nav_orders, R.id.nav_products, R.id.nav_special)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
@@ -178,6 +192,21 @@ public class Home extends AppCompatActivity {
 
                 Bundle bundle = new Bundle();
                 ProductsFragment fragment = new ProductsFragment();
+                bundle.putString("name", name);
+                bundle.putInt("id", id);
+                bundle.putString("email", email);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+
+                return false;
+            }
+        });
+        navigationView.getMenu().getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                Bundle bundle = new Bundle();
+                SpecialStatusFragment fragment = new SpecialStatusFragment();
                 bundle.putString("name", name);
                 bundle.putInt("id", id);
                 bundle.putString("email", email);
@@ -250,6 +279,39 @@ public class Home extends AppCompatActivity {
         requestQueue1.add(jsonArrayRequestRec1);
     }
 
+    public void getEndDate(){
+        JsonArrayRequest jsonArrayRequestFoodforyou= new JsonArrayRequest(Request.Method.GET, JSON_URL+"specialNotif.php", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i=0; i < response.length(); i++){
+                    try {
+                        JSONObject jsonObjectNotif = response.getJSONObject(i);
+                        endDate = jsonObjectNotif.getString("endDate");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+//                Log.d("home date check", "curr" +formattedDateTime);
+//                Log.d("home date check", "end"+endDate);
+//                if (formattedDateTime.compareTo(endDate) <= 0){
+//                    Log.d("home date check", formattedDateTime);
+//                } else Log.d("home date check", "Failed" + formattedDateTime.compareTo(endDate));
+                if (endDate == null){
+                    Log.d("home date check", "is null");
+                    NavigationView navigationView = binding.navView;
+                    navigationView.getMenu().getItem(3).setVisible(false);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonArrayRequestFoodforyou);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
