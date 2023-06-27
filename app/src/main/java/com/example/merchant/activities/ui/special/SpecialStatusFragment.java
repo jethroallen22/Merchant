@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ import com.example.merchant.interfaces.Singleton;
 import com.example.merchant.models.IPModel;
 import com.example.merchant.models.ProductModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -67,7 +69,8 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
     Button btn_apply;
 //    CheckBox checkBoxProd;
 //    List<Integer> checkedList;
-    String title, description, specialTagNot;
+    String title, description, specialTagNot, endDate;
+    LinearLayout linearLayout3;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -92,6 +95,7 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
         tv_special_status = root.findViewById(R.id.tv_special_status);
         tv_special_name = root.findViewById(R.id.tv_special_name);
         tv_special_desc = root.findViewById(R.id.tv_special_desc);
+        linearLayout3 = root.findViewById(R.id.linearLayout3);
 //        product_list = new ArrayList<>();
         requestQueue = Singleton.getsInstance(getActivity()).getRequestQueue();
 
@@ -246,12 +250,17 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
                             title = jsonObjectNotif.getString("title");
                             description = jsonObjectNotif.getString("description");
                             specialTagNot = jsonObjectNotif.getString("specialTag");
-
+                            endDate = jsonObjectNotif.getString("endDate");
 //                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+                if (endDate == null){
+                    Log.d("SS date check", "is null");
+                    linearLayout3.setVisibility(View.GONE);
+                } else {
                     tv_special_name.setText(specialTagNot);
                     tv_special_desc.setText(description);
                 }

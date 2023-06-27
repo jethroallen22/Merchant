@@ -135,7 +135,7 @@ public class Home extends AppCompatActivity {
         // Format the date and time.
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         formattedDateTime = dateFormat.format(currDate);
-        getEndDate();
+//        getEndDate();
 
 
         root = new Handler();
@@ -324,11 +324,6 @@ public class Home extends AppCompatActivity {
                     }
 
                 }
-//                Log.d("home date check", "curr" +formattedDateTime);
-//                Log.d("home date check", "end"+endDate);
-//                if (formattedDateTime.compareTo(endDate) <= 0){
-//                    Log.d("home date check", formattedDateTime);
-//                } else Log.d("home date check", "Failed" + formattedDateTime.compareTo(endDate));
                 if (endDate == null){
                     Log.d("home date check", "is null");
                     NavigationView navigationView = binding.navView;

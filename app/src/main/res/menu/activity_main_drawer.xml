@@ -18,11 +18,11 @@
             android:title="@string/menu_products" />
         <item
             android:id="@+id/nav_deals"
-            android:icon="@drawable/ic_price_tag"
+            android:icon="@drawable/ic_deal"
             android:title="Deals" />
         <item
             android:id="@+id/nav_voucher"
-            android:icon="@drawable/ic_price_tag"
+            android:icon="@drawable/ic_voucher"
             android:title="Vouchers" />
         <item
             android:id="@+id/nav_special"
