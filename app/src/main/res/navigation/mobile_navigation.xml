@@ -20,6 +20,9 @@
             android:id="@+id/action_nav_dashboard_to_nav_deals"
             app:destination="@id/nav_deals" />
         <action
+            android:id="@+id/action_nav_dashboard_to_nav_voucher"
+            app:destination="@id/nav_voucher" />
+        <action
             android:id="@+id/action_nav_dashboard_to_nav_special"
             app:destination="@id/nav_special" />
     </fragment>
@@ -55,6 +58,13 @@
         android:name="com.example.merchant.activities.ui.deals.DealsStatusFragment"
         android:label="deals"
         tools:layout="@layout/fragment_deals_status" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_voucher"
+        android:name="com.example.merchant.activities.ui.voucher.VoucherStatusFragment"
+        android:label="voucher"
+        tools:layout="@layout/fragment_voucher_status" >
     </fragment>
 
     <fragment
