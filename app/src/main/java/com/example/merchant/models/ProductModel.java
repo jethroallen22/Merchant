@@ -21,6 +21,7 @@ public class ProductModel implements Parcelable {
     String productPrepTime;
     String weather;
     String specialStatus;
+    int percentage;
 
 
     public ProductModel(int idProduct, int store_idStore, String productName, String productDescription, float productPrice, String productImage, String productServingSize, String productTag, String productPrepTime, String productRestoName, String productRestoImage, String weather) {
@@ -36,12 +37,14 @@ public class ProductModel implements Parcelable {
         this.weather = weather;
     }
 
-    public ProductModel(int idProduct, String productName, String productDescription, String productImage, String specialStatus) {
+    public ProductModel(int idProduct, String productName, String productDescription, float productPrice, String productImage, String specialStatus, int percentage) {
         this.idProduct = idProduct;
         this.productName = productName;
         this.productDescription = productDescription;
         this.productImage = productImage;
+        this.productPrice = productPrice;
         this.specialStatus = specialStatus;
+        this.percentage = percentage;
     }
 
     public ProductModel(){}
@@ -58,6 +61,7 @@ public class ProductModel implements Parcelable {
         productPrepTime = in.readString();
         weather = in.readString();
         specialStatus = in.readString();
+        percentage = in.readInt();
     }
 
     public static final Creator<ProductModel> CREATOR = new Creator<ProductModel>() {
@@ -161,6 +165,14 @@ public class ProductModel implements Parcelable {
         this.specialStatus = specialStatus;
     }
 
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
+    }
+
     public Bitmap getBitmapImage(){
         byte[] byteArray = Base64.decode(productImage, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
@@ -185,5 +197,6 @@ public class ProductModel implements Parcelable {
         parcel.writeString(productPrepTime);
         parcel.writeString(weather);
         parcel.writeString(specialStatus);
+        parcel.writeInt(percentage);
     }
 }

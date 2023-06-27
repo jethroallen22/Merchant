@@ -17,6 +17,9 @@
             android:id="@+id/action_nav_dashboard_to_nav_products"
             app:destination="@id/nav_products" />
         <action
+            android:id="@+id/action_nav_dashboard_to_nav_deals"
+            app:destination="@id/nav_deals" />
+        <action
             android:id="@+id/action_nav_dashboard_to_nav_special"
             app:destination="@id/nav_special" />
     </fragment>
@@ -47,12 +50,12 @@
             app:destination="@id/nav_orders" />
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_special"-->
-<!--        android:name="com.example.merchant.activities.ui.special.SpecialFragment"-->
-<!--        android:label="special"-->
-<!--        tools:layout="@layout/fragment_special" >-->
-<!--    </fragment>-->
+    <fragment
+        android:id="@+id/nav_deals"
+        android:name="com.example.merchant.activities.ui.deals.DealsStatusFragment"
+        android:label="deals"
+        tools:layout="@layout/fragment_deals_status" >
+    </fragment>
 
     <fragment
         android:id="@+id/nav_special"

@@ -1,13 +1,11 @@
-package com.example.merchant.activities.ui.special;
+package com.example.merchant.activities.ui.deals;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,10 +22,9 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
-import com.example.merchant.activities.ui.slideshow.ProductsFragment;
-import com.example.merchant.adapters.SpecialAdapter;
+import com.example.merchant.activities.ui.special.SpecialFragment;
 import com.example.merchant.adapters.SpecialStatusAdapter;
-import com.example.merchant.databinding.FragmentSpecialBinding;
+import com.example.merchant.databinding.FragmentDealsStatusBinding;
 import com.example.merchant.databinding.FragmentSpecialStatusBinding;
 import com.example.merchant.interfaces.RecyclerViewInterface;
 import com.example.merchant.interfaces.Singleton;
@@ -45,14 +42,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SpecialStatusFragment extends Fragment implements RecyclerViewInterface, SpecialStatusAdapter.OnItemClickListener {
+public class DealsStatusFragment extends Fragment implements RecyclerViewInterface, SpecialStatusAdapter.OnItemClickListener {
 
-    private FragmentSpecialStatusBinding binding;
+    private FragmentDealsStatusBinding binding;
     private RequestQueue requestQueue;
     private static String JSON_URL;
     private IPModel ipModel;
     //Product List Recycler View
-    RecyclerView rv_special_status;
+    RecyclerView rv_deals_status;
     List<ProductModel> product_list;
     SpecialStatusAdapter specialStatusAdapter;
     RecyclerViewInterface recyclerViewInterface;
@@ -72,7 +69,7 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentSpecialStatusBinding.inflate(inflater, container, false);
+        binding = FragmentDealsStatusBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 
@@ -87,8 +84,8 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
             Log.d("Merchant Special Stat", name + " " + id + " " + email);
         }
 
-        rv_special_status = root.findViewById(R.id.rv_special_status);
-        btn_apply = root.findViewById(R.id.btn_apply);
+        rv_deals_status = root.findViewById(R.id.rv_deals_status);
+//        btn_apply = root.findViewById(R.id.btn_apply);
         tv_special_status = root.findViewById(R.id.tv_special_status);
         tv_special_name = root.findViewById(R.id.tv_special_name);
         tv_special_desc = root.findViewById(R.id.tv_special_desc);
@@ -100,18 +97,17 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
             public void run() {
                 product_list = new ArrayList<>();
                 extractFoodforyou();
-                getNotif();
                 root.postDelayed(this, 5000);
             }
         }, 0);
 
 
 
-        btn_apply.setOnClickListener(new View.OnClickListener() {
+        binding.fabAddDeals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                SpecialFragment fragment = new SpecialFragment();
+                DealsFragment fragment = new DealsFragment();
                 bundle.putString("name", name);
                 bundle.putInt("id", id);
                 bundle.putString("email", email);
@@ -163,103 +159,43 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
     }
 
     public void extractFoodforyou(){
-        Log.d("Special Stat: ", "inside");
-        JsonArrayRequest jsonArrayRequestFoodforyou= new JsonArrayRequest(Request.Method.GET, JSON_URL+"addSpecial.php", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequestFoodforyou= new JsonArrayRequest(Request.Method.GET, JSON_URL+"addDeals.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("Special Stat: ", "inside onResponse");
                 for (int i=0; i < response.length(); i++){
                     try {
                         JSONObject jsonObjectFoodforyou = response.getJSONObject(i);
-                        Log.d("IDSTORE special stat: ", String.valueOf(jsonObjectFoodforyou.getInt("idStore")));
-                        Log.d("ID special stat: " , String.valueOf(id));
-                        if (jsonObjectFoodforyou.getInt("idStore") == id) {
-                            Log.d("Special Stat: ", "inside the if");
-                            int idProduct = jsonObjectFoodforyou.getInt("idProduct");
+//                        Log.d("IDSTORE special stat: ", String.valueOf(jsonObjectFoodforyou.getInt("idStore")));
+//                        Log.d("ID special stat: " , String.valueOf(id));
+                        if (jsonObjectFoodforyou.getInt("storeId") == id) {
+                            Log.d("Deal Stat: ", String.valueOf(response));
+                            int idProduct = jsonObjectFoodforyou.getInt("productId");
                             String productName = jsonObjectFoodforyou.getString("productName");
                             String productDescription = jsonObjectFoodforyou.getString("productDescription");
+                            float productPrice = (float) jsonObjectFoodforyou.getDouble("productPrice");
                             String productImage = jsonObjectFoodforyou.getString("productImage");
-                            String status = jsonObjectFoodforyou.getString("status");
+                            int percentage = jsonObjectFoodforyou.getInt("percentage");
 
-                            ProductModel foodfyModel = new ProductModel(idProduct, productName, productDescription, 0,productImage, status, 0);
+                            ProductModel foodfyModel = new ProductModel(idProduct, productName, productDescription, productPrice, productImage, "", percentage);
                             product_list.add(foodfyModel);
-                            Log.d("Special Stat: ", product_list.get(i).getProductName());
+                            Log.d("Deals Stat: ", product_list.get(i).getProductName());
                             //list.add(productName);
                         }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    specialStatusAdapter = new SpecialStatusAdapter(getActivity(),product_list, SpecialStatusFragment.this);
-                    rv_special_status.setAdapter(specialStatusAdapter);
+                    specialStatusAdapter = new SpecialStatusAdapter(getActivity(),product_list, DealsStatusFragment.this);
+                    rv_deals_status.setAdapter(specialStatusAdapter);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                    rv_special_status.setLayoutManager(layoutManager);
+                    rv_deals_status.setLayoutManager(layoutManager);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-            }
-        });
-        requestQueue.add(jsonArrayRequestFoodforyou);
-    }
-
-    public void addSpecial(List<Integer> checkedList){
-            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-
-            StringRequest stringRequest = new StringRequest(Request.Method.POST,JSON_URL+ "addSpecial.php",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String result) {
-                            Log.d("On Res", "inside on res");
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("Volley Error", String.valueOf(error));
-                }
-            }){
-                protected Map<String, String> getParams(){
-                    Map<String, String> paramV = new HashMap<>();
-                    paramV.put("idStore", String.valueOf(product_list.get(0).getStore_idStore()));
-                    paramV.put("specialTag", "Halal");//get from notif
-                    paramV.put("status", "pending");
-                    Gson gson = new Gson();
-                    String jsonArray = gson.toJson(checkedList);
-                    paramV.put("data", jsonArray);
-                    return paramV;
-                }
-            };
-
-            queue.add(stringRequest);
-        }
-
-    public void getNotif(){
-        JsonArrayRequest jsonArrayRequestFoodforyou= new JsonArrayRequest(Request.Method.GET, JSON_URL+"specialNotif.php", null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i=0; i < response.length(); i++){
-                    try {
-                        JSONObject jsonObjectNotif = response.getJSONObject(i);
-//                        if (jsonObjectFoodforyou.getInt("idStore") == id) {
-                            title = jsonObjectNotif.getString("title");
-                            description = jsonObjectNotif.getString("description");
-                            specialTagNot = jsonObjectNotif.getString("specialTag");
-
-//                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    tv_special_name.setText(specialTagNot);
-                    tv_special_desc.setText(description);
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
             }
         });
         requestQueue.add(jsonArrayRequestFoodforyou);
