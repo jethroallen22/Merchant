@@ -16,6 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.activities.Home;
+import com.example.merchant.adapters.DealsAdapter;
 import com.example.merchant.databinding.FragmentDealsCreateBinding;
 import com.example.merchant.models.IPModel;
 import com.google.gson.Gson;
@@ -57,6 +60,9 @@ public class DealsCreateFragment extends Fragment {
     List<String> checkedProducts;
     ListView lv_deals;
     ArrayAdapter<String> listAdapter;
+    RecyclerView rv_deals;
+    DealsAdapter dealsAdapter;
+
 
     @Nullable
     @Override
@@ -82,16 +88,22 @@ public class DealsCreateFragment extends Fragment {
         dt_startdate = root.findViewById(R.id.startDatePicker);
         dt_enddate = root.findViewById(R.id.endDatePicker);
         btn_createdeals = root.findViewById(R.id.btn_createdeals);
-        lv_deals = root.findViewById(R.id.lv_deals);
+        rv_deals = root.findViewById(R.id.rv_deals);
+        rv_deals.setLayoutManager(new LinearLayoutManager(getContext()));
+        dealsAdapter = new DealsAdapter(getContext(), checkedProducts);
+        rv_deals.setAdapter(dealsAdapter);
 
-        listAdapter = new ArrayAdapter<String>(getContext(), R.layout.simple_row, checkedProducts);
-        Log.d("DC size", String.valueOf(checkedProducts.size()));
-        for (int i=0;i<checkedProducts.size();i++){
-            Log.d("DC", checkedProducts.get(i));
-            listAdapter.add(checkedProducts.get(i));
-            break;
-        }
-        lv_deals.setAdapter(listAdapter);
+//        lv_deals = root.findViewById(R.id.lv_deals);
+//        Log.d("deal", "Size: " + checkedProducts.size());
+//
+//        listAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, checkedProducts);
+////        Log.d("DC size", String.valueOf(checkedProducts.size()));
+////        for (String deal: checkedProducts) {
+////            Log.d("DC", deal);
+////            listAdapter.add(deal);
+////        }
+//        lv_deals.setAdapter(listAdapter);
+
 
         btn_createdeals.setOnClickListener(new View.OnClickListener() {
             @Override
