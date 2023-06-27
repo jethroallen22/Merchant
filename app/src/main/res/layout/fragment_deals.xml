@@ -5,60 +5,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mosibusOffWhite"
-    tools:context=".activities.ui.special.SpecialFragment">
+    tools:context=".activities.ui.deals.DealsFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/white"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:layout_editor_absoluteX="1dp">-->
 
-        <TextView
-            android:id="@+id/tv_special_name"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/robotobold"
-            android:lines="1"
-            android:maxLines="1"
-            android:text="TextView"
-            android:textSize="20sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_special_name"-->
+<!--            android:layout_width="160dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:fontFamily="@font/robotobold"-->
+<!--            android:lines="1"-->
+<!--            android:maxLines="1"-->
+<!--            android:text="TextView"-->
+<!--            android:textSize="20sp" />-->
 
-        <TextView
-            android:id="@+id/tv_special_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/robotoregular"
-            android:text="TextView"
-            android:textSize="16sp" />
-    </LinearLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/tv_special_desc"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:fontFamily="@font/robotoregular"-->
+<!--            android:text="TextView"-->
+<!--            android:textSize="16sp" />-->
+<!--    </LinearLayout>-->
     <TextView
         android:id="@+id/textView34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:fontFamily="@font/robotomedium"
-        android:text="Apply"
+        android:text="Add Deals"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <Button
-        android:id="@+id/btn_add_special"
+        android:id="@+id/btn_add_deals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/mosibusPrimary"
-        android:text="Add Products"
+        android:text="Add Deals"
         android:textAllCaps="false"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,14 +67,14 @@
 
     <ScrollView
         android:layout_width="409dp"
-        android:layout_height="560dp"
+        android:layout_height="635dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView34">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_special"
+            android:id="@+id/rv_deals"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />

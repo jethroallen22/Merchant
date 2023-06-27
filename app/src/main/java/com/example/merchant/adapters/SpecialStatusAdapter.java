@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.merchant.R;
@@ -42,7 +43,7 @@ public class SpecialStatusAdapter extends RecyclerView.Adapter<SpecialStatusAdap
     @NonNull
     @Override
     public SpecialStatusAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new SpecialStatusAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.special_status_product, parent, false),recyclerViewInterface,listener);
+        return new SpecialStatusAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.deals_status, parent, false),recyclerViewInterface,listener);
     }
 
     @Override
@@ -52,6 +53,14 @@ public class SpecialStatusAdapter extends RecyclerView.Adapter<SpecialStatusAdap
         Log.d("INSIDE ADAPTER", list.get(position).getProductName());
         holder.tv_product_desc.setText(list.get(position).getProductDescription());
         holder.tv_special_status.setText(list.get(position).getSpecialStatus());
+        if(list.get(position).getPercentage() != 0) {
+            holder.tv_product_price.setText("P "+list.get(position).getProductPrice());
+            holder.cv_banner.setVisibility(View.VISIBLE);
+            holder.tv_deal_percentage.setText(list.get(position).getPercentage() + "% off");
+        } else{
+            holder.tv_product_price.setVisibility(View.INVISIBLE);
+            holder.cv_banner.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -62,7 +71,8 @@ public class SpecialStatusAdapter extends RecyclerView.Adapter<SpecialStatusAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_product_image;
-        TextView tv_product_name, tv_product_desc, tv_special_status;
+        TextView tv_product_name, tv_product_desc, tv_special_status, tv_deal_percentage, tv_product_price;
+        CardView cv_banner;
 
         public ViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface, OnItemClickListener listener) {
             super(itemView);
@@ -71,6 +81,9 @@ public class SpecialStatusAdapter extends RecyclerView.Adapter<SpecialStatusAdap
             tv_product_name = itemView.findViewById(R.id.tv_product_name);
             tv_product_desc = itemView.findViewById(R.id.tv_product_desc);
             tv_special_status = itemView.findViewById(R.id.tv_special_status);
+            tv_product_price = itemView.findViewById(R.id.tv_product_price);
+            tv_deal_percentage = itemView.findViewById(R.id.tv_deal_percentage);
+            cv_banner = itemView.findViewById(R.id.cv_banner);
 
 //            checkBoxProd.setOnClickListener(new View.OnClickListener() {
 //                @Override

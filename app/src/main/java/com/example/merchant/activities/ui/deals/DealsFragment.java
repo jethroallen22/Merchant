@@ -1,4 +1,4 @@
-package com.example.merchant.activities.ui.special;
+package com.example.merchant.activities.ui.deals;
 
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -24,11 +24,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
-import com.example.merchant.activities.ui.slideshow.ProductsFragment;
+import com.example.merchant.activities.ui.special.SpecialStatusFragment;
 import com.example.merchant.adapters.SpecialAdapter;
-import com.example.merchant.adapters.SpecialStatusAdapter;
+import com.example.merchant.databinding.FragmentDealsBinding;
 import com.example.merchant.databinding.FragmentSpecialBinding;
-import com.example.merchant.databinding.FragmentSpecialStatusBinding;
 import com.example.merchant.interfaces.RecyclerViewInterface;
 import com.example.merchant.interfaces.Singleton;
 import com.example.merchant.models.IPModel;
@@ -45,34 +44,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SpecialStatusFragment extends Fragment implements RecyclerViewInterface, SpecialStatusAdapter.OnItemClickListener {
+public class DealsFragment extends Fragment implements RecyclerViewInterface, SpecialAdapter.OnItemClickListener {
 
-    private FragmentSpecialStatusBinding binding;
+    private FragmentDealsBinding binding;
     private RequestQueue requestQueue;
     private static String JSON_URL;
     private IPModel ipModel;
     //Product List Recycler View
-    RecyclerView rv_special_status;
-    List<ProductModel> product_list;
-    SpecialStatusAdapter specialStatusAdapter;
+    RecyclerView rv_deals;
+    List<ProductModel> product_list, applied;
+    SpecialAdapter specialAdapter;
     RecyclerViewInterface recyclerViewInterface;
     TextView tv_product_namee2, tv_product_pricee2, tv_product_description2, tv_product_info,
-             tv_special_name, tv_special_desc, tv_special_status;
+             tv_special_name, tv_special_desc;
 
     ImageView iv_product_imagee2;
 
     public static String name = "";
     public static String email = "";
     public static int id;
-    Button btn_apply;
-//    CheckBox checkBoxProd;
-//    List<Integer> checkedList;
+    Button btn_add_deals;
+    CheckBox checkBoxProd;
+    List<Integer> checkedList;
+    List<String> checkedProducts;
     String title, description, specialTagNot;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+//        ProductsViewModel productsViewModel =
+//                new ViewModelProvider(this).get(ProductsViewModel.class);
 
-        binding = FragmentSpecialStatusBinding.inflate(inflater, container, false);
+        binding = FragmentDealsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
 
@@ -84,42 +86,49 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
             name = bundle.getString("name");
             id = bundle.getInt("id");
             email = bundle.getString("email");
-            Log.d("Merchant Special Stat", name + " " + id + " " + email);
+            applied = bundle.getParcelableArrayList("applied");
+            Log.d("Merchant", name + " " + id + " " + email);
         }
 
-        rv_special_status = root.findViewById(R.id.rv_special_status);
-        btn_apply = root.findViewById(R.id.btn_apply);
-        tv_special_status = root.findViewById(R.id.tv_special_status);
+
+        rv_deals = root.findViewById(R.id.rv_deals);
+        btn_add_deals = root.findViewById(R.id.btn_add_deals);
+        checkBoxProd = root.findViewById(R.id.checkBoxProd);
         tv_special_name = root.findViewById(R.id.tv_special_name);
         tv_special_desc = root.findViewById(R.id.tv_special_desc);
 //        product_list = new ArrayList<>();
         requestQueue = Singleton.getsInstance(getActivity()).getRequestQueue();
 
-        root.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                product_list = new ArrayList<>();
-                extractFoodforyou();
-                getNotif();
-                root.postDelayed(this, 5000);
-            }
-        }, 0);
+//        root.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                product_list = new ArrayList<>();
+//                extractFoodforyou();
+//                root.postDelayed(this, 10000);
+//            }
+//        }, 0);
+
+        product_list = new ArrayList<>();
+        checkedList = new ArrayList<>();
+        checkedProducts = new ArrayList<>();
+        extractFoodforyou();
 
 
-
-        btn_apply.setOnClickListener(new View.OnClickListener() {
+        btn_add_deals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                SpecialFragment fragment = new SpecialFragment();
-                bundle.putString("name", name);
-                bundle.putInt("id", id);
-                bundle.putString("email", email);
-                if (product_list.size() != 0){
-                    bundle.putParcelableArrayList("applied", (ArrayList<ProductModel>) product_list);
+                if (!checkedList.isEmpty()){
+                    Log.d("Button", "Sent to DB");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", name);
+                    bundle.putInt("id", id);
+                    bundle.putString("email", email);
+                    bundle.putIntegerArrayList("checkedList", (ArrayList<Integer>) checkedList);
+                    bundle.putStringArrayList("checkedProducts", (ArrayList<String>) checkedProducts);
+                    DealsCreateFragment fragment = new DealsCreateFragment();
+                    fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
                 }
-                fragment.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
             }
         });
 
@@ -163,77 +172,92 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
     }
 
     public void extractFoodforyou(){
-        Log.d("Special Stat: ", "inside");
-        JsonArrayRequest jsonArrayRequestFoodforyou= new JsonArrayRequest(Request.Method.GET, JSON_URL+"addSpecial.php", null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequestFoodforyou= new JsonArrayRequest(Request.Method.GET, JSON_URL+"apifood.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("Special Stat: ", "inside onResponse");
                 for (int i=0; i < response.length(); i++){
                     try {
                         JSONObject jsonObjectFoodforyou = response.getJSONObject(i);
-                        Log.d("IDSTORE special stat: ", String.valueOf(jsonObjectFoodforyou.getInt("idStore")));
-                        Log.d("ID special stat: " , String.valueOf(id));
+                        Log.d("IDSTORE: ", String.valueOf(jsonObjectFoodforyou.getInt("idStore")));
+                        Log.d("ID: " , String.valueOf(id));
                         if (jsonObjectFoodforyou.getInt("idStore") == id) {
-                            Log.d("Special Stat: ", "inside the if");
                             int idProduct = jsonObjectFoodforyou.getInt("idProduct");
+                            int idStore = jsonObjectFoodforyou.getInt("idStore");
                             String productName = jsonObjectFoodforyou.getString("productName");
                             String productDescription = jsonObjectFoodforyou.getString("productDescription");
+                            float productPrice = (float) jsonObjectFoodforyou.getDouble("productPrice");
                             String productImage = jsonObjectFoodforyou.getString("productImage");
-                            String status = jsonObjectFoodforyou.getString("status");
+                            String productServingSize = jsonObjectFoodforyou.getString("productServingSize");
+                            String productTag = jsonObjectFoodforyou.getString("productTag");
+                            String productPrepTime = jsonObjectFoodforyou.getString("productPrepTime");
+                            String storeName = jsonObjectFoodforyou.getString("storeName");
+                            String storeImage = jsonObjectFoodforyou.getString("storeImage");
+                            String weather = jsonObjectFoodforyou.getString("weather");
 
-                            ProductModel foodfyModel = new ProductModel(idProduct, productName, productDescription, 0,productImage, status, 0);
-                            product_list.add(foodfyModel);
-                            Log.d("Special Stat: ", product_list.get(i).getProductName());
+                            ProductModel foodfyModel = new ProductModel(idProduct, idStore, productName, productDescription, productPrice, productImage,
+                                    productServingSize, productTag, productPrepTime, storeName, storeImage, weather);
+                            if (applied != null){
+                                for (int j=0;j<applied.size();j++){
+                                    if (applied.get(j).getIdProduct() != foodfyModel.getIdProduct()){
+                                        if (applied.size()-1 == j){
+                                            product_list.add(foodfyModel);
+                                        }
+                                    }else break;
+                                }
+                            } else {
+                                product_list.add(foodfyModel);
+                            }
+
+
                             //list.add(productName);
                         }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    specialStatusAdapter = new SpecialStatusAdapter(getActivity(),product_list, SpecialStatusFragment.this);
-                    rv_special_status.setAdapter(specialStatusAdapter);
+                    specialAdapter = new SpecialAdapter(getActivity(),product_list, DealsFragment.this);
+                    rv_deals.setAdapter(specialAdapter);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                    rv_special_status.setLayoutManager(layoutManager);
+                    rv_deals.setLayoutManager(layoutManager);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+
             }
         });
         requestQueue.add(jsonArrayRequestFoodforyou);
     }
 
     public void addSpecial(List<Integer> checkedList){
-            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST,JSON_URL+ "addSpecial.php",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String result) {
-                            Log.d("On Res", "inside on res");
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("Volley Error", String.valueOf(error));
-                }
-            }){
-                protected Map<String, String> getParams(){
-                    Map<String, String> paramV = new HashMap<>();
-                    paramV.put("idStore", String.valueOf(product_list.get(0).getStore_idStore()));
-                    paramV.put("specialTag", "Halal");//get from notif
-                    paramV.put("status", "pending");
-                    Gson gson = new Gson();
-                    String jsonArray = gson.toJson(checkedList);
-                    paramV.put("data", jsonArray);
-                    return paramV;
-                }
-            };
-
-            queue.add(stringRequest);
-        }
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,JSON_URL+ "addSpecial.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String result) {
+                        Log.d("On Res", "inside on res");
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error", String.valueOf(error));
+            }
+        }){
+            protected Map<String, String> getParams(){
+                Map<String, String> paramV = new HashMap<>();
+                paramV.put("idStore", String.valueOf(product_list.get(0).getStore_idStore()));
+                paramV.put("specialTag", "Halal");//get from notif
+                paramV.put("status", "pending");
+                Gson gson = new Gson();
+                String jsonArray = gson.toJson(checkedList);
+                paramV.put("data", jsonArray);
+                return paramV;
+            }
+        };
+        queue.add(stringRequest);
+    }
 
     public void getNotif(){
         JsonArrayRequest jsonArrayRequestFoodforyou= new JsonArrayRequest(Request.Method.GET, JSON_URL+"specialNotif.php", null, new Response.Listener<JSONArray>() {
@@ -267,7 +291,27 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
 
     @Override
     public void onItemClick(int position) {
-
+//        showBottomSheet(position);
+        Log.d("Checkbox", product_list.get(position).getProductName());
+        if (checkedList.size() == 0){
+            checkedList.add(product_list.get(position).getIdProduct());
+            checkedProducts.add(product_list.get(position).getProductName());
+        } else {
+            Log.d("Checkbox", "inside else");
+            for (int i=0;i<checkedList.size();i++){
+                if(checkedList.get(i) == product_list.get(position).getIdProduct()){
+                    checkedList.remove(i);
+                    checkedProducts.remove(i);
+                    Log.d("Checkbox", "removed: " + product_list.get(position).getProductName());
+                    break;
+                }else if (i == checkedList.size()-1){
+                    checkedList.add(product_list.get(position).getIdProduct());
+                    checkedProducts.add(product_list.get(position).getProductName());
+                    Log.d("Checkbox", "added: " + product_list.get(position).getProductName());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
