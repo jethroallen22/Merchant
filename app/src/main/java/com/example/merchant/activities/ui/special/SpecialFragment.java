@@ -249,7 +249,7 @@ public class SpecialFragment extends Fragment implements RecyclerViewInterface, 
             protected Map<String, String> getParams(){
                 Map<String, String> paramV = new HashMap<>();
                 paramV.put("idStore", String.valueOf(product_list.get(0).getStore_idStore()));
-                paramV.put("specialTag", "Halal");//get from notif
+                paramV.put("specialTag", specialTagNot);//get from notif
                 paramV.put("status", "pending");
                 Gson gson = new Gson();
                 String jsonArray = gson.toJson(checkedList);

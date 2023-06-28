@@ -18,6 +18,10 @@ public class StoreModel implements Parcelable {
     Float store_rating;
     int store_open;
     int store_closing;
+    //for Voucher
+    String voucherName;
+    int voucherAmount, voucherMin;
+    String startDate, endDate, voucher_status;
 
     public StoreModel(long store_id, String store_image, String store_name, String store_description,
                       String store_location, String store_category, Float store_rating, int store_open,
@@ -33,10 +37,19 @@ public class StoreModel implements Parcelable {
         this.store_closing = store_closing;
     }
 
-    public StoreModel(){
-
+    public StoreModel(long store_id, String voucherName, int voucherAmount, int voucherMin,
+                      String startDate, String endDate, String voucher_status){
+        this.store_id = store_id;
+        this.voucherName = voucherName;
+        this.voucherAmount = voucherAmount;
+        this.voucherMin = voucherMin;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.voucher_status = voucher_status;
     }
 
+    public StoreModel(){
+    }
     public StoreModel(Parcel in) {
         store_id = in.readLong();
         store_image = in.readString();
@@ -47,6 +60,12 @@ public class StoreModel implements Parcelable {
         store_rating = in.readFloat();
         store_open = in.readInt();
         store_closing = in.readInt();
+        voucherName = in.readString();
+        voucherAmount = in.readInt();
+        voucherMin = in.readInt();
+        startDate = in.readString();
+        endDate = in.readString();
+        voucher_status = in.readString();
     }
 
     public static final Creator<StoreModel> CREATOR = new Creator<StoreModel>() {
@@ -133,6 +152,54 @@ public class StoreModel implements Parcelable {
         this.store_closing = store_closing;
     }
 
+    public String getVoucherName() {
+        return voucherName;
+    }
+
+    public void setVoucherName(String voucherName) {
+        this.voucherName = voucherName;
+    }
+
+    public int getVoucherAmount() {
+        return voucherAmount;
+    }
+
+    public void setVoucherAmount(int voucherAmount) {
+        this.voucherAmount = voucherAmount;
+    }
+
+    public int getVoucherMin() {
+        return voucherMin;
+    }
+
+    public void setVoucherMin(int voucherMin) {
+        this.voucherMin = voucherMin;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getVoucher_status() {
+        return voucher_status;
+    }
+
+    public void setVoucher_status(String voucher_status) {
+        this.voucher_status = voucher_status;
+    }
+
     public Bitmap getBitmapImage(){
         byte[] byteArray = Base64.decode(store_image, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
@@ -155,6 +222,11 @@ public class StoreModel implements Parcelable {
         dest.writeFloat(store_rating);
         dest.writeInt(store_open);
         dest.writeInt(store_closing);
-
+        dest.writeString(voucherName);
+        dest.writeInt(voucherAmount);
+        dest.writeInt(voucherMin);
+        dest.writeString(startDate);
+        dest.writeString(endDate);
+        dest.writeString(voucher_status);
     }
 }

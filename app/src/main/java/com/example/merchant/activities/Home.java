@@ -33,6 +33,7 @@ import com.example.merchant.activities.ui.profile.ProfileFragment;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.activities.ui.special.SpecialFragment;
 import com.example.merchant.activities.ui.special.SpecialStatusFragment;
+import com.example.merchant.activities.ui.voucher.VoucherStatusFragment;
 import com.example.merchant.adapters.OrderAdapter;
 import com.example.merchant.databinding.ActivityHomeBinding;
 import com.example.merchant.interfaces.RecyclerViewInterface;
@@ -134,7 +135,7 @@ public class Home extends AppCompatActivity {
         // Format the date and time.
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         formattedDateTime = dateFormat.format(currDate);
-        getEndDate();
+//        getEndDate();
 
 
         root = new Handler();
@@ -154,7 +155,7 @@ public class Home extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_dashboard, R.id.nav_orders, R.id.nav_products, R.id.nav_deals, R.id.nav_special)
+                R.id.nav_dashboard, R.id.nav_orders, R.id.nav_products, R.id.nav_deals, R.id.nav_voucher, R.id.nav_special)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
@@ -218,6 +219,21 @@ public class Home extends AppCompatActivity {
             }
         });
         navigationView.getMenu().getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                Bundle bundle = new Bundle();
+                VoucherStatusFragment fragment = new VoucherStatusFragment();
+                bundle.putString("name", name);
+                bundle.putInt("id", id);
+                bundle.putString("email", email);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+
+                return false;
+            }
+        });
+        navigationView.getMenu().getItem(5).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
 
@@ -308,15 +324,10 @@ public class Home extends AppCompatActivity {
                     }
 
                 }
-//                Log.d("home date check", "curr" +formattedDateTime);
-//                Log.d("home date check", "end"+endDate);
-//                if (formattedDateTime.compareTo(endDate) <= 0){
-//                    Log.d("home date check", formattedDateTime);
-//                } else Log.d("home date check", "Failed" + formattedDateTime.compareTo(endDate));
                 if (endDate == null){
                     Log.d("home date check", "is null");
                     NavigationView navigationView = binding.navView;
-                    navigationView.getMenu().getItem(4).setVisible(false);
+                    navigationView.getMenu().getItem(5).setVisible(false);
                 }
             }
         }, new Response.ErrorListener() {
