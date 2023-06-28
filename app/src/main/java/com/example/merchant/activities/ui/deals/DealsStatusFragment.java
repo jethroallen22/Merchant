@@ -176,8 +176,9 @@ public class DealsStatusFragment extends Fragment implements RecyclerViewInterfa
                             float productPrice = (float) jsonObjectFoodforyou.getDouble("productPrice");
                             String productImage = jsonObjectFoodforyou.getString("productImage");
                             int percentage = jsonObjectFoodforyou.getInt("percentage");
+                            String status = jsonObjectFoodforyou.getString("status");
 
-                            ProductModel foodfyModel = new ProductModel(idProduct, productName, productDescription, productPrice, productImage, "", percentage);
+                            ProductModel foodfyModel = new ProductModel(idProduct, productName, productDescription, productPrice, productImage, status, percentage);
                             product_list.add(foodfyModel);
                             Log.d("Deals Stat: ", product_list.get(i).getProductName());
                             //list.add(productName);

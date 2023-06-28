@@ -27,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.activities.Home;
+import com.example.merchant.activities.ui.special.SpecialStatusFragment;
 import com.example.merchant.adapters.DealsAdapter;
 import com.example.merchant.databinding.FragmentDealsCreateBinding;
 import com.example.merchant.models.IPModel;
@@ -83,7 +84,6 @@ public class DealsCreateFragment extends Fragment {
 //            Log.d("Merchant", name + " " + id + " " + email);
         }
 
-        et_title = root.findViewById(R.id.et_title);
         et_percentage = root.findViewById(R.id.et_percentage);
         dt_startdate = root.findViewById(R.id.startDatePicker);
         dt_enddate = root.findViewById(R.id.endDatePicker);
@@ -93,29 +93,24 @@ public class DealsCreateFragment extends Fragment {
         dealsAdapter = new DealsAdapter(getContext(), checkedProducts);
         rv_deals.setAdapter(dealsAdapter);
 
-//        lv_deals = root.findViewById(R.id.lv_deals);
-//        Log.d("deal", "Size: " + checkedProducts.size());
-//
-//        listAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, checkedProducts);
-////        Log.d("DC size", String.valueOf(checkedProducts.size()));
-////        for (String deal: checkedProducts) {
-////            Log.d("DC", deal);
-////            listAdapter.add(deal);
-////        }
-//        lv_deals.setAdapter(listAdapter);
-
 
         btn_createdeals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createTag();
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putInt("id", id);
+                bundle.putString("email", email);
+                DealsStatusFragment fragment = new DealsStatusFragment();
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
             }
         });
         return root;
     }
 
     public void createTag(){
-        String title = et_title.getText().toString();
         String percentage = et_percentage.getText().toString();
         int startday = dt_startdate.getDayOfMonth();
         int startmonth = dt_startdate.getMonth();
@@ -149,17 +144,15 @@ public class DealsCreateFragment extends Fragment {
         Log.d("enddate", formatedEndDate);
 
         try {
-            if (startdate.before(enddate) && !title.isEmpty() && !percentage.isEmpty()) {
-                sendDealstoDb(title,percentage,formatedStartDate,formatedEndDate);
+            if (startdate.before(enddate) && !percentage.isEmpty()) {
+                sendDealstoDb(percentage,formatedStartDate,formatedEndDate);
 
-                Intent intent = new Intent(getActivity(), Home.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), Home.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
 
             } else if (startdate.after(enddate)){
                 tv_specialtagstatus.setText("Voucher Start Date should be before the End Date. Please try again!");
-            } else if (title.isEmpty()){
-                tv_specialtagstatus.setText("Please Input Title!");
             } else if (percentage.isEmpty()){
                 tv_specialtagstatus.setText("Please Input Percentage!");
             } else {
@@ -171,7 +164,7 @@ public class DealsCreateFragment extends Fragment {
 
     }
 
-    public void sendDealstoDb(String title, String percentage, String formatedStartDate, String formatedEndDate) throws ParseException {
+    public void sendDealstoDb(String percentage, String formatedStartDate, String formatedEndDate) throws ParseException {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "addDeals.php",
                 new Response.Listener<String>() {
                     @Override
@@ -194,10 +187,9 @@ public class DealsCreateFragment extends Fragment {
                 Gson gson = new Gson();
                 String jsonArray = gson.toJson(checkedList);
                 params.put("data", jsonArray);
-                params.put("title", title);
                 params.put("percentage", percentage);
-                params.put("startdate", formatedStartDate);
-                params.put("enddate", formatedEndDate);
+                params.put("startDate", formatedStartDate);
+                params.put("endDate", formatedEndDate);
                 params.put("status", "pending");
                 return params;
             }

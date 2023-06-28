@@ -44,13 +44,17 @@ import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.databinding.FragmentEditProductBinding;
 import com.example.merchant.models.IPModel;
 import com.example.merchant.models.ProductModel;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EditProductFragment extends Fragment {
@@ -73,6 +77,9 @@ public class EditProductFragment extends Fragment {
     private ProductModel productModel;
     Bitmap bitmap;
     String path;
+    ChipGroup cg_product;
+    String categorySelected;
+    List<String> category_list;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -98,7 +105,7 @@ public class EditProductFragment extends Fragment {
         name_text_input = root.findViewById(R.id.name_text_input);
         description_text_input = root.findViewById(R.id.description_text_input);
         preptime_text_input = root.findViewById(R.id.preptime_text_input);
-        category_text_input = root.findViewById(R.id.category_spinner);
+//        category_text_input = root.findViewById(R.id.category_spinner);
         servesize_text_input = root.findViewById(R.id.servesize_text_input);
         price_text_input = root.findViewById(R.id.price_text_input);
         btn_edit_product = root.findViewById(R.id.btn_edit_product);
@@ -106,12 +113,13 @@ public class EditProductFragment extends Fragment {
         btn_upload = root.findViewById(R.id.btn_upload);
         iv_product_img = root.findViewById(R.id.iv_edit_product_img);
         spinner = root.findViewById(R.id.weather_spinner2);
+        cg_product = root.findViewById(R.id.cg_product);
 
 
         name_text_input.setText(productModel.getProductName());
         description_text_input.setText(productModel.getProductDescription());
         preptime_text_input.setText(String.valueOf(productModel.getProductPrepTime()));
-        category_text_input.setText(productModel.getProductTag());
+//        category_text_input.setText(productModel.getProductTag());
         servesize_text_input.setText(productModel.getProductServingSize());
         price_text_input.setText(String.valueOf(productModel.getProductPrice()));
 
@@ -130,6 +138,56 @@ public class EditProductFragment extends Fragment {
         } else {
             Log.d("SPINNER", "inside cold");
             spinner.setSelection(1);
+        }
+
+        //Chip Group
+        category_list = new ArrayList<>();
+        category_list.add("American");
+        category_list.add("Chinese");
+        category_list.add("Filipino");
+        category_list.add("Japanese");
+        category_list.add("Thai");
+        category_list.add("Breakfast");
+        category_list.add("Lunch");
+        category_list.add("Dessert");
+        category_list.add("Pork");
+        category_list.add("Beef");
+        category_list.add("Fish");
+
+
+        for (String str : category_list) {
+            final Chip chip = new Chip(getActivity());
+            chip.setText(str);
+            chip.setClickable(true);
+            chip.setChipBackgroundColorResource(R.color.chipDefault);
+            chip.setTextColor(getResources().getColor(R.color.black));
+
+            if (str.compareTo(productModel.getProductTag()) == 0){
+                chip.setSelected(true);
+                chip.setChipBackgroundColorResource(R.color.mosibusPrimary);
+//                chip.setChipStrokeColorResource(R.color.teal_700);
+                chip.setTextColor(getResources().getColor(R.color.white));
+                categorySelected = str;
+                Log.d("chups", categorySelected);
+            }
+            chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (int i = 0; i < cg_product.getChildCount(); i++) {
+                        Chip currentChip = (Chip) cg_product.getChildAt(i);
+                        if (currentChip != chip) {
+                            currentChip.setChipBackgroundColorResource(R.color.chipDefault);
+                            currentChip.setTextColor(getResources().getColor(R.color.black));
+                        }
+                    }
+                    chip.setChipBackgroundColorResource(R.color.mosibusPrimary);
+                    chip.setTextColor(getResources().getColor(android.R.color.white));
+                    categorySelected = (String) chip.getText();
+                    Log.d("chups", categorySelected);
+                }
+            });
+
+            cg_product.addView(chip);
         }
 
 
@@ -168,7 +226,7 @@ public class EditProductFragment extends Fragment {
 
                     product_name = String.valueOf(name_text_input.getText());
                     description = String.valueOf(name_text_input.getText());
-                    category = String.valueOf(category_text_input.getText());
+                    category = categorySelected;
                     servesize = String.valueOf(servesize_text_input.getText());
                     prep_time_tmp = String.valueOf(preptime_text_input.getText());
                     price_tmp = String.valueOf(price_text_input.getText());
