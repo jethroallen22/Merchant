@@ -492,15 +492,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
             <CheckBox
-                android:id="@+id/checkBoxBeef"
-                android:layout_width="29dp"
-                android:layout_height="29dp"
-                android:layout_marginTop="10dp"
-                android:text=""
-                app:layout_constraintStart_toStartOf="@+id/checkBoxPork"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxPork" />
-
-            <CheckBox
                 android:id="@+id/checkBoxFish"
                 android:layout_width="29dp"
                 android:layout_height="29dp"
@@ -520,6 +511,35 @@
                 app:layout_constraintStart_toEndOf="@+id/checkBoxPork"
                 app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
+            <CheckBox
+                android:id="@+id/checkBoxChicken"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="10dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxPork"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxPork" />
+
+            <TextView
+                android:id="@+id/textView72"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="16dp"
+                android:text="Chicken"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxChicken"
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+            <CheckBox
+                android:id="@+id/checkBoxBeef"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="10dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxChicken"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxChicken" />
+
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
@@ -529,7 +549,7 @@
                 android:text="Beef"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/checkBoxBeef"
-                app:layout_constraintTop_toBottomOf="@+id/textView20" />
+                app:layout_constraintTop_toBottomOf="@+id/textView72" />
 
             <TextView
                 android:id="@+id/textView22"
