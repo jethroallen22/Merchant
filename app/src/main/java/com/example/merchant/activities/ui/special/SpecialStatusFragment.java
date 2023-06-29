@@ -99,10 +99,12 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
 //        product_list = new ArrayList<>();
         requestQueue = Singleton.getsInstance(getActivity()).getRequestQueue();
 
+        linearLayout3.setVisibility(View.GONE);
         root.postDelayed(new Runnable() {
             @Override
             public void run() {
                 product_list = new ArrayList<>();
+                endDate = null;
                 extractFoodforyou();
                 getNotif();
                 root.postDelayed(this, 5000);
@@ -261,6 +263,7 @@ public class SpecialStatusFragment extends Fragment implements RecyclerViewInter
                     Log.d("SS date check", "is null");
                     linearLayout3.setVisibility(View.GONE);
                 } else {
+                    linearLayout3.setVisibility(View.VISIBLE);
                     tv_special_name.setText(specialTagNot);
                     tv_special_desc.setText(description);
                 }
