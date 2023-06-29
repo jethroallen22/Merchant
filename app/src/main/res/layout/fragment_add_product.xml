@@ -542,6 +542,25 @@
                 app:layout_constraintStart_toEndOf="@+id/checkBoxFish"
                 app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
+            <CheckBox
+                android:id="@+id/checkBoxSeafood"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="10dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxFish"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxFish" />
+
+            <TextView
+                android:id="@+id/textView69"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Seafood"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView22"
+                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
             <TextView
                 android:id="@+id/textView31"
                 android:layout_width="wrap_content"
@@ -703,15 +722,83 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView64" />
 
             <TextView
-                android:id="@+id/textView60"
+                android:id="@+id/taste"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/robotomedium"
                 android:layout_marginTop="2dp"
+                android:text="Taste and Texture"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/checkBoxMT"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxMT" />
+
+            <CheckBox
+                android:id="@+id/checkBoxCrispy"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/taste"
+                app:layout_constraintTop_toBottomOf="@+id/taste" />
+
+            <TextView
+                android:id="@+id/textView67"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Crispy"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView65"
+                app:layout_constraintTop_toBottomOf="@+id/taste" />
+
+            <CheckBox
+                android:id="@+id/checkBoxSpicy"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxCrispy"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxCrispy" />
+
+            <TextView
+                android:id="@+id/textView66"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Spicy"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView67"
+                app:layout_constraintTop_toBottomOf="@+id/textView67" />
+
+            <CheckBox
+                android:id="@+id/checkBoxSweet"
+                android:layout_width="29dp"
+                android:layout_height="29dp"
+                android:layout_marginTop="5dp"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/checkBoxSpicy"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxSpicy" />
+
+            <TextView
+                android:id="@+id/textView68"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Sweet"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView66"
+                app:layout_constraintTop_toBottomOf="@+id/textView66" />
+
+            <TextView
+                android:id="@+id/textView60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/robotomedium"
+                android:layout_marginTop="4dp"
                 android:text="Other tags"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/checkBoxFish"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxFish" />
+                app:layout_constraintStart_toStartOf="@+id/checkBoxSeafood"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxSeafood" />
 
             <CheckBox
                 android:id="@+id/checkBoxPizza"
@@ -772,7 +859,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
             <CheckBox
-                android:id="@+id/checkBoxCrispy"
+                android:id="@+id/checkBoxBread"
                 android:layout_width="29dp"
                 android:layout_height="29dp"
                 android:layout_marginTop="5dp"
@@ -781,53 +868,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxFastFood" />
 
             <TextView
-                android:id="@+id/textView67"
+                android:id="@+id/textView70"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Crispy"
+                android:text="Bread"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/textView61"
                 app:layout_constraintTop_toBottomOf="@+id/textView61" />
-
-            <CheckBox
-                android:id="@+id/checkBoxSpicy"
-                android:layout_width="29dp"
-                android:layout_height="29dp"
-                android:layout_marginTop="5dp"
-                android:text=""
-                app:layout_constraintStart_toStartOf="@+id/checkBoxCrispy"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxCrispy" />
-
-            <TextView
-                android:id="@+id/textView66"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Spicy"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/textView67"
-                app:layout_constraintTop_toBottomOf="@+id/textView67" />
-
-            <CheckBox
-                android:id="@+id/checkBoxSweet"
-                android:layout_width="29dp"
-                android:layout_height="29dp"
-                android:layout_marginTop="5dp"
-                android:text=""
-                app:layout_constraintStart_toStartOf="@+id/checkBoxSpicy"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxSpicy" />
-
-            <TextView
-                android:id="@+id/textView68"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Sweet"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/textView66"
-                app:layout_constraintTop_toBottomOf="@+id/textView66" />
-
 
             <TextView
                 android:id="@+id/textView35"
@@ -840,7 +888,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.552"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxMT" />
+                app:layout_constraintTop_toBottomOf="@+id/textView68" />
 
             <TextView
                 android:id="@+id/textView36"
