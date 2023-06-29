@@ -292,6 +292,7 @@ public class EditProductFragment extends Fragment {
                             paramV.put("productPrice", String.valueOf(pprice));
                             paramV.put("productPrepTime", ppreptime);
                             paramV.put("weather", pweather);
+                            paramV.put("status", "pending");
                             Log.d("PARAM", pid + " " + pname);
                             return paramV;
                         }
