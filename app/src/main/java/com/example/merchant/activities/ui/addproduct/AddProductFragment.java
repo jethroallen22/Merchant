@@ -43,6 +43,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.RealPathUtil;
+import com.example.merchant.activities.MainActivity;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.databinding.FragmentAddProductBinding;
 import com.example.merchant.models.IPModel;
@@ -223,13 +224,7 @@ public class AddProductFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (counterCheckBox() <= 2 && checkBoxAmerican.isChecked()){
                     Log.d("Check Counter", String.valueOf(counterCheckBox()));
-                    if (categorySelected.compareTo("American")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxAmerican.setChecked(false);
-                    } else {
-                        checkboxes_list.add("American");
-                    }
-
+                    checkboxes_list.add("American");
                 }else {
                     Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
                     toast.setText("Up to 2 Cuisines Only");
@@ -251,13 +246,7 @@ public class AddProductFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (counterCheckBox() <= 2 && checkBoxChinese.isChecked()){
                     Log.d("Check Counter", String.valueOf(counterCheckBox()));
-                    if (categorySelected.compareTo("Chinese")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxChinese.setChecked(false);
-                    } else {
-                        checkboxes_list.add("Chinese");
-                    }
-
+                    checkboxes_list.add("Chinese");
                 }else {
                     Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
                     toast.setText("Up to 2 Cuisines Only");
@@ -278,13 +267,7 @@ public class AddProductFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (counterCheckBox() <= 2 && checkBoxFilipino.isChecked()){
                     Log.d("Check Counter", String.valueOf(counterCheckBox()));
-                    if (categorySelected.compareTo("Filipino")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxFilipino.setChecked(false);
-                    } else {
-                        checkboxes_list.add("Filipino");
-                    }
-
+                    checkboxes_list.add("Filipino");
                 }else {
                     Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
                     toast.setText("Up to 2 Cuisines Only");
@@ -305,13 +288,7 @@ public class AddProductFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (counterCheckBox() <= 2 && checkBoxJapanese.isChecked()){
                     Log.d("Check Counter", String.valueOf(counterCheckBox()));
-                    if (categorySelected.compareTo("Japanese")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxJapanese.setChecked(false);
-                    } else {
-                        checkboxes_list.add("Japanese");
-                    }
-
+                    checkboxes_list.add("Japanese");
                 }else {
                     Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
                     toast.setText("Up to 2 Cuisines Only");
@@ -332,13 +309,7 @@ public class AddProductFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (counterCheckBox() <= 2 && checkBoxThai.isChecked()){
                     Log.d("Check Counter", String.valueOf(counterCheckBox()));
-                    if (categorySelected.compareTo("Thai")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxThai.setChecked(false);
-                    } else {
-                        checkboxes_list.add("Thai");
-                    }
-
+                    checkboxes_list.add("Thai");
                 }else {
                     Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
                     toast.setText("Up to 2 Cuisines Only");
@@ -358,18 +329,20 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    Log.d("Add Tag", categorySelected);
-                    Log.d("Add Tag", String.valueOf(categorySelected.compareTo("Breakfast")));
-                    if ((categorySelected.compareTo("Breakfast")==0 || categorySelected.compareTo("Lunch")==0 ||
-                            categorySelected.compareTo("Dessert")==0)){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxBreakfast.setChecked(false);
+                    if (categorySelected != null){
+                        if ((categorySelected.compareTo("Breakfast")==0 || categorySelected.compareTo("Lunch")==0 ||
+                                categorySelected.compareTo("Dessert")==0)){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxBreakfast.setChecked(false);
+                        } else {
+                            checkBoxLunch.setChecked(false);
+                            checkBoxDessert.setChecked(false);
+                            checkboxes_list.add("Breakfast");
+                        }
                     } else {
-                        checkBoxLunch.setChecked(false);
-                        checkBoxDessert.setChecked(false);
-                        checkboxes_list.add("Breakfast");
+                        checkBoxBreakfast.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
-
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
                         if (checkboxes_list.get(i).equals("Breakfast")){
@@ -384,14 +357,19 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    if ((categorySelected.compareTo("Breakfast")==0 || categorySelected.compareTo("Lunch")==0 ||
-                            categorySelected.compareTo("Dessert")==0)){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxLunch.setChecked(false);
+                    if (categorySelected != null){
+                        if ((categorySelected.compareTo("Breakfast")==0 || categorySelected.compareTo("Lunch")==0 ||
+                                categorySelected.compareTo("Dessert")==0)){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxLunch.setChecked(false);
+                        } else {
+                            checkBoxBreakfast.setChecked(false);
+                            checkBoxDessert.setChecked(false);
+                            checkboxes_list.add("Lunch");
+                        }
                     } else {
-                        checkBoxBreakfast.setChecked(false);
-                        checkBoxDessert.setChecked(false);
-                        checkboxes_list.add("Lunch");
+                        checkBoxLunch.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
@@ -407,14 +385,19 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    if ((categorySelected.compareTo("Breakfast")==0 || categorySelected.compareTo("Lunch")==0 ||
-                            categorySelected.compareTo("Dessert")==0)){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxDessert.setChecked(false);
+                    if (categorySelected != null){
+                        if ((categorySelected.compareTo("Breakfast")==0 || categorySelected.compareTo("Lunch")==0 ||
+                                categorySelected.compareTo("Dessert")==0)){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxDessert.setChecked(false);
+                        } else {
+                            checkBoxBreakfast.setChecked(false);
+                            checkBoxLunch.setChecked(false);
+                            checkboxes_list.add("Dessert");
+                        }
                     } else {
-                        checkBoxBreakfast.setChecked(false);
-                        checkBoxLunch.setChecked(false);
-                        checkboxes_list.add("Dessert");
+                        checkBoxDessert.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
@@ -430,11 +413,16 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    if (categorySelected.compareTo("Pork")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxPork.setChecked(false);
+                    if (categorySelected != null){
+                        if (categorySelected.compareTo("Pork")==0){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxPork.setChecked(false);
+                        } else {
+                            checkboxes_list.add("Pork");
+                        }
                     } else {
-                        checkboxes_list.add("Pork");
+                        checkBoxPork.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
@@ -450,11 +438,16 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    if (categorySelected.compareTo("Beef")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxBeef.setChecked(false);
+                    if (categorySelected != null){
+                        if (categorySelected.compareTo("Beef")==0){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxBeef.setChecked(false);
+                        } else {
+                            checkboxes_list.add("Beef");
+                        }
                     } else {
-                        checkboxes_list.add("Beef");
+                        checkBoxBeef.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
@@ -470,13 +463,17 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    if (categorySelected.compareTo("Fish")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxFish.setChecked(false);
+                    if (categorySelected != null){
+                        if (categorySelected.compareTo("Fish")==0){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxFish.setChecked(false);
+                        } else {
+                            checkboxes_list.add("Fish");
+                        }
                     } else {
-                        checkboxes_list.add("Fish");
+                        checkBoxFish.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
-
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
                         if (checkboxes_list.get(i).equals("Fish")){
@@ -491,13 +488,17 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    if (categorySelected.compareTo("Chicken")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxChicken.setChecked(false);
+                    if (categorySelected != null){
+                        if (categorySelected.compareTo("Chicken")==0){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxChicken.setChecked(false);
+                        } else {
+                            checkboxes_list.add("Chicken");
+                        }
                     } else {
-                        checkboxes_list.add("Chicken");
+                        checkBoxChicken.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
-
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
                         if (checkboxes_list.get(i).equals("Chicken")){
@@ -512,13 +513,17 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    if (categorySelected.compareTo("Seafood")==0){
-                        Log.d("Add Tag", categorySelected);
-                        checkBoxSeafood.setChecked(false);
+                    if (categorySelected != null){
+                        if (categorySelected.compareTo("Seafood")==0){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxSeafood.setChecked(false);
+                        } else {
+                            checkboxes_list.add("Seafood");
+                        }
                     } else {
-                        checkboxes_list.add("Seafood");
+                        checkBoxSeafood.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
-
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
                         if (checkboxes_list.get(i).equals("Seafood")){
@@ -533,9 +538,16 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    checkboxes_list.add("Noodles");
-                    for (int i=0;i<checkboxes_list.size();i++){
-                        Log.d("CheckList", checkboxes_list.get(i));
+                    if (categorySelected != null){
+                        if (categorySelected.compareTo("Noodles")==0){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxNoodles.setChecked(false);
+                        } else {
+                            checkboxes_list.add("Noodles");
+                        }
+                    } else {
+                        checkBoxNoodles.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
@@ -551,9 +563,6 @@ public class AddProductFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
                     checkboxes_list.add("Pasta");
-                    for (int i=0;i<checkboxes_list.size();i++){
-                        Log.d("CheckList", checkboxes_list.get(i));
-                    }
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
                         if (checkboxes_list.get(i).equals("Pasta")){
@@ -584,9 +593,16 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()){
-                    checkboxes_list.add("Beverages");
-                    for (int i=0;i<checkboxes_list.size();i++){
-                        Log.d("CheckList", checkboxes_list.get(i));
+                    if (categorySelected != null){
+                        if (categorySelected.compareTo("Beverages")==0){
+                            Log.d("Add Tag", categorySelected);
+                            checkBoxBeverages.setChecked(false);
+                        } else {
+                            checkboxes_list.add("Beverages");
+                        }
+                    } else {
+                        checkBoxBeverages.setChecked(false);
+                        Toast.makeText(getContext(), "Please Select a Main Category", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
@@ -848,17 +864,21 @@ public class AddProductFragment extends Fragment {
         });
 
         category_list = new ArrayList<>();
-        category_list.add("American");
-        category_list.add("Chinese");
-        category_list.add("Filipino");
-        category_list.add("Japanese");
-        category_list.add("Thai");
+//        category_list.add("American");
+//        category_list.add("Chinese");
+//        category_list.add("Filipino");
+//        category_list.add("Japanese");
+//        category_list.add("Thai");
         category_list.add("Breakfast");
         category_list.add("Lunch");
         category_list.add("Dessert");
         category_list.add("Pork");
+        category_list.add("Chicken");
         category_list.add("Beef");
         category_list.add("Fish");
+        category_list.add("Seafood");
+        category_list.add("Noodles");
+        category_list.add("Beverages");
 
 
         for (String str : category_list) {
@@ -1038,12 +1058,12 @@ public class AddProductFragment extends Fragment {
             countCheckBox++;
             Log.d("Check Count Thai", String.valueOf(countCheckBox));
         }
-        if (categorySelected.compareTo("American")==0 || categorySelected.compareTo("Chinese")==0 ||
-                categorySelected.compareTo("Filipino")==0 || categorySelected.compareTo("Japanese")==0 ||
-                categorySelected.compareTo("Thai")==0){
-            countCheckBox++;
-            Log.d("Check Count Category", categorySelected);
-        }
+//        if (categorySelected.compareTo("American")==0 || categorySelected.compareTo("Chinese")==0 ||
+//                categorySelected.compareTo("Filipino")==0 || categorySelected.compareTo("Japanese")==0 ||
+//                categorySelected.compareTo("Thai")==0){
+//            countCheckBox++;
+//            Log.d("Check Count Category", categorySelected);
+//        }
 
         return countCheckBox;
     }

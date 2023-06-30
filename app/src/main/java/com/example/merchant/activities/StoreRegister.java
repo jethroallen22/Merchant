@@ -171,7 +171,7 @@ public class StoreRegister extends AppCompatActivity {
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setBuiltInZoomControls(true);
         mapView.getController().setCenter(new GeoPoint(14.56610, 120.99244));
-        mapView.getController().setZoom(20);
+        mapView.getController().setZoom(19);
         mapView.invalidate();
 
         mapView.getOverlays().add(new MapEventsOverlay(new MapEventsReceiver() {

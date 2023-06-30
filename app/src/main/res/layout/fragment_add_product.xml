@@ -968,75 +968,75 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Easy to eat"
+                android:text="Baked"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/textView75"
                 app:layout_constraintTop_toBottomOf="@+id/textView75" />
 
-            <TextView
-                android:id="@+id/textView35"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:fontFamily="@font/robotomedium"
-                android:text="Apply for a Special Tag?"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.531"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxBaked" />
+<!--            <TextView-->
+<!--                android:id="@+id/textView35"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="40dp"-->
+<!--                android:fontFamily="@font/robotomedium"-->
+<!--                android:text="Apply for a Special Tag?"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.531"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/checkBoxBaked" />-->
 
-            <TextView
-                android:id="@+id/textView36"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/robotomedium"
-                android:text="*If selected, a fee of 100 will be taken"
-                android:textColor="#B85555"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView35" />
+<!--            <TextView-->
+<!--                android:id="@+id/textView36"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/robotomedium"-->
+<!--                android:text="*If selected, a fee of 100 will be taken"-->
+<!--                android:textColor="#B85555"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView35" />-->
 
-            <CheckBox
-                android:id="@+id/checkBoxHalal"
-                android:layout_width="29dp"
-                android:layout_height="29dp"
-                android:layout_marginTop="5dp"
-                android:text=""
-                app:layout_constraintStart_toStartOf="@+id/checkBoxNoodles"
-                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+<!--            <CheckBox-->
+<!--                android:id="@+id/checkBoxHalal"-->
+<!--                android:layout_width="29dp"-->
+<!--                android:layout_height="29dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:text=""-->
+<!--                app:layout_constraintStart_toStartOf="@+id/checkBoxNoodles"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView36" />-->
 
-            <TextView
-                android:id="@+id/textView37"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="8dp"
-                android:text="Halal"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/checkBoxHalal"
-                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+<!--            <TextView-->
+<!--                android:id="@+id/textView37"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:text="Halal"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/checkBoxHalal"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView36" />-->
 
-            <CheckBox
-                android:id="@+id/checkBoxVegan"
-                android:layout_width="29dp"
-                android:layout_height="29dp"
-                android:layout_marginTop="5dp"
-                android:text=""
-                app:layout_constraintStart_toStartOf="@+id/checkBoxFish"
-                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+<!--            <CheckBox-->
+<!--                android:id="@+id/checkBoxVegan"-->
+<!--                android:layout_width="29dp"-->
+<!--                android:layout_height="29dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:text=""-->
+<!--                app:layout_constraintStart_toStartOf="@+id/checkBoxFish"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView36" />-->
 
-            <TextView
-                android:id="@+id/textView38"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="8dp"
-                android:text="Vegan"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/checkBoxVegan"
-                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+<!--            <TextView-->
+<!--                android:id="@+id/textView38"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:text="Vegan"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/checkBoxVegan"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView36" />-->
 
             <TextView
                 android:id="@+id/textView33"
@@ -1077,7 +1077,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxHalal" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxBaked" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
