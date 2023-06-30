@@ -259,12 +259,12 @@ public class StoreRegister extends AppCompatActivity {
             store.setStore_open(start_time);
             store.setStore_closing(end_time);
 
-            Intent intent2 = new Intent(getApplicationContext(),Home.class);
-            intent2.putExtra("Username", uname);
-            intent2.putExtra("Email", email);
-            intent2.putExtra("Number", number);
-            intent2.putExtra("Password",password);
-            intent2.putExtra("Store",store);
+            Intent intent2 = new Intent(getApplicationContext(),MainActivity.class);
+//            intent2.putExtra("Username", uname);
+//            intent2.putExtra("Email", email);
+//            intent2.putExtra("Number", number);
+//            intent2.putExtra("Password",password);
+//            intent2.putExtra("Store",store);
             intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
             SignUpStore(name,description,location,rating,start_time,end_time,image, rlat, rlong, "pending");

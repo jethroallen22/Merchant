@@ -140,55 +140,55 @@ public class EditProductFragment extends Fragment {
             spinner.setSelection(1);
         }
 
-        //Chip Group
-        category_list = new ArrayList<>();
-        category_list.add("American");
-        category_list.add("Chinese");
-        category_list.add("Filipino");
-        category_list.add("Japanese");
-        category_list.add("Thai");
-        category_list.add("Breakfast");
-        category_list.add("Lunch");
-        category_list.add("Dessert");
-        category_list.add("Pork");
-        category_list.add("Beef");
-        category_list.add("Fish");
-
-
-        for (String str : category_list) {
-            final Chip chip = new Chip(getActivity());
-            chip.setText(str);
-            chip.setClickable(true);
-            chip.setChipBackgroundColorResource(R.color.chipDefault);
-            chip.setTextColor(getResources().getColor(R.color.black));
-
-            if (str.compareTo(productModel.getProductTag()) == 0){
-                chip.setSelected(true);
-                chip.setChipBackgroundColorResource(R.color.mosibusPrimary);
-//                chip.setChipStrokeColorResource(R.color.teal_700);
-                chip.setTextColor(getResources().getColor(R.color.white));
-                categorySelected = str;
-                Log.d("chups", categorySelected);
-            }
-            chip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (int i = 0; i < cg_product.getChildCount(); i++) {
-                        Chip currentChip = (Chip) cg_product.getChildAt(i);
-                        if (currentChip != chip) {
-                            currentChip.setChipBackgroundColorResource(R.color.chipDefault);
-                            currentChip.setTextColor(getResources().getColor(R.color.black));
-                        }
-                    }
-                    chip.setChipBackgroundColorResource(R.color.mosibusPrimary);
-                    chip.setTextColor(getResources().getColor(android.R.color.white));
-                    categorySelected = (String) chip.getText();
-                    Log.d("chups", categorySelected);
-                }
-            });
-
-            cg_product.addView(chip);
-        }
+//        //Chip Group
+//        category_list = new ArrayList<>();
+//        category_list.add("American");
+//        category_list.add("Chinese");
+//        category_list.add("Filipino");
+//        category_list.add("Japanese");
+//        category_list.add("Thai");
+//        category_list.add("Breakfast");
+//        category_list.add("Lunch");
+//        category_list.add("Dessert");
+//        category_list.add("Pork");
+//        category_list.add("Beef");
+//        category_list.add("Fish");
+//
+//
+//        for (String str : category_list) {
+//            final Chip chip = new Chip(getActivity());
+//            chip.setText(str);
+//            chip.setClickable(true);
+//            chip.setChipBackgroundColorResource(R.color.chipDefault);
+//            chip.setTextColor(getResources().getColor(R.color.black));
+//
+//            if (str.compareTo(productModel.getProductTag()) == 0){
+//                chip.setSelected(true);
+//                chip.setChipBackgroundColorResource(R.color.mosibusPrimary);
+////                chip.setChipStrokeColorResource(R.color.teal_700);
+//                chip.setTextColor(getResources().getColor(R.color.white));
+//                categorySelected = str;
+//                Log.d("chups", categorySelected);
+//            }
+//            chip.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    for (int i = 0; i < cg_product.getChildCount(); i++) {
+//                        Chip currentChip = (Chip) cg_product.getChildAt(i);
+//                        if (currentChip != chip) {
+//                            currentChip.setChipBackgroundColorResource(R.color.chipDefault);
+//                            currentChip.setTextColor(getResources().getColor(R.color.black));
+//                        }
+//                    }
+//                    chip.setChipBackgroundColorResource(R.color.mosibusPrimary);
+//                    chip.setTextColor(getResources().getColor(android.R.color.white));
+//                    categorySelected = (String) chip.getText();
+//                    Log.d("chups", categorySelected);
+//                }
+//            });
+//
+//            cg_product.addView(chip);
+//        }
 
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {

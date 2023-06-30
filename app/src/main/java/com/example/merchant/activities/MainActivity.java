@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d("responseJson", String.valueOf(response));
                     JSONObject jsonObject = new JSONObject(response);
                     String success = jsonObject.getString("success");
                     Log.d("responseJson", String.valueOf(jsonObject));
@@ -130,13 +131,14 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("NAME LOGIN: " , String.valueOf(id));
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
+                    } else if (success.equals("2")) {
+                        Toast.makeText(MainActivity.this, "Your Account is Being Processed", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
 
 //                    e.printStackTrace();
 //                    Toast.makeText(Login.this, "Error! "+ e.toString(),Toast.LENGTH_SHORT).show();*/
-
                     Toast.makeText(MainActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
                 }
             }
