@@ -992,7 +992,7 @@ public class AddProductFragment extends Fragment {
                                 paramV.put("productName", pname);
                                 paramV.put("productDescription", pdesc);
                                 paramV.put("productTag", ptag);
-                                paramV.put("productServingSize", pservesize);
+                                paramV.put("productServingSize", pservesize + " pax");
                                 paramV.put("productPrice", String.valueOf(pprice));
                                 paramV.put("productPrepTime", ppreptime);
                                 paramV.put("weather", pweather);

@@ -19,6 +19,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
 
+import java.io.File;
 import java.util.Map;
 
 
@@ -36,6 +37,12 @@ public class OSMFragment extends AppCompatActivity {
         setContentView(R.layout.fragment_osm);
 
         Configuration.getInstance().load(getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+
+//        org.osmdroid.config.IConfigurationProvider osmConf = org.osmdroid.config.Configuration.getInstance();
+//        File basePath = new File(getCacheDir().getAbsolutePath(), "osmdroid");
+//        osmConf.setOsmdroidBasePath(basePath);
+//        File tileCache = new File(osmConf.getOsmdroidBasePath().getAbsolutePath(), "tile");
+//        osmConf.setOsmdroidTileCache(tileCache);
 
         btn_confirm_marker = findViewById(R.id.btn_confirm_marker);
         mapView = findViewById(R.id.mapView);

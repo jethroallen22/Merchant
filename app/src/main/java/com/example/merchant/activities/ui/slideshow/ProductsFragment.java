@@ -25,6 +25,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
+import com.example.merchant.activities.MainActivity;
 import com.example.merchant.activities.ui.addproduct.AddProductFragment;
 import com.example.merchant.activities.ui.editproduct.EditProductFragment;
 import com.example.merchant.adapters.OrderAdapter;
@@ -96,9 +97,9 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
             public void run() {
                 product_list = new ArrayList<>();
                 extractFoodforyou();
-                root.postDelayed(this, 10000);
+                root.postDelayed(this, 15000);
             }
-        }, 0);
+        }, 1000);
 
 
         binding.fabAddProduct.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +224,7 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                     @Override
                     public void onResponse(String result) {
                         Log.d("On Res", "inside on res");
+                        Toast.makeText(getActivity(), "Your Product has been Removed", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -237,8 +239,14 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                 return paramV;
             }
         };
-
         queue.add(stringRequest);
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putInt("id", id);
+        bundle.putString("email", email);
+        ProductsFragment fragment = new ProductsFragment();
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
     }
 
     @Override
