@@ -66,8 +66,8 @@ public class Register extends AppCompatActivity {
         register_name_text_input = findViewById(R.id.name_text_input);
         register_email_text_input = findViewById(R.id.description_text_input);
         register_number_text_input = findViewById(R.id.contact_text_input);
-        register_password_text_input = findViewById(R.id.calories_text_input);
-        register_confpassword_text_input = findViewById(R.id.price_text_input);
+        register_password_text_input = findViewById(R.id.register_password_text_input);
+        register_confpassword_text_input = findViewById(R.id.confpassword_text_input);
 
         org.osmdroid.config.IConfigurationProvider osmConf = org.osmdroid.config.Configuration.getInstance();
 
