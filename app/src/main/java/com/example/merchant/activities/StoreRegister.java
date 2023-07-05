@@ -351,12 +351,13 @@ public class StoreRegister extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), StoreRegister.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         StoreRegister.this.startActivity(intent);
+                        Toast.makeText(getApplicationContext(), "Your Account is Being Processed", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(StoreRegister.this, "Email/Contact has been used ",Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     Log.d("REGISTER:", "catch" );
-                    Toast.makeText(StoreRegister.this, "Catch ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StoreRegister.this, "Error",Toast.LENGTH_SHORT).show();
                 }
 
             }
