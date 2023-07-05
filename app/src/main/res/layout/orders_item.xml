@@ -33,23 +33,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/robotomedium"
                 android:text="OID: 2"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/cv_for_later" />
 
             <TextView
                 android:id="@+id/tv_order_info"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/robotobold"
                 android:lines="1"
-                android:text="Mcdo Fries, Burger Mcdo, Chicken, Chicken Fillet..."
+                android:text="Mcdo Fries"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toBottomOf="@+id/tv_order_id2" />
 
@@ -57,13 +57,53 @@
                 android:id="@+id/tv_order_item_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/robotoregular"
                 android:lines="1"
                 android:maxLines="1"
                 android:text="1 item - 45min - 5.2km"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_order_id2" />
+                app:layout_constraintTop_toBottomOf="@+id/cv_for_later" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_for_later"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#F1493D"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_order_id2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/robotoregular"
+                    android:text="For Later"
+                    android:textColor="#F3E4E4" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_banner"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:cardBackgroundColor="#F1493D"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintStart_toStartOf="@id/tv_order_info"
+                app:layout_constraintTop_toBottomOf="@id/tv_order_info">
+
+                <TextView
+                    android:id="@+id/tv_for_later"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/robotoregular"
+                    android:text="05-07-2023 12:00 PM"
+                    android:textColor="#F3E4E4" />
+            </androidx.cardview.widget.CardView>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

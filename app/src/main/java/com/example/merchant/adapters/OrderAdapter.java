@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.merchant.R;
@@ -40,18 +41,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         ArrayList<String> strings = new ArrayList<>();
         String text = "";
         if(list.size() != 0) {
-            int i, j = 0;
-//            //text = String.join(", ", list.get(position).getOrderItem_list().get(i).getProduct_name());
-//            for (i = 0; i < list.get(position).getOrderItem_list().size(); i++) {
-//                if (i == list.get(position).getOrderItem_list().size() - 1) {
-//                    text += list.get(position).getOrderItem_list().get(i).getProductName();
-//                } else {
-//                    text += list.get(position).getOrderItem_list().get(i).getProductName() + ", ";
-//                }
-//            }
             holder.tv_order_info.setText(list.get(position).getUsers_name());
-//            Log.d("ReponseOrderID", String.valueOf(list.get(position).getIdOrder()));
-//            Log.d("ReponseItemSize", String.valueOf(list.get(position).getOrderItem_list().size()));
             holder.tv_order_item_info.setText("Qty: " + list.get(position).getOrderItem_list().size());
             holder.tv_order_id2.setText("OID: " + list.get(position).getIdOrder());
         }
@@ -63,7 +53,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_order_info, tv_order_item_info, tv_order_id2;
+        TextView tv_order_info, tv_order_item_info, tv_order_id2, tv_for_later;
+        CardView cv_banner;
 
         public ViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
@@ -71,6 +62,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             tv_order_info = itemView.findViewById(R.id.tv_order_info);
             tv_order_item_info = itemView.findViewById(R.id.tv_order_item_info);
             tv_order_id2 = itemView.findViewById(R.id.tv_order_id2);
+            tv_for_later = itemView.findViewById(R.id.tv_for_later);
+            cv_banner = itemView.findViewById(R.id.cv_banner);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
