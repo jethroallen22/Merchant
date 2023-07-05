@@ -157,6 +157,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                 try {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject jsonObjectOrder = response.getJSONObject(i);
+                        int users_id = jsonObjectOrder.getInt("users_id");
                         int idOrder = jsonObjectOrder.getInt("idOrder");
                         float orderItemTotalPrice = jsonObjectOrder.getInt("orderItemTotalPrice");
                         String orderStatus = jsonObjectOrder.getString("orderStatus");
@@ -175,6 +176,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                             tempOrderModel.setStore_idstore(store_idStore);
                             tempOrderModel.setUsers_name(name);
                             tempOrderModel.setOrderItem_list(tempOrderItemList);
+                            tempOrderModel.setIdUser(users_id);
 
 //                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd/MM/yyyy hh:mm a" )
                             if (dateTimeString.compareTo(timedate) >= 0){
