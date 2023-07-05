@@ -43,11 +43,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class OrdersFragment extends Fragment implements RecyclerViewInterface {
@@ -65,6 +71,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     public static String name = "";
     public static String email = "";
     public static int id;
+    String dateTimeString, timedate;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -92,6 +99,17 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
         Log.d("Start ", "Before ExtractOrderItem");
         product_list = new ArrayList<>();
         orderModelList = new ArrayList<>();
+
+        // Get the current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date currentDateAndTime = calendar.getTime();
+        // Format the date and time as desired
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        String formattedDate = dateFormat.format(currentDateAndTime);
+        String formattedTime = timeFormat.format(currentDateAndTime);
+
+        dateTimeString = formattedDate + " " + formattedTime;
 
 
         root.postDelayed(new Runnable() {
@@ -144,6 +162,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                         String orderStatus = jsonObjectOrder.getString("orderStatus");
                         int store_idStore = jsonObjectOrder.getInt("store_idStore");
                         String name = jsonObjectOrder.getString("name");
+                         timedate = jsonObjectOrder.getString("timedate");
                         Log.d("ResponseIdStore", String.valueOf(store_idStore));
                         Log.d("ResponseIdStoreMerch", String.valueOf(id));
                         if (store_idStore == id) {
@@ -156,6 +175,23 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                             tempOrderModel.setStore_idstore(store_idStore);
                             tempOrderModel.setUsers_name(name);
                             tempOrderModel.setOrderItem_list(tempOrderItemList);
+
+//                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd/MM/yyyy hh:mm a" )
+                            if (dateTimeString.compareTo(timedate) >= 0){
+                                Log.d("DATETIME", "before" + dateTimeString);
+                                Log.d("DATETIME DB", timedate);
+                            } else {
+//                                DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern( "dd-MM-yyyy hh:mm:ss aa" );
+                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                Date date;
+                                try {
+                                    date = formatter.parse(timedate);
+//                                    String formattedDate = dtFormat.format(date.toInstant());
+                                    Log.d("DATETIME DB Form", String.valueOf(date));
+                                } catch (ParseException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
 
                             JsonArrayRequest jsonArrayRequestOrderItemList = new JsonArrayRequest(Request.Method.GET, JSON_URL + "apiorderitemget.php", null, new Response.Listener<JSONArray>() {
                                 @Override

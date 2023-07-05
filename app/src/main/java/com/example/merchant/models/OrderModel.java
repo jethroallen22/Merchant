@@ -15,6 +15,7 @@ public class OrderModel implements Parcelable {
     int store_idstore;
     String users_name;
     List<OrderItemModel> orderItem_list;
+    String timedate;
 
     public OrderModel(int idOrder, float orderItemTotalPrice, String orderStatus, int store_idstore, String users_name, List<OrderItemModel> orderItem_list) {
         this.idOrder = idOrder;
@@ -25,12 +26,14 @@ public class OrderModel implements Parcelable {
         this.orderItem_list = orderItem_list;
     }
 
-    public OrderModel(int idOrder, float orderItemTotalPrice, String orderStatus, int store_idstore, String users_name) {
+    public OrderModel(int idOrder, float orderItemTotalPrice, String orderStatus, int store_idstore, String users_name, String timedate, List<OrderItemModel> orderItem_list) {
         this.idOrder = idOrder;
         this.orderItemTotalPrice = orderItemTotalPrice;
         this.orderStatus = orderStatus;
         this.store_idstore = store_idstore;
         this.users_name = users_name;
+        this.timedate = timedate;
+        this.orderItem_list = orderItem_list;
     }
 
     //    public OrderModel(long order_id, String name, String address, String time, String distance, List<OrderItemModel> orderItem_list, int item_count, float total) {
@@ -63,6 +66,7 @@ public class OrderModel implements Parcelable {
         orderStatus = in.readString();
         store_idstore = in.readInt();
         users_name = in.readString();
+        timedate = in.readString();
         orderItem_list = in.createTypedArrayList(OrderItemModel.CREATOR);
     }
 
@@ -118,6 +122,14 @@ public class OrderModel implements Parcelable {
         this.users_name = users_name;
     }
 
+    public String getTimedate() {
+        return timedate;
+    }
+
+    public void setTimedate(String timedate) {
+        this.timedate = timedate;
+    }
+
     public List<OrderItemModel> getOrderItem_list() {
         return orderItem_list;
     }
@@ -138,6 +150,7 @@ public class OrderModel implements Parcelable {
         dest.writeString(orderStatus);
         dest.writeInt(store_idstore);
         dest.writeString(users_name);
+        dest.writeString(timedate);
         dest.writeTypedList(orderItem_list);
     }
 }

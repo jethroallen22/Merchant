@@ -56,21 +56,21 @@
     <fragment
         android:id="@+id/nav_deals"
         android:name="com.example.merchant.activities.ui.deals.DealsStatusFragment"
-        android:label="deals"
+        android:label="Deals"
         tools:layout="@layout/fragment_deals_status" >
     </fragment>
 
     <fragment
         android:id="@+id/nav_voucher"
         android:name="com.example.merchant.activities.ui.voucher.VoucherStatusFragment"
-        android:label="voucher"
+        android:label="Vouchers"
         tools:layout="@layout/fragment_voucher_status" >
     </fragment>
 
     <fragment
         android:id="@+id/nav_special"
         android:name="com.example.merchant.activities.ui.special.SpecialStatusFragment"
-        android:label="special"
+        android:label="Special Tags"
         tools:layout="@layout/fragment_special_status" >
     </fragment>
 </navigation>
