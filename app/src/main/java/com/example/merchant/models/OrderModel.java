@@ -10,6 +10,7 @@ import java.util.List;
 
 public class OrderModel implements Parcelable {
     int idOrder;
+    int idUser;
     float orderItemTotalPrice;
     String orderStatus;
     int store_idstore;
@@ -96,6 +97,14 @@ public class OrderModel implements Parcelable {
 
     public void setOrderItemTotalPrice(float orderItemTotalPrice) {
         this.orderItemTotalPrice = orderItemTotalPrice;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getOrderStatus() {

@@ -1003,8 +1003,8 @@ public class AddProductFragment extends Fragment {
                                 return paramV;
                             }
                         };
-
                         queue.add(stringRequest);
+                    Toast.makeText(getContext(), "Your Product is Being Processed", Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(getActivity().getApplicationContext(),"Please select an image first!", Toast.LENGTH_SHORT).show();
 
