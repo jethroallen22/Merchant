@@ -331,7 +331,7 @@ public class StoreRegister extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
-
+//miggymiggy
     private void SignUpStore(String name_text_input,  String description_text_input,
                                 String location_text_input, float rating_text_input,
                              int start_time_text_input, int end_time_text_input,
