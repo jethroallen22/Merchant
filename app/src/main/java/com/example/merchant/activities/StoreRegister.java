@@ -356,7 +356,7 @@ public class StoreRegister extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     Log.d("REGISTER:", "catch" );
-                    Toast.makeText(StoreRegister.this, "Catch ",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(StoreRegister.this, "Catch ",Toast.LENGTH_SHORT).show();
                 }
 
             }

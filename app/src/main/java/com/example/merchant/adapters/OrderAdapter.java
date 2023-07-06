@@ -44,6 +44,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             holder.tv_order_info.setText(list.get(position).getUsers_name());
             holder.tv_order_item_info.setText("Qty: " + list.get(position).getOrderItem_list().size());
             holder.tv_order_id2.setText("OID: " + list.get(position).getIdOrder());
+            if (list.get(position).getTimedate() != null){
+                holder.tv_for_later.setText(list.get(position).getTimedate());
+                holder.cv_banner.setVisibility(View.VISIBLE);
+                holder.cv_for_later.setVisibility(View.VISIBLE);
+            } else {
+                holder.cv_banner.setVisibility(View.GONE);
+                holder.cv_for_later.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -54,7 +62,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_order_info, tv_order_item_info, tv_order_id2, tv_for_later;
-        CardView cv_banner;
+        CardView cv_banner, cv_for_later;
 
         public ViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
@@ -64,6 +72,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             tv_order_id2 = itemView.findViewById(R.id.tv_order_id2);
             tv_for_later = itemView.findViewById(R.id.tv_for_later);
             cv_banner = itemView.findViewById(R.id.cv_banner);
+            cv_for_later = itemView.findViewById(R.id.cv_for_later);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override

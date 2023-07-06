@@ -182,14 +182,16 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                             if (dateTimeString.compareTo(timedate) >= 0){
                                 Log.d("DATETIME", "before" + dateTimeString);
                                 Log.d("DATETIME DB", timedate);
+                                tempOrderModel.setTimedate(null);
                             } else {
-//                                DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern( "dd-MM-yyyy hh:mm:ss aa" );
                                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
                                 Date date;
                                 try {
                                     date = formatter.parse(timedate);
-//                                    String formattedDate = dtFormat.format(date.toInstant());
-                                    Log.d("DATETIME DB Form", String.valueOf(date));
+                                    String formattedDate = formatter2.format(date);
+                                    Log.d("DATETIME DB Form", String.valueOf(formattedDate));
+                                    tempOrderModel.setTimedate(formattedDate);
                                 } catch (ParseException e) {
                                     throw new RuntimeException(e);
                                 }
