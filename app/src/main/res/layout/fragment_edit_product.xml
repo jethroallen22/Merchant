@@ -144,15 +144,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/preptime_text" />
 
-            <TextView
-                android:id="@+id/category_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/robotomedium"
-                android:text="Category"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/preptime_text_input"
-                app:layout_constraintTop_toBottomOf="@+id/preptime_text_input" />
+<!--            <TextView-->
+<!--                android:id="@+id/category_text"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/robotomedium"-->
+<!--                android:text="Category"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/preptime_text_input"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/preptime_text_input" />-->
 
 <!--            <EditText-->
 <!--                android:id="@+id/category_spinner"-->
@@ -168,12 +168,12 @@
 <!--                app:layout_constraintStart_toStartOf="parent"-->
 <!--                app:layout_constraintTop_toBottomOf="@+id/category_text" />-->
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cg_product"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@+id/category_text"
-                app:layout_constraintTop_toBottomOf="@+id/category_text"></com.google.android.material.chip.ChipGroup>
+<!--            <com.google.android.material.chip.ChipGroup-->
+<!--                android:id="@+id/cg_product"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/category_text"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/category_text"></com.google.android.material.chip.ChipGroup>-->
 
             <TextView
                 android:id="@+id/weather_text2"
@@ -183,8 +183,8 @@
                 android:fontFamily="@font/robotomedium"
                 android:text="Weather"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/cg_product"
-                app:layout_constraintTop_toBottomOf="@+id/cg_product" />
+                app:layout_constraintStart_toStartOf="@+id/preptime_text_input"
+                app:layout_constraintTop_toBottomOf="@+id/preptime_text_input" />
 
             <Spinner
                 android:id="@+id/weather_spinner2"
