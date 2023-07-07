@@ -186,13 +186,13 @@ public class OrderSummaryFragment extends Fragment {
                 params.put("title", "Order ID: " + order.getIdOrder());
                 params.put("type", "orderprocess");
                 if (status.equalsIgnoreCase("preparing")){
-                    params.put("description", "Hang in there! Your order is currently being prapared.");
+                    params.put("description", "Hang in there! Your order is currently being prepared.");
                 } else if (status.equalsIgnoreCase("pickup")){
                     params.put("description", "We have great news for you! Your order is now ready for pick-up.");
                 } else if (status.equalsIgnoreCase("complete")){
                     params.put("description", "Thank you! Your order is now complete.");
                 } else if (status.equalsIgnoreCase("canceled")){
-                    params.put("description", "Our apologies! It looks like your order has been canceled.");
+                    params.put("description", "Our apologies! It looks like your order has been cancelled.");
                 }
 //                Log.d("Params: ", String.valueOf(params));
                 return params;
