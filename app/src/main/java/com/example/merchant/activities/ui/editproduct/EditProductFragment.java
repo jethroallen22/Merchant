@@ -299,7 +299,7 @@ public class EditProductFragment extends Fragment {
                     };
 
                     queue.add(stringRequest);
-
+                    Toast.makeText(getContext(), "Your Product is Being Processed", Toast.LENGTH_SHORT).show();
                     Bundle bundle = new Bundle();
                     ProductsFragment fragment = new ProductsFragment();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
