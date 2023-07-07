@@ -79,7 +79,9 @@ public class AddProductFragment extends Fragment {
             checkBoxBreakfast, checkBoxLunch, checkBoxDessert, checkBoxPork, checkBoxBeef, checkBoxFish, checkBoxChicken,
             checkBoxSeafood, checkBoxNoodles, checkBoxPasta, checkBoxRamen, checkBoxBeverages, checkBoxJuice, checkBoxSoda,
             checkBoxMilkTea, checkBoxPizza, checkBoxSalad, checkBoxFastFood, checkBoxCrispy, checkBoxSpicy, checkBoxSweet,
-            checkBoxBread, checkBoxQuick, checkBoxEasy, checkBoxHeavy, checkBoxBaked;
+            checkBoxBread, checkBoxQuick, checkBoxEasy, checkBoxHeavy, checkBoxBaked, checkBoxCoffee, checkBoxItalian, checkBoxIndian,
+            checkBoxFrench, checkBoxMexican, checkBoxKorean, checkBoxMediterranean, checkBoxMainCourse, checkBoxAppetizer, checkBoxSoup,
+            checkBoxSushi, checkBoxFruit;
 
     List<String> checkboxes_list;
 
@@ -161,6 +163,18 @@ public class AddProductFragment extends Fragment {
         checkBoxEasy = root.findViewById(R.id.checkBoxEasy);
         checkBoxHeavy = root.findViewById(R.id.checkBoxHeavy);
         checkBoxBaked = root.findViewById(R.id.checkBoxBaked);
+        checkBoxCoffee = root.findViewById(R.id.checkBoxCoffee);
+        checkBoxItalian = root.findViewById(R.id.checkBoxItalian);
+        checkBoxIndian = root.findViewById(R.id.checkBoxIndian);
+        checkBoxFrench = root.findViewById(R.id.checkBoxFrench);
+        checkBoxMexican = root.findViewById(R.id.checkBoxMexican);
+        checkBoxKorean = root.findViewById(R.id.checkBoxKorean);
+        checkBoxMediterranean = root.findViewById(R.id.checkBoxMediterranean);
+        checkBoxMainCourse = root.findViewById(R.id.checkBoxMainCourse);
+        checkBoxAppetizer = root.findViewById(R.id.checkBoxAppetizer);
+        checkBoxSoup = root.findViewById(R.id.checkBoxSoup);
+        checkBoxSushi = root.findViewById(R.id.checkBoxSushi);
+        checkBoxFruit = root.findViewById(R.id.checkBoxFruit);
         cg_product=root.findViewById(R.id.cg_product);
 
         checkboxes_list = new ArrayList<>();
@@ -325,6 +339,132 @@ public class AddProductFragment extends Fragment {
             }
         });
 
+        checkBoxItalian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() <= 2 && checkBoxItalian.isChecked()){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    checkboxes_list.add("Italian");
+                }else {
+                    Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
+                    toast.setText("Up to 2 Cuisines Only");
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.show();
+                    compoundButton.setChecked(false);
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Italian")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxIndian.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() <= 2 && checkBoxIndian.isChecked()){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    checkboxes_list.add("Indian");
+                }else {
+                    Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
+                    toast.setText("Up to 2 Cuisines Only");
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.show();
+                    compoundButton.setChecked(false);
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Indian")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxFrench.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() <= 2 && checkBoxFrench.isChecked()){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    checkboxes_list.add("French");
+                }else {
+                    Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
+                    toast.setText("Up to 2 Cuisines Only");
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.show();
+                    compoundButton.setChecked(false);
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("French")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxMexican.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() <= 2 && checkBoxMexican.isChecked()){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    checkboxes_list.add("Mexican");
+                }else {
+                    Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
+                    toast.setText("Up to 2 Cuisines Only");
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.show();
+                    compoundButton.setChecked(false);
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Mexican")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxKorean.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() <= 2 && checkBoxKorean.isChecked()){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    checkboxes_list.add("Korean");
+                }else {
+                    Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
+                    toast.setText("Up to 2 Cuisines Only");
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.show();
+                    compoundButton.setChecked(false);
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Korean")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxMediterranean.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (counterCheckBox() <= 2 && checkBoxMediterranean.isChecked()){
+                    Log.d("Check Counter", String.valueOf(counterCheckBox()));
+                    checkboxes_list.add("Mediterranean");
+                }else {
+                    Toast toast = Toast.makeText(getContext(),"This is toast", Toast.LENGTH_SHORT);
+                    toast.setText("Up to 2 Cuisines Only");
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.show();
+                    compoundButton.setChecked(false);
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Mediterranean")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
         checkBoxBreakfast.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -402,6 +542,36 @@ public class AddProductFragment extends Fragment {
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
                         if (checkboxes_list.get(i).equals("Dessert")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxMainCourse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkboxes_list.add("Main Course");
+                }else {
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Main Course")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxAppetizer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkboxes_list.add("Appetizer");
+                }else {
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Appetizer")){
                             checkboxes_list.remove(i);
                         }
                     }
@@ -664,6 +834,20 @@ public class AddProductFragment extends Fragment {
                 }
             }
         });
+        checkBoxCoffee.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkboxes_list.add("Coffee");
+                }else {
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Coffee")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
         checkBoxPizza.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -850,6 +1034,51 @@ public class AddProductFragment extends Fragment {
                 }else {
                     for (int i=0;i<checkboxes_list.size();i++){
                         if (checkboxes_list.get(i).equals("Baked")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxSoup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkboxes_list.add("Soup");
+                }else {
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Soup")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxSushi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkboxes_list.add("Sushi");
+                }else {
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Sushi")){
+                            checkboxes_list.remove(i);
+                        }
+                    }
+                }
+            }
+        });
+
+        checkBoxFruit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()){
+                    checkboxes_list.add("Fruit");
+                }else {
+                    for (int i=0;i<checkboxes_list.size();i++){
+                        if (checkboxes_list.get(i).equals("Fruit")){
                             checkboxes_list.remove(i);
                         }
                     }
@@ -1058,13 +1287,36 @@ public class AddProductFragment extends Fragment {
             countCheckBox++;
             Log.d("Check Count Thai", String.valueOf(countCheckBox));
         }
+        if (checkBoxItalian.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Ital", String.valueOf(countCheckBox));
+        }
+        if (checkBoxIndian.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Indi", String.valueOf(countCheckBox));
+        }
+        if (checkBoxFrench.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count French", String.valueOf(countCheckBox));
+        }
+        if (checkBoxMexican.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Mex", String.valueOf(countCheckBox));
+        }
+        if (checkBoxKorean.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Kor", String.valueOf(countCheckBox));
+        }
+        if (checkBoxMediterranean.isChecked()){
+            countCheckBox++;
+            Log.d("Check Count Med", String.valueOf(countCheckBox));
+        }
 //        if (categorySelected.compareTo("American")==0 || categorySelected.compareTo("Chinese")==0 ||
 //                categorySelected.compareTo("Filipino")==0 || categorySelected.compareTo("Japanese")==0 ||
 //                categorySelected.compareTo("Thai")==0){
 //            countCheckBox++;
 //            Log.d("Check Count Category", categorySelected);
 //        }
-
         return countCheckBox;
     }
 
