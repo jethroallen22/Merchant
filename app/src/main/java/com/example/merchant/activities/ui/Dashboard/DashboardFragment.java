@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -86,6 +87,8 @@ public class DashboardFragment extends Fragment {
     String image;
     Bitmap bitmap;
 //    String dateTimeString, timedate;
+    Handler handler;
+    Runnable myRunnable;
 
     private FragmentDashboardBinding binding;
 
@@ -124,162 +127,21 @@ public class DashboardFragment extends Fragment {
         requestQueue3 = Singleton.getsInstance(getActivity()).getRequestQueue();
         requestQueue4 = Singleton.getsInstance(getActivity()).getRequestQueue();
         requestQueue5 = Singleton.getsInstance(getActivity()).getRequestQueue();
-
-//        // Get the current date and time
-//        Calendar calendar = Calendar.getInstance();
-//        Date currentDateAndTime = calendar.getTime();
-//        // Format the date and time as desired
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-//        String formattedDate = dateFormat.format(currentDateAndTime);
-//        String formattedTime = timeFormat.format(currentDateAndTime);
-//
-//        dateTimeString = formattedDate + " " + formattedTime;
-
-        newCust(String.valueOf(id));
-        extractOrders();
-
-//        root.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                extractOrder();
-//                //Log.d("OrderStatus", order.getOrderStatus());
-//                root.postDelayed(this, 10000);
-//            }
-//        }, 0);
+        root.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                order_list.clear();
+                order_item_list.clear();
+                temp_order_item.clear();
+                temp_order.clear();
+                newCust(String.valueOf(id));
+                extractOrders();
+                root.postDelayed(this, 5000);
+            }
+        }, 1000);
 
         return root;
     }
-
-//    public void extractOrders(){
-//        Log.d("extractOrders", "Called");
-//        JsonArrayRequest jsonArrayRequestRec3 = new JsonArrayRequest(Request.Method.GET, JSON_URL + "testAll.php", null, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                Log.e("Bug", String.valueOf(response));
-//                Log.d("Response Order: ", String.valueOf(response.length()));
-//                int incoming_count = 0;
-//                for (int i=0; i < response.length(); i++){
-//                    try {
-//                        Log.d("Try O: ", "Im in");
-//                        JSONObject jsonObjectRec1 = response.getJSONObject(i);
-//
-//                        //USERS DB
-//                        String name = jsonObjectRec1.getString("name");
-//
-//                        //ORDER DB
-//                        int idOrder = jsonObjectRec1.getInt("idOrder");
-//                        int orderItemTotalPrice = jsonObjectRec1.getInt("orderItemTotalPrice");
-//                        String orderStatus = jsonObjectRec1.getString("orderStatus");
-//                        int store_idstore = jsonObjectRec1.getInt("store_idstore");
-////                        timedate = jsonObjectRec1.getString("timedate");
-//
-//                        //OrderItem DB
-//                        int idItem = jsonObjectRec1.getInt("idItem");
-//                        Log.d("Test", String.valueOf(idItem));
-//                        int product_idProduct = jsonObjectRec1.getInt("product_idProduct");
-//                        int order_idOrder = jsonObjectRec1.getInt("order_idOrder");
-//                        float ItemPrice = (float) jsonObjectRec1.getDouble("ItemPrice");
-//                        int ItemQuantity = jsonObjectRec1.getInt("ItemQuantity");
-//
-//                        //PRODUCT DB
-//                        String productName = jsonObjectRec1.getString("productName");
-//                        Log.d("Store ID", String.valueOf(store_idstore));
-//                        Log.d("Merch ID", String.valueOf(id));
-//
-//                            OrderItemModel orderItemModel = new OrderItemModel(product_idProduct, (float) ItemPrice, ItemQuantity, order_idOrder, productName);
-//
-//                            order_item_list.add(orderItemModel);
-////                            Log.d("ORDER ITEM LIST: ", String.valueOf(order_item_list.get(i).getIdItem()));
-//                            temp_order_item.add(order_item_list.get(i));
-//
-//                            OrderModel orderModel = new OrderModel(idOrder, orderItemTotalPrice, orderStatus, store_idstore, name, temp_order_item);
-//
-////                            if (dateTimeString.compareTo(timedate) >= 0){
-////                                Log.d("DATETIME", "before" + dateTimeString);
-////                                Log.d("DATETIME DB", timedate);
-////                                orderModel.setTimedate(null);
-////                            } else {
-////                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-////                                SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
-////                                Date date;
-////                                try {
-////                                    date = formatter.parse(timedate);
-////                                    String formattedDate = formatter2.format(date);
-////                                    Log.d("DATETIME DB Form", String.valueOf(formattedDate));
-////                                    tempOrderModel.setTimedate(formattedDate);
-////                                } catch (ParseException e) {
-////                                    throw new RuntimeException(e);
-////                                }
-////                            }
-//                            temp_order.add(orderModel);
-//
-//                            if((idOrder != temp_idOrder && idOrder != 0) || response.length() == 1 || i == response.length()-1){
-//                                Log.d("Inside If", String.valueOf(order_item_list.size()));
-//                                temp_order_item = new ArrayList<>();
-//                                for(int j=0; j < order_item_list.size(); j++){
-//                                    Log.d("Inside For", String.valueOf(order_item_list.size()));
-//                                    if((temp_idOrder == order_item_list.get(j).getIdOrder()) || (response.length() == 1)){
-//                                        Log.d("Inside If", String.valueOf(order_item_list.size()));
-//                                        temp_order_item.add(order_item_list.get(j));
-//                                        Log.d("TEMP LIST: ", String.valueOf(i));
-//                                    }
-//                                }
-//
-////                            Log.d("TEMP LIST: ", temp_order_item.get(i).getProductName());
-//                                if(i != 0){
-//                                    if (temp_order.get(i-1).getStore_idstore() == id){
-//                                        OrderModel orderModel2 = new OrderModel(temp_order.get(i-1).getIdOrder(), temp_order.get(i-1).getOrderItemTotalPrice(), temp_order.get(i-1).getOrderStatus(), temp_order.get(i-1).getStore_idstore(), temp_order.get(i-1).getUsers_name(), temp_order_item);
-//                                        order_list.add(orderModel2);
-//                                    }
-//                                }
-//                                if(response.length()==1 || i == response.length()-1){
-//                                    if (i == response.length()-1 && temp_idOrder != idOrder && temp_order.get(i).getStore_idstore() == id){
-//                                        OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), Collections.singletonList(order_item_list.get(i)));
-//                                        order_list.add(orderModel2);
-//                                    }else{
-//                                        if (temp_order.get(i).getStore_idstore() == id){
-//                                            OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), temp_order_item);
-//                                            order_list.add(orderModel2);
-//                                        }
-//
-//                                    }
-//
-//                                }
-//
-//                                Log.d("ORDER LIST: ", "Just added #" + i);
-////                            if(i!=0){
-////                                Log.d("ORDER MODEL: ", String.valueOf(order_list.get(i).getIdOrder()));
-////                            }
-//
-//                            }
-//                            if((orderStatus.equals("pending")) && store_idstore == id){
-//                                incoming_count++;
-//                                Log.d("Incoming Count", String.valueOf(incoming_count));
-//                            }
-//                            temp_idOrder = idOrder;
-//
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Log.d("Order Size" , String.valueOf(temp_order.size()));
-////                    if(i != 0){
-////                        orderAdapter = new OrderAdapter(getActivity(), order_list, recyclerViewInterface);
-////                        rv_orders.setAdapter(orderAdapter);
-////                    }
-//                }
-//                tv_incoming_orders.setText(String.valueOf(incoming_count));
-//                innit();
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("OnError O: ", String.valueOf(error));
-//            }
-//        });
-//        requestQueue3.add(jsonArrayRequestRec3);
-//    }
 
     public void extractOrders(){
         JsonArrayRequest jsonArrayRequestOrder = new JsonArrayRequest(Request.Method.GET, JSON_URL+"apiorderget.php", null, new Response.Listener<JSONArray>() {
@@ -357,13 +219,6 @@ public class DashboardFragment extends Fragment {
                                         }
                                         Log.d("ResponseOrderItemSize", String.valueOf(orderItemModels.size()));
                                         tempOrderModel.setOrderItem_list(orderItemModels);
-//                                        orderModelList = order_list;
-//                                        Log.d("ResponseOrderSize", String.valueOf(orderModelList.size()));
-//                                        orderAdapter = new OrderAdapter(getActivity(),orderModelList, OrdersFragment.this);
-//                                        rv_orders.setAdapter(orderAdapter);
-//                                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//                                        rv_orders.setLayoutManager(layoutManager);
-
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         Log.d("Error", String.valueOf(e));
@@ -380,7 +235,7 @@ public class DashboardFragment extends Fragment {
                             tv_incoming_orders.setText(String.valueOf(incoming_count));
                         }
                     }
-                    innit();
+                    innit(order_list);
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -392,7 +247,6 @@ public class DashboardFragment extends Fragment {
             }
         });
         requestQueue4.add(jsonArrayRequestOrder);
-        innit();
     }
 
     private void newCust(String storeId){
@@ -438,20 +292,20 @@ public class DashboardFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
-
     }
 
     //For Dynamic Table
-    public void innit(){
+    public void innit(List<OrderModel> orderModelList){
         Log.d("Innit", "inside");
-        Log.d("Innit OL size", String.valueOf(order_list.size()));
+        Log.d("Innit OL size", String.valueOf(orderModelList.size()));
 //        TableLayout tl_dashboard  = (TableLayout) root.findViewById(R.id.tl_dashboard);
-        for (int i=0;i<order_list.size();i++){
-            Log.d("Innit OL size", String.valueOf(order_list.size()));
+        tl_dashboard.removeViews(1,tl_dashboard.getChildCount()-1);
+        for (int i=0;i<orderModelList.size();i++){
+            Log.d("Innit OL size", String.valueOf(orderModelList.size()));
             //Creating Table Rows
             TableRow tbrow = new TableRow(getActivity());
             TextView tv_orderID = new TextView(getActivity());
-            tv_orderID.setText(String.valueOf(order_list.get(i).getIdOrder()));
+            tv_orderID.setText(String.valueOf(orderModelList.get(i).getIdOrder()));
             tv_orderID.setTextColor(Color.BLACK);
             tv_orderID.setGravity(Gravity.CENTER);
             tv_orderID.setPadding(0,60,0,60);
@@ -459,14 +313,14 @@ public class DashboardFragment extends Fragment {
 
             TextView tv_custName = new TextView(getActivity());
             tv_custName.setWidth(100);
-            tv_custName.setText(order_list.get(i).getUsers_name());
+            tv_custName.setText(orderModelList.get(i).getUsers_name());
             tv_custName.setTextColor(Color.BLACK);
             tv_custName.setGravity(Gravity.CENTER);
             tv_custName.setPadding(0,60,0,60);
             tbrow.addView(tv_custName);
 
             TextView tv_totalPrice = new TextView(getActivity());
-            tv_totalPrice.setText(String.valueOf(order_list.get(i).getOrderItemTotalPrice()));
+            tv_totalPrice.setText(String.valueOf(orderModelList.get(i).getOrderItemTotalPrice()));
             tv_totalPrice.setTextColor(Color.BLACK);
             tv_totalPrice.setGravity(Gravity.CENTER);
             tv_totalPrice.setPadding(0,60,0,60);
@@ -482,13 +336,12 @@ public class DashboardFragment extends Fragment {
                 public void onClick(View view) {
                     TableRow row = (TableRow) view.getParent();
                     int index = tl_dashboard.indexOfChild(row) - 1;
-
                     Bundle order = new Bundle();
                     //bundle.putParcelableArrayList(order_list);
                     OrderSummaryFragment fragment = new OrderSummaryFragment();
                     //bundle.putSerializable("OrderSummary", order_list);
                     //order.putParcelableArrayList("OrderItemList", (ArrayList<? extends Parcelable>) order_list); //
-                    order.putParcelable("Order",order_list.get(index));
+                    order.putParcelable("Order",orderModelList.get(index));
                     fragment.setArguments(order);
                     Log.d("TAG", "Success");
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
@@ -496,14 +349,10 @@ public class DashboardFragment extends Fragment {
                 }
             });
             tbrow.addView(tv_viewDetails);
-
             Log.d("Innit TBrow", String.valueOf(tbrow.getChildCount()));
-
             tl_dashboard.addView(tbrow);
         }
-
     }
-
 
     @Override
     public void onDestroyView() {

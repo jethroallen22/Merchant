@@ -89,7 +89,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginLeft="8dp"
-                                android:text="366"
+                                android:text="0"
                                 android:textColor="@color/mosibusPrimary"
                                 android:textSize="30sp"
                                 android:textStyle="normal"></TextView>
