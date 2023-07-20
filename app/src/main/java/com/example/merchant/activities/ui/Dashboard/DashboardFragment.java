@@ -60,7 +60,7 @@ public class DashboardFragment extends Fragment {
 
     private AppBarConfiguration mAppBarConfiguration;
 
-    private TextView tv_view_profile, tv_incoming_orders, tv_new_customers;
+    private TextView tv_view_profile, tv_incoming_orders, tv_new_customers, tv_net_profit, tv_operating_expense;
     private TableLayout tl_dashboard;
     public static String name = "";
     public static String email = "";
@@ -113,6 +113,8 @@ public class DashboardFragment extends Fragment {
         //Initialize
         tv_incoming_orders = root.findViewById(R.id.tv_incoming_orders);
         tv_new_customers = root.findViewById(R.id.tv_new_customers);
+        tv_net_profit = root.findViewById(R.id.tv_net_profit);
+        tv_operating_expense = root.findViewById(R.id.tv_operating_expense);
         tl_dashboard  = root.findViewById(R.id.tl_dashboard);
 
         storeModelList = new ArrayList();
@@ -137,6 +139,7 @@ public class DashboardFragment extends Fragment {
 //        dateTimeString = formattedDate + " " + formattedTime;
 
         newCust(String.valueOf(id));
+        sales(String.valueOf(id));
         extractOrders();
 
 //        root.postDelayed(new Runnable() {
@@ -150,136 +153,6 @@ public class DashboardFragment extends Fragment {
 
         return root;
     }
-
-//    public void extractOrders(){
-//        Log.d("extractOrders", "Called");
-//        JsonArrayRequest jsonArrayRequestRec3 = new JsonArrayRequest(Request.Method.GET, JSON_URL + "testAll.php", null, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                Log.e("Bug", String.valueOf(response));
-//                Log.d("Response Order: ", String.valueOf(response.length()));
-//                int incoming_count = 0;
-//                for (int i=0; i < response.length(); i++){
-//                    try {
-//                        Log.d("Try O: ", "Im in");
-//                        JSONObject jsonObjectRec1 = response.getJSONObject(i);
-//
-//                        //USERS DB
-//                        String name = jsonObjectRec1.getString("name");
-//
-//                        //ORDER DB
-//                        int idOrder = jsonObjectRec1.getInt("idOrder");
-//                        int orderItemTotalPrice = jsonObjectRec1.getInt("orderItemTotalPrice");
-//                        String orderStatus = jsonObjectRec1.getString("orderStatus");
-//                        int store_idstore = jsonObjectRec1.getInt("store_idstore");
-////                        timedate = jsonObjectRec1.getString("timedate");
-//
-//                        //OrderItem DB
-//                        int idItem = jsonObjectRec1.getInt("idItem");
-//                        Log.d("Test", String.valueOf(idItem));
-//                        int product_idProduct = jsonObjectRec1.getInt("product_idProduct");
-//                        int order_idOrder = jsonObjectRec1.getInt("order_idOrder");
-//                        float ItemPrice = (float) jsonObjectRec1.getDouble("ItemPrice");
-//                        int ItemQuantity = jsonObjectRec1.getInt("ItemQuantity");
-//
-//                        //PRODUCT DB
-//                        String productName = jsonObjectRec1.getString("productName");
-//                        Log.d("Store ID", String.valueOf(store_idstore));
-//                        Log.d("Merch ID", String.valueOf(id));
-//
-//                            OrderItemModel orderItemModel = new OrderItemModel(product_idProduct, (float) ItemPrice, ItemQuantity, order_idOrder, productName);
-//
-//                            order_item_list.add(orderItemModel);
-////                            Log.d("ORDER ITEM LIST: ", String.valueOf(order_item_list.get(i).getIdItem()));
-//                            temp_order_item.add(order_item_list.get(i));
-//
-//                            OrderModel orderModel = new OrderModel(idOrder, orderItemTotalPrice, orderStatus, store_idstore, name, temp_order_item);
-//
-////                            if (dateTimeString.compareTo(timedate) >= 0){
-////                                Log.d("DATETIME", "before" + dateTimeString);
-////                                Log.d("DATETIME DB", timedate);
-////                                orderModel.setTimedate(null);
-////                            } else {
-////                                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-////                                SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm a");
-////                                Date date;
-////                                try {
-////                                    date = formatter.parse(timedate);
-////                                    String formattedDate = formatter2.format(date);
-////                                    Log.d("DATETIME DB Form", String.valueOf(formattedDate));
-////                                    tempOrderModel.setTimedate(formattedDate);
-////                                } catch (ParseException e) {
-////                                    throw new RuntimeException(e);
-////                                }
-////                            }
-//                            temp_order.add(orderModel);
-//
-//                            if((idOrder != temp_idOrder && idOrder != 0) || response.length() == 1 || i == response.length()-1){
-//                                Log.d("Inside If", String.valueOf(order_item_list.size()));
-//                                temp_order_item = new ArrayList<>();
-//                                for(int j=0; j < order_item_list.size(); j++){
-//                                    Log.d("Inside For", String.valueOf(order_item_list.size()));
-//                                    if((temp_idOrder == order_item_list.get(j).getIdOrder()) || (response.length() == 1)){
-//                                        Log.d("Inside If", String.valueOf(order_item_list.size()));
-//                                        temp_order_item.add(order_item_list.get(j));
-//                                        Log.d("TEMP LIST: ", String.valueOf(i));
-//                                    }
-//                                }
-//
-////                            Log.d("TEMP LIST: ", temp_order_item.get(i).getProductName());
-//                                if(i != 0){
-//                                    if (temp_order.get(i-1).getStore_idstore() == id){
-//                                        OrderModel orderModel2 = new OrderModel(temp_order.get(i-1).getIdOrder(), temp_order.get(i-1).getOrderItemTotalPrice(), temp_order.get(i-1).getOrderStatus(), temp_order.get(i-1).getStore_idstore(), temp_order.get(i-1).getUsers_name(), temp_order_item);
-//                                        order_list.add(orderModel2);
-//                                    }
-//                                }
-//                                if(response.length()==1 || i == response.length()-1){
-//                                    if (i == response.length()-1 && temp_idOrder != idOrder && temp_order.get(i).getStore_idstore() == id){
-//                                        OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), Collections.singletonList(order_item_list.get(i)));
-//                                        order_list.add(orderModel2);
-//                                    }else{
-//                                        if (temp_order.get(i).getStore_idstore() == id){
-//                                            OrderModel orderModel2 = new OrderModel(temp_order.get(i).getIdOrder(), temp_order.get(i).getOrderItemTotalPrice(), temp_order.get(i).getOrderStatus(), temp_order.get(i).getStore_idstore(), temp_order.get(i).getUsers_name(), temp_order_item);
-//                                            order_list.add(orderModel2);
-//                                        }
-//
-//                                    }
-//
-//                                }
-//
-//                                Log.d("ORDER LIST: ", "Just added #" + i);
-////                            if(i!=0){
-////                                Log.d("ORDER MODEL: ", String.valueOf(order_list.get(i).getIdOrder()));
-////                            }
-//
-//                            }
-//                            if((orderStatus.equals("pending")) && store_idstore == id){
-//                                incoming_count++;
-//                                Log.d("Incoming Count", String.valueOf(incoming_count));
-//                            }
-//                            temp_idOrder = idOrder;
-//
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Log.d("Order Size" , String.valueOf(temp_order.size()));
-////                    if(i != 0){
-////                        orderAdapter = new OrderAdapter(getActivity(), order_list, recyclerViewInterface);
-////                        rv_orders.setAdapter(orderAdapter);
-////                    }
-//                }
-//                tv_incoming_orders.setText(String.valueOf(incoming_count));
-//                innit();
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("OnError O: ", String.valueOf(error));
-//            }
-//        });
-//        requestQueue3.add(jsonArrayRequestRec3);
-//    }
 
     public void extractOrders(){
         JsonArrayRequest jsonArrayRequestOrder = new JsonArrayRequest(Request.Method.GET, JSON_URL+"apiorderget.php", null, new Response.Listener<JSONArray>() {
@@ -393,6 +266,48 @@ public class DashboardFragment extends Fragment {
         });
         requestQueue4.add(jsonArrayRequestOrder);
         innit();
+    }
+
+    private void sales(String storeId){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "sales.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String result) {
+                try {
+//                    Log.d("NewCust: success= ", result);
+                    JSONArray jsonArray = new JSONArray(result);
+//                    Log.d("NewCust: Array Length ", String.valueOf(jsonArray.length()));
+                    for(int i=0; i < jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                        float orderItemTotalPrice = jsonObject.getInt("orderItemTotalPrice");
+
+                        tv_net_profit.setText("P "+String.valueOf((float)Math.round((orderItemTotalPrice * 0.95) * 100) / 100));
+                        tv_operating_expense.setText("P "+String.valueOf((float)Math.round((orderItemTotalPrice * 0.05) * 100) / 100));
+                    }
+//                    Log.d("NewCust:", "Outside Loop");
+//                    tv_new_customers.setText(String.valueOf(newcust_count));
+                } catch (JSONException e) {
+                    Log.d("Catch:", String.valueOf(e));
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        })
+        {
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("storeId", storeId);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+
     }
 
     private void newCust(String storeId){

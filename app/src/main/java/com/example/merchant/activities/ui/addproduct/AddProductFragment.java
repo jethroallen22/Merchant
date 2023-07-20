@@ -1182,7 +1182,7 @@ public class AddProductFragment extends Fragment {
                     final String ptag = categorySelected;
                     final String pservesize = servesize;
                     final String ppreptime = prep_time_tmp;
-                    final float pprice = Float.parseFloat(price_tmp);
+                    final float pprice = (float) (Float.parseFloat(price_tmp) + (Float.parseFloat(price_tmp) * 0.05));
                     final String pweather = weather_tmp;
 
 
