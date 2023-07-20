@@ -28,5 +28,9 @@
             android:id="@+id/nav_special"
             android:icon="@drawable/ic_price_tag"
             android:title="Special Tags" />
+        <item
+            android:id="@+id/nav_documents"
+            android:icon="@drawable/baseline_file_present_24"
+            android:title="Documents"/>
     </group>
 </menu>
