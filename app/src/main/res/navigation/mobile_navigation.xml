@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_nav_dashboard_to_nav_special"
             app:destination="@id/nav_special" />
+        <action
+            android:id="@id/nav_documents"
+            app:destination="@id/nav_documents"/>
     </fragment>
 
     <fragment
@@ -72,5 +75,12 @@
         android:name="com.example.merchant.activities.ui.special.SpecialStatusFragment"
         android:label="Special Tags"
         tools:layout="@layout/fragment_special_status" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_documents"
+        android:name="com.example.merchant.activities.ui.documents.DocumentsFragment"
+        android:label="Documents"
+        tools:layout="@layout/fragment_documents">
     </fragment>
 </navigation>

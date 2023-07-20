@@ -27,8 +27,11 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
+import com.example.merchant.activities.ui.Dashboard.DashboardFragment;
 import com.example.merchant.activities.ui.addproduct.AddProductFragment;
 import com.example.merchant.activities.ui.deals.DealsStatusFragment;
+import com.example.merchant.activities.ui.documents.DocumentsFragment;
+import com.example.merchant.activities.ui.orders.OrdersFragment;
 import com.example.merchant.activities.ui.profile.ProfileFragment;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.activities.ui.special.SpecialFragment;
@@ -165,12 +168,6 @@ public class Home extends AppCompatActivity {
         iv_user_image = navigationView.getHeaderView(0).findViewById(R.id.iv_user_image);
         tv_user_name = navigationView.getHeaderView(0).findViewById(R.id.tv_user_name);
         tv_view_profile = navigationView.getHeaderView(0).findViewById(R.id.tv_view_profile);
-
-//        byte[] byteArray = Base64.decode(image, Base64.DEFAULT);
-//        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
-//        iv_user_image.setImageBitmap(bitmap);
-//        Log.d("IMAGE", String.valueOf(bitmap));
-//        tv_user_name.setText(name);
         tv_view_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,66 +185,131 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        navigationView.getMenu().getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        // Handle the click event of the MenuItem
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId() == R.id.nav_dashboard){
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idMerchant",id);
+                    bundle.putString("name", name);
+                    bundle.putString("email", email);
+                    DashboardFragment fragment = new DashboardFragment();
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                } else if (item.getItemId() == R.id.nav_orders) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idMerchant",id);
+                    bundle.putString("name", name);
+                    bundle.putString("email", email);
+                    OrdersFragment fragment = new OrdersFragment();
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                } else if (item.getItemId() == R.id.nav_products){
+                    Bundle bundle = new Bundle();
+                    ProductsFragment fragment = new ProductsFragment();
+                    bundle.putString("name", name);
+                    bundle.putInt("id", id);
+                    bundle.putString("email", email);
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                } else if (item.getItemId() == R.id.nav_deals){
+                    Bundle bundle = new Bundle();
+                    DealsStatusFragment fragment = new DealsStatusFragment();
+                    bundle.putString("name", name);
+                    bundle.putInt("id", id);
+                    bundle.putString("email", email);
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                } else if(item.getItemId() == R.id.nav_voucher){
+                    Bundle bundle = new Bundle();
+                    VoucherStatusFragment fragment = new VoucherStatusFragment();
+                    bundle.putString("name", name);
+                    bundle.putInt("id", id);
+                    bundle.putString("email", email);
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                } else if(item.getItemId() == R.id.nav_special){
+                    Bundle bundle = new Bundle();
+                    SpecialStatusFragment fragment = new SpecialStatusFragment();
+                    bundle.putString("name", name);
+                    bundle.putInt("id", id);
+                    bundle.putString("email", email);
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                } else if(item.getItemId() == R.id.nav_documents){
+                    Bundle bundle = new Bundle();
+                    DocumentsFragment fragment = new DocumentsFragment();
+                    bundle.putInt("id", id);
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home, fragment).commit();
+                }
 
-                Bundle bundle = new Bundle();
-                ProductsFragment fragment = new ProductsFragment();
-                bundle.putString("name", name);
-                bundle.putInt("id", id);
-                bundle.putString("email", email);
-                fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
-
-                return false;
+                drawer.closeDrawers();
+                return true;
             }
         });
-        navigationView.getMenu().getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
 
-                Bundle bundle = new Bundle();
-                DealsStatusFragment fragment = new DealsStatusFragment();
-                bundle.putString("name", name);
-                bundle.putInt("id", id);
-                bundle.putString("email", email);
-                fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
-
-                return false;
-            }
-        });
-        navigationView.getMenu().getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
-
-                Bundle bundle = new Bundle();
-                VoucherStatusFragment fragment = new VoucherStatusFragment();
-                bundle.putString("name", name);
-                bundle.putInt("id", id);
-                bundle.putString("email", email);
-                fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
-
-                return false;
-            }
-        });
-        navigationView.getMenu().getItem(5).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
-
-                Bundle bundle = new Bundle();
-                SpecialStatusFragment fragment = new SpecialStatusFragment();
-                bundle.putString("name", name);
-                bundle.putInt("id", id);
-                bundle.putString("email", email);
-                fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
-
-                return false;
-            }
-        });
+//        navigationView.getMenu().getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(@NonNull MenuItem item) {
+//
+//                Bundle bundle = new Bundle();
+//                ProductsFragment fragment = new ProductsFragment();
+//                bundle.putString("name", name);
+//                bundle.putInt("id", id);
+//                bundle.putString("email", email);
+//                fragment.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+//
+//                return false;
+//            }
+//        });
+//        navigationView.getMenu().getItem(3).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(@NonNull MenuItem item) {
+//
+//                Bundle bundle = new Bundle();
+//                DealsStatusFragment fragment = new DealsStatusFragment();
+//                bundle.putString("name", name);
+//                bundle.putInt("id", id);
+//                bundle.putString("email", email);
+//                fragment.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+//
+//                return false;
+//            }
+//        });
+//        navigationView.getMenu().getItem(4).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(@NonNull MenuItem item) {
+//
+//                Bundle bundle = new Bundle();
+//                VoucherStatusFragment fragment = new VoucherStatusFragment();
+//                bundle.putString("name", name);
+//                bundle.putInt("id", id);
+//                bundle.putString("email", email);
+//                fragment.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+//
+//                return false;
+//            }
+//        });
+//        navigationView.getMenu().getItem(5).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(@NonNull MenuItem item) {
+//
+//                Bundle bundle = new Bundle();
+//                SpecialStatusFragment fragment = new SpecialStatusFragment();
+//                bundle.putString("name", name);
+//                bundle.putInt("id", id);
+//                bundle.putString("email", email);
+//                fragment.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+//
+//                return false;
+//            }
+//        });
 
     }
 

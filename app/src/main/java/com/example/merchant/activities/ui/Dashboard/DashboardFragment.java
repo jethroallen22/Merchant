@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -86,6 +87,8 @@ public class DashboardFragment extends Fragment {
     String image;
     Bitmap bitmap;
 //    String dateTimeString, timedate;
+    Handler handler;
+    Runnable myRunnable;
 
     private FragmentDashboardBinding binding;
 
@@ -126,30 +129,19 @@ public class DashboardFragment extends Fragment {
         requestQueue3 = Singleton.getsInstance(getActivity()).getRequestQueue();
         requestQueue4 = Singleton.getsInstance(getActivity()).getRequestQueue();
         requestQueue5 = Singleton.getsInstance(getActivity()).getRequestQueue();
-
-//        // Get the current date and time
-//        Calendar calendar = Calendar.getInstance();
-//        Date currentDateAndTime = calendar.getTime();
-//        // Format the date and time as desired
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-//        String formattedDate = dateFormat.format(currentDateAndTime);
-//        String formattedTime = timeFormat.format(currentDateAndTime);
-//
-//        dateTimeString = formattedDate + " " + formattedTime;
-
-        newCust(String.valueOf(id));
-        sales(String.valueOf(id));
-        extractOrders();
-
-//        root.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                extractOrder();
-//                //Log.d("OrderStatus", order.getOrderStatus());
-//                root.postDelayed(this, 10000);
-//            }
-//        }, 0);
+        root.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                order_list.clear();
+                order_item_list.clear();
+                temp_order_item.clear();
+                temp_order.clear();
+                newCust(String.valueOf(id));
+                sales(String.valueOf(id));
+                extractOrders();
+                root.postDelayed(this, 5000);
+            }
+        }, 1000);
 
         return root;
     }
@@ -230,13 +222,6 @@ public class DashboardFragment extends Fragment {
                                         }
                                         Log.d("ResponseOrderItemSize", String.valueOf(orderItemModels.size()));
                                         tempOrderModel.setOrderItem_list(orderItemModels);
-//                                        orderModelList = order_list;
-//                                        Log.d("ResponseOrderSize", String.valueOf(orderModelList.size()));
-//                                        orderAdapter = new OrderAdapter(getActivity(),orderModelList, OrdersFragment.this);
-//                                        rv_orders.setAdapter(orderAdapter);
-//                                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//                                        rv_orders.setLayoutManager(layoutManager);
-
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         Log.d("Error", String.valueOf(e));
@@ -253,7 +238,7 @@ public class DashboardFragment extends Fragment {
                             tv_incoming_orders.setText(String.valueOf(incoming_count));
                         }
                     }
-                    innit();
+                    innit(order_list);
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -265,7 +250,6 @@ public class DashboardFragment extends Fragment {
             }
         });
         requestQueue4.add(jsonArrayRequestOrder);
-        innit();
     }
 
     private void sales(String storeId){
@@ -353,20 +337,20 @@ public class DashboardFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
-
     }
 
     //For Dynamic Table
-    public void innit(){
+    public void innit(List<OrderModel> orderModelList){
         Log.d("Innit", "inside");
-        Log.d("Innit OL size", String.valueOf(order_list.size()));
+        Log.d("Innit OL size", String.valueOf(orderModelList.size()));
 //        TableLayout tl_dashboard  = (TableLayout) root.findViewById(R.id.tl_dashboard);
-        for (int i=0;i<order_list.size();i++){
-            Log.d("Innit OL size", String.valueOf(order_list.size()));
+        tl_dashboard.removeViews(1,tl_dashboard.getChildCount()-1);
+        for (int i=0;i<orderModelList.size();i++){
+            Log.d("Innit OL size", String.valueOf(orderModelList.size()));
             //Creating Table Rows
             TableRow tbrow = new TableRow(getActivity());
             TextView tv_orderID = new TextView(getActivity());
-            tv_orderID.setText(String.valueOf(order_list.get(i).getIdOrder()));
+            tv_orderID.setText(String.valueOf(orderModelList.get(i).getIdOrder()));
             tv_orderID.setTextColor(Color.BLACK);
             tv_orderID.setGravity(Gravity.CENTER);
             tv_orderID.setPadding(0,60,0,60);
@@ -374,14 +358,14 @@ public class DashboardFragment extends Fragment {
 
             TextView tv_custName = new TextView(getActivity());
             tv_custName.setWidth(100);
-            tv_custName.setText(order_list.get(i).getUsers_name());
+            tv_custName.setText(orderModelList.get(i).getUsers_name());
             tv_custName.setTextColor(Color.BLACK);
             tv_custName.setGravity(Gravity.CENTER);
             tv_custName.setPadding(0,60,0,60);
             tbrow.addView(tv_custName);
 
             TextView tv_totalPrice = new TextView(getActivity());
-            tv_totalPrice.setText(String.valueOf(order_list.get(i).getOrderItemTotalPrice()));
+            tv_totalPrice.setText(String.valueOf(orderModelList.get(i).getOrderItemTotalPrice()));
             tv_totalPrice.setTextColor(Color.BLACK);
             tv_totalPrice.setGravity(Gravity.CENTER);
             tv_totalPrice.setPadding(0,60,0,60);
@@ -397,13 +381,12 @@ public class DashboardFragment extends Fragment {
                 public void onClick(View view) {
                     TableRow row = (TableRow) view.getParent();
                     int index = tl_dashboard.indexOfChild(row) - 1;
-
                     Bundle order = new Bundle();
                     //bundle.putParcelableArrayList(order_list);
                     OrderSummaryFragment fragment = new OrderSummaryFragment();
                     //bundle.putSerializable("OrderSummary", order_list);
                     //order.putParcelableArrayList("OrderItemList", (ArrayList<? extends Parcelable>) order_list); //
-                    order.putParcelable("Order",order_list.get(index));
+                    order.putParcelable("Order",orderModelList.get(index));
                     fragment.setArguments(order);
                     Log.d("TAG", "Success");
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
@@ -411,14 +394,10 @@ public class DashboardFragment extends Fragment {
                 }
             });
             tbrow.addView(tv_viewDetails);
-
             Log.d("Innit TBrow", String.valueOf(tbrow.getChildCount()));
-
             tl_dashboard.addView(tbrow);
         }
-
     }
-
 
     @Override
     public void onDestroyView() {
