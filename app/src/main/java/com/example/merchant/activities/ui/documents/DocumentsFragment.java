@@ -32,6 +32,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
@@ -39,11 +40,19 @@ import com.example.merchant.RealPathUtil;
 import com.example.merchant.activities.ui.Dashboard.DashboardFragment;
 import com.example.merchant.activities.ui.Dashboard.DashboardViewModel;
 import com.example.merchant.databinding.FragmentDocumentsBinding;
+import com.example.merchant.interfaces.Singleton;
 import com.example.merchant.models.IPModel;
+import com.example.merchant.models.OrderItemModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DocumentsFragment extends Fragment {
@@ -56,6 +65,7 @@ public class DocumentsFragment extends Fragment {
     Bitmap bitmap_valid_id, bitmap_mayor, bitmap_bir, bitmap_dti, bitmap_sanitary;
     String path;
     int id;
+    RequestQueue queue;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -203,36 +213,24 @@ public class DocumentsFragment extends Fragment {
             }
         });
 
+        readDocuments();
+
+        queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         btn_save_edit = root.findViewById(R.id.btn_save_edit);
         btn_save_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ByteArrayOutputStream byteArrayOutputStream;
-                byteArrayOutputStream = new ByteArrayOutputStream();
-                String[] imageNames = {"valid ID", "Mayor's Permit", "BIR Permit", "DTI Permit", "Sanitary Permit"};
+                // Define arrays to store bitmaps and image names
+                Bitmap[] bitmaps = {bitmap_valid_id, bitmap_mayor, bitmap_bir, bitmap_dti, bitmap_sanitary};
+                String[] imageNames = {"validId", "permitMayor", "permitBir", "permitDti", "permitSanitary"};
                 String[] imageBase64 = new String[5];
 
-                for (int i = 0; i < imageNames.length; i++) {
-                    Bitmap bitmap = null;
-                    switch (i) {
-                        case 0:
-                            bitmap = bitmap_valid_id;
-                            break;
-                        case 1:
-                            bitmap = bitmap_mayor;
-                            break;
-                        case 2:
-                            bitmap = bitmap_bir;
-                            break;
-                        case 3:
-                            bitmap = bitmap_dti;
-                            break;
-                        case 4:
-                            bitmap = bitmap_sanitary;
-                            break;
-                    }
-
+// Iterate through the bitmaps and process them
+                for (int i = 0; i < bitmaps.length; i++) {
+                    Bitmap bitmap = bitmaps[i];
                     if (bitmap != null) {
+                        // Create a new ByteArrayOutputStream for each iteration
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                         byte[] bytes = byteArrayOutputStream.toByteArray();
                         imageBase64[i] = Base64.encodeToString(bytes, Base64.DEFAULT);
@@ -242,7 +240,10 @@ public class DocumentsFragment extends Fragment {
                     }
                 }
 
-                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                for (int i = 0 ; i < imageBase64.length ; i++){
+                    String shortenedString = imageBase64[i].substring(0, 20);
+                    Log.d("base64", "image: " + shortenedString);
+                }
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL + "upload_docu.php",
                         new Response.Listener<String>() {
@@ -252,7 +253,7 @@ public class DocumentsFragment extends Fragment {
                                     // Handle the response, if needed
                                     Log.d("Pasok", "pasok");
                                 } catch (Throwable e) {
-                                    Log.d("Catch", String.valueOf(e));
+                                    Log.d("CatchError", String.valueOf(e));
                                     // Toast.makeText(Login.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -264,6 +265,12 @@ public class DocumentsFragment extends Fragment {
                 }) {
                     protected Map<String, String> getParams() {
                         Map<String, String> paramV = new HashMap<>();
+                        Log.d("image", "valid: " + imageBase64[0]);
+                        Log.d("image", "mayor: " + imageBase64[1]);
+                        Log.d("image", "bir: " + imageBase64[2]);
+                        Log.d("image", "dti: " + imageBase64[3]);
+                        Log.d("image", "sanitary: " + imageBase64[4]);
+
                         paramV.put("idStore", String.valueOf(id));
                         paramV.put("validId", imageBase64[0]);
                         paramV.put("permitMayor", imageBase64[1]);
@@ -279,9 +286,9 @@ public class DocumentsFragment extends Fragment {
                 // Rest of the code (if needed)
 
                 // Redirect to the DashboardFragment after saving edits
-                Bundle bundle = new Bundle();
-                DashboardFragment fragment = new DashboardFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home, fragment).commit();
+//                Bundle bundle = new Bundle();
+//                DashboardFragment fragment = new DashboardFragment();
+//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home, fragment).commit();
             }
         });
 
@@ -289,19 +296,73 @@ public class DocumentsFragment extends Fragment {
         return root;
     }
 
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        try {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == 10 && resultCode == Activity.RESULT_OK) {
-                Uri uri = data.getData();
-                Context context = getActivity();
-                path = RealPathUtil.getRealPath(context, uri);
-                Bitmap bitmap = BitmapFactory.decodeFile(path);
-                iv_valid_id_placeholder.setImageBitmap(bitmap);
-                Log.d("IMAGE", String.valueOf(iv_valid_id_placeholder.getDrawable()));
+    public void readDocuments(){
+        RequestQueue requestQueueDocument = Singleton.getsInstance(getActivity()).getRequestQueue();
+        JsonArrayRequest jsonArrayRequestDocuments = new JsonArrayRequest(Request.Method.GET, JSON_URL + "apidocuget.php", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("ResponseItemLength", String.valueOf(response.length()));
+                List<OrderItemModel> orderItemModels = new ArrayList<>();
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObjectDocument = response.getJSONObject(i);
+                        if (jsonObjectDocument.getInt("idStore") == id) {
+                            String validId = jsonObjectDocument.getString("validId");
+                            String permitMayor = jsonObjectDocument.getString("permitMayor");
+                            String permitBir = jsonObjectDocument.getString("permitBir");
+                            String permitDti = jsonObjectDocument.getString("permitDti");
+                            String permitSanitary = jsonObjectDocument.getString("permitSanitary");
+
+                            if(validId.length() != 0) {
+                                byte[] byteArrayValidId = Base64.decode(validId, Base64.DEFAULT);
+                                Bitmap bitmapValidId = BitmapFactory.decodeByteArray(byteArrayValidId, 0, byteArrayValidId.length);
+                                iv_valid_id_placeholder.setImageBitmap(bitmapValidId);
+                            } if(permitMayor.length() != 0){
+                                byte[] byteArrayMayor = Base64.decode(permitMayor, Base64.DEFAULT);
+                                Bitmap bitmapMayor = BitmapFactory.decodeByteArray(byteArrayMayor, 0, byteArrayMayor.length);
+                                iv_mayors_permit_placeholder.setImageBitmap(bitmapMayor);
+                            } if(permitBir.length() != 0){
+                                byte[] byteArrayBir = Base64.decode(permitBir, Base64.DEFAULT);
+                                Bitmap bitmapBir = BitmapFactory.decodeByteArray(byteArrayBir, 0, byteArrayBir.length);
+                                iv_bir_permit_placeholder.setImageBitmap(bitmapBir);
+                            } if(permitDti.length() != 0){
+                                byte[] byteArrayDti = Base64.decode(permitDti, Base64.DEFAULT);
+                                Bitmap bitmapDti = BitmapFactory.decodeByteArray(byteArrayDti, 0, byteArrayDti.length);
+                                iv_dti_permit_placeholder.setImageBitmap(bitmapDti);
+                            } if(permitSanitary.length() != 0){
+                                byte[] byteArraySanitary = Base64.decode(permitSanitary, Base64.DEFAULT);
+                                Bitmap bitmapSanitary = BitmapFactory.decodeByteArray(byteArraySanitary, 0, byteArraySanitary.length);
+                                iv_sanitary_permit_placeholder.setImageBitmap(bitmapSanitary);
+                            }
+                        }
+                    }
+                    Log.d("ResponseOrderItemSize", String.valueOf(orderItemModels.size()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("Error", String.valueOf(e));
+                }
             }
-        } catch (Exception e){
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", String.valueOf(error));
+            }
+        });
+        requestQueueDocument.add(jsonArrayRequestDocuments);
     }
+
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        try {
+//            super.onActivityResult(requestCode, resultCode, data);
+//            if (requestCode == 10 && resultCode == Activity.RESULT_OK) {
+//                Uri uri = data.getData();
+//                Context context = getActivity();
+//                path = RealPathUtil.getRealPath(context, uri);
+//                Bitmap bitmap = BitmapFactory.decodeFile(path);
+//                iv_valid_id_placeholder.setImageBitmap(bitmap);
+//            }
+//        } catch (Exception e){
+//            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }
