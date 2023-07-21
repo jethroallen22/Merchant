@@ -332,6 +332,7 @@ public class DocumentsFragment extends Fragment {
                             } if(permitSanitary.length() != 0){
                                 byte[] byteArraySanitary = Base64.decode(permitSanitary, Base64.DEFAULT);
                                 Bitmap bitmapSanitary = BitmapFactory.decodeByteArray(byteArraySanitary, 0, byteArraySanitary.length);
+                                Log.d("imageSanitary", "sanitary: " + permitSanitary);
                                 iv_sanitary_permit_placeholder.setImageBitmap(bitmapSanitary);
                             }
                         }
