@@ -28,6 +28,9 @@
         <action
             android:id="@id/nav_documents"
             app:destination="@id/nav_documents"/>
+<!--        <action-->
+<!--            android:id="@+id/action_nav_dashboard_to_nav_reports"-->
+<!--            app:destination="@id/nav_reports" />-->
     </fragment>
 
     <fragment
@@ -83,4 +86,11 @@
         android:label="Documents"
         tools:layout="@layout/fragment_documents">
     </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_reports"-->
+<!--        android:name="com.example.merchant.activities.ui.reports.ReportsFragment"-->
+<!--        android:label="Reports"-->
+<!--        tools:layout="@layout/fragment_reports" >-->
+<!--    </fragment>-->
 </navigation>

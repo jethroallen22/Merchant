@@ -1,9 +1,12 @@
 package com.example.merchant.activities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
@@ -33,6 +36,7 @@ import com.example.merchant.activities.ui.deals.DealsStatusFragment;
 import com.example.merchant.activities.ui.documents.DocumentsFragment;
 import com.example.merchant.activities.ui.orders.OrdersFragment;
 import com.example.merchant.activities.ui.profile.ProfileFragment;
+import com.example.merchant.activities.ui.reports.ReportsFragment;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.activities.ui.special.SpecialFragment;
 import com.example.merchant.activities.ui.special.SpecialStatusFragment;
@@ -50,6 +54,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -107,7 +113,7 @@ public class Home extends AppCompatActivity {
     String image, endDate, formattedDateTime;
     Bitmap bitmap;
     Date currDate;
-
+    int lastDisplayedNotificationId = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +152,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void run() {
                 store_profile();
+                homeNotification();
                 root.postDelayed(this, 10000);
             }
         }, 0);
@@ -310,7 +317,21 @@ public class Home extends AppCompatActivity {
 //                return false;
 //            }
 //        });
+        navigationView.getMenu().getItem(6).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
 
+                Bundle bundle = new Bundle();
+                ReportsFragment fragment = new ReportsFragment();
+                bundle.putString("name", name);
+                bundle.putInt("id", id);
+                bundle.putString("email", email);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+
+                return false;
+            }
+        });
     }
 
     public void store_profile(){
@@ -400,6 +421,53 @@ public class Home extends AppCompatActivity {
         });
         requestQueue.add(jsonArrayRequestFoodforyou);
 
+    }
+
+    public void homeNotification(){
+        JsonArrayRequest jsonArrayRequestBalance = new JsonArrayRequest(Request.Method.GET, JSON_URL + "apihomenotifget.php", null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("notif_response", String.valueOf(response.length()));
+                for (int i=0; i < response.length(); i++){
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        Log.d("notif_id_json", String.valueOf(jsonObject.getInt("iduser") + " " + id));
+                        if(jsonObject.getInt("idmerchant") == id && jsonObject.getString("type").equalsIgnoreCase("status")) {
+                            int idnotifread = jsonObject.getInt("idnotif");
+                            String description = jsonObject.getString("description");
+                            Log.d("notif_id_json", String.valueOf(idnotifread + " " + lastDisplayedNotificationId));
+                            if (idnotifread != lastDisplayedNotificationId) {
+                                // Display the notification only if the ID is different
+                                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "My Notification");
+                                builder.setContentTitle("Mosibus");
+                                builder.setContentText(description);
+                                builder.setSmallIcon(R.drawable.logo);
+                                builder.setAutoCancel(true);
+                                lastDisplayedNotificationId = idnotifread; // Update the last displayed ID
+
+                                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
+                                managerCompat.notify(1, builder.build());
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_HIGH);
+                                    NotificationManager manager = getSystemService(NotificationManager.class);
+                                    manager.createNotificationChannel(channel);
+                                }
+                            }
+                        }
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error response
+            }
+        });
+        requestQueue.add(jsonArrayRequestBalance);
     }
 
 //    @Override

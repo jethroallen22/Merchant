@@ -16,6 +16,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -33,6 +34,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.activities.ui.orders.OrdersFragment;
 import com.example.merchant.activities.ui.ordersummary.OrderSummaryFragment;
+import com.example.merchant.activities.ui.reports.ReportsFragment;
+import com.example.merchant.activities.ui.voucher.VoucherStatusFragment;
 import com.example.merchant.adapters.OrderAdapter;
 import com.example.merchant.databinding.ActivityHomeBinding;
 import com.example.merchant.databinding.FragmentDashboardBinding;
@@ -77,6 +80,7 @@ public class DashboardFragment extends Fragment {
 
     ImageView iv_user_image;
     TextView tv_user_name;
+    CardView cardViewRev;
 
     //School IP
     private static String JSON_URL;
@@ -119,6 +123,7 @@ public class DashboardFragment extends Fragment {
         tv_net_profit = root.findViewById(R.id.tv_net_profit);
         tv_operating_expense = root.findViewById(R.id.tv_operating_expense);
         tl_dashboard  = root.findViewById(R.id.tl_dashboard);
+        cardViewRev = root.findViewById(R.id.cardViewRev);
 
         storeModelList = new ArrayList();
         order_item_list = new ArrayList<>();
@@ -142,6 +147,19 @@ public class DashboardFragment extends Fragment {
                 root.postDelayed(this, 5000);
             }
         }, 1000);
+
+        cardViewRev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                ReportsFragment fragment = new ReportsFragment();
+                bundle.putString("name", name);
+                bundle.putInt("id", id);
+                bundle.putString("email", email);
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+            }
+        });
 
         return root;
     }
