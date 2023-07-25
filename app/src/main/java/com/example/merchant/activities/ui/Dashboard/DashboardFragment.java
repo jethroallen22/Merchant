@@ -353,7 +353,7 @@ public class DashboardFragment extends Fragment {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        RequestQueue requestQueue = Singleton.getsInstance(getContext()).getRequestQueue();
         requestQueue.add(stringRequest);
     }
 
