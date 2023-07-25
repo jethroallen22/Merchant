@@ -72,6 +72,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     public static String email = "";
     public static int id;
     String dateTimeString, timedate;
+    String endTimeMilitary, endTimeStandard;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -111,11 +112,23 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
         dateTimeString = formattedDate + " " + formattedTime;
 
+//        //Convert endTime
+//        SimpleDateFormat militaryTimeFormat = new SimpleDateFormat("HHmm");
+//        SimpleDateFormat standardTimeFormat = new SimpleDateFormat("hh:mm a");
+//
+//        Date date = null;
+//        try {
+//            date = militaryTimeFormat.parse(militaryTime);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        standardTimeFormat.format(date);
 
         root.postDelayed(new Runnable() {
             @Override
             public void run() {
                 extractOrder();
+                endOfDay();
                 //Log.d("OrderStatus", order.getOrderStatus());
                 root.postDelayed(this, 10000);
             }
@@ -278,5 +291,40 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
         });
         requestQueue4.add(jsonArrayRequestOrder);
 
+    }
+
+    public void endOfDay(){
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,JSON_URL+ "endTime.php", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("endTime", "inside on res");
+                        Log.d("endTime", response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+//                            JSONObject jsonObjectOrderItemList = response.getJSONObject(i);
+
+                            int storeEndTime = jsonObject.getInt("storeEndTime");
+
+                            Log.d("endTime", String.valueOf(storeEndTime));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.d("Error", String.valueOf(e));
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error", String.valueOf(error));
+            }
+        }){
+            protected Map<String, String> getParams(){
+                Map<String, String> paramV = new HashMap<>();
+                paramV.put("idStore", String.valueOf(id));
+                return paramV;
+            }
+        };
+        queue.add(stringRequest);
     }
 }

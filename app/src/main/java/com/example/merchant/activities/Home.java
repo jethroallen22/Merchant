@@ -87,6 +87,7 @@ public class Home extends AppCompatActivity {
 //    private TableLayout tl_dashboard;
     public static String name = "";
     public static String email = "";
+    public static String status = "";
     public static int id;
     OrderAdapter orderAdapter;
     List <StoreModel> storeList;
@@ -133,7 +134,9 @@ public class Home extends AppCompatActivity {
             name = intent.getStringExtra("name");
             id = intent.getIntExtra("idMerchant",0);
             email = intent.getStringExtra("email");
+            status = intent.getStringExtra("status");
             Log.d("HOME FRAG name", name + id + email);
+            Log.d("HOME status", status);
         } else {
             Log.d("HOME FRAG name", "FAIL");
         }

@@ -106,9 +106,10 @@ public class MainActivity extends AppCompatActivity {
                     int id = 0;
                     String name = "";
                     String email = "";
+                    String status = "";
 
                     Log.d("OnRespo: ", success);
-                    if (success.equals("1")){
+                    if (success.equals("1") || success.equals("2")){
                         Log.d("INSIDE IF:", "SUCCESS");
                         for (int i = 0; i < jsonArray.length(); i++){
 
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                             name = object.getString("name").trim();
                             email = object.getString("email").trim();
                             id = object.getInt("idMerchant");
+                            status = object.getString("status");
 
                             Toast.makeText(MainActivity.this, "Success Login. \nYour Name : "
                                     + name + "\nYour Email : "
@@ -128,16 +130,18 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("name",name);
                         intent.putExtra("idMerchant",id);
                         intent.putExtra("email",email);
+                        intent.putExtra("status",status);
                         Log.d("NAME LOGIN: " , String.valueOf(id));
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                    } else if (success.equals("2")) {
-                        Toast.makeText(MainActivity.this, "Your Account is Being Processed", Toast.LENGTH_SHORT).show();
                     }
+//                    else if (success.equals("2")) {
+//                        Toast.makeText(MainActivity.this, "Your Account is Being Processed", Toast.LENGTH_SHORT).show();
+//                    }
 
                 } catch (JSONException e) {
 
-//                    e.printStackTrace();
+                    e.printStackTrace();
 //                    Toast.makeText(Login.this, "Error! "+ e.toString(),Toast.LENGTH_SHORT).show();*/
                     Toast.makeText(MainActivity.this, "Invalid Email and/or Password", Toast.LENGTH_SHORT).show();
                 }
