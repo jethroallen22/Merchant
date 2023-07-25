@@ -20,7 +20,7 @@ public class ProductModel implements Parcelable {
     String productTag;
     String productPrepTime;
     String weather;
-    String specialStatus;
+    String specialStatus, stock;
     int percentage;
 
 
@@ -35,6 +35,20 @@ public class ProductModel implements Parcelable {
         this.productTag = productTag;
         this.productPrepTime = productPrepTime;
         this.weather = weather;
+    }
+
+    public ProductModel(int idProduct, int store_idStore, String productName, String productDescription, float productPrice, String productImage, String productServingSize, String productTag, String productPrepTime, String productRestoName, String productRestoImage, String weather, String stock) {
+        this.idProduct = idProduct;
+        this.store_idStore = store_idStore;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.productPrice = productPrice;
+        this.productImage = productImage;
+        this.productServingSize = productServingSize;
+        this.productTag = productTag;
+        this.productPrepTime = productPrepTime;
+        this.weather = weather;
+        this.stock = stock;
     }
 
     public ProductModel(int idProduct, String productName, String productDescription, float productPrice, String productImage, String specialStatus, int percentage) {
@@ -62,6 +76,7 @@ public class ProductModel implements Parcelable {
         weather = in.readString();
         specialStatus = in.readString();
         percentage = in.readInt();
+        stock = in.readString();
     }
 
     public static final Creator<ProductModel> CREATOR = new Creator<ProductModel>() {
@@ -173,6 +188,14 @@ public class ProductModel implements Parcelable {
         this.percentage = percentage;
     }
 
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
     public Bitmap getBitmapImage(){
         byte[] byteArray = Base64.decode(productImage, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
@@ -198,5 +221,6 @@ public class ProductModel implements Parcelable {
         parcel.writeString(weather);
         parcel.writeString(specialStatus);
         parcel.writeInt(percentage);
+        parcel.writeString(stock);
     }
 }

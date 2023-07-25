@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 "min | " + list.get(position).getProductServingSize() +
                 " | " + list.get(position).getProductTag());
         holder.tv_product_price.setText("P" + list.get(position).getProductPrice());
+
     }
 
     @Override
@@ -67,6 +69,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_product_image, iv_edit_product, iv_delete_product;
         TextView tv_product_name, tv_product_price, tv_product_calories;
+//        Button btn_stock;
 
         public ViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface, OnItemClickListener listener) {
             super(itemView);
@@ -77,6 +80,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             tv_product_price = itemView.findViewById(R.id.tv_product_price);
             iv_edit_product = itemView.findViewById(R.id.iv_edit_product);
             iv_delete_product = itemView.findViewById(R.id.iv_delete_product);
+//            btn_stock = itemView.findViewById(R.id.btn_stock);
 
             iv_edit_product.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,6 +107,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     }
                 }
             });
+
+//            btn_stock.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null){
+//                        int pos = getAdapterPosition();
+//
+//                        if (pos != RecyclerView.NO_POSITION){
+//                            listener.onItemClick(pos);
+//                        }
+//                    }
+//                }
+//            });
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override

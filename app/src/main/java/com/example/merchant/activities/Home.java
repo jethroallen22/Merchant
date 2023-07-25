@@ -99,7 +99,7 @@ public class Home extends AppCompatActivity {
     int incoming_count = 0;
     int newcust_count = 0;
 
-    Handler root;
+    Handler root, notif_root;
 
     ImageView iv_user_image;
     TextView tv_user_name;
@@ -156,6 +156,15 @@ public class Home extends AppCompatActivity {
                 root.postDelayed(this, 10000);
             }
         }, 0);
+
+        notif_root = new Handler();
+        notif_root.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                homeNotification();
+                root.postDelayed(this, 5000);
+            }
+        }, 5000);
 
 
         setSupportActionBar(binding.appBarHome.toolbar);
@@ -428,10 +437,11 @@ public class Home extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("notif_response", String.valueOf(response.length()));
+                Log.d("notif_response", String.valueOf(response));
                 for (int i=0; i < response.length(); i++){
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-                        Log.d("notif_id_json", String.valueOf(jsonObject.getInt("iduser") + " " + id));
+                        Log.d("notif_id_json", String.valueOf(jsonObject.getInt("idmerchant") + " " + id));
                         if(jsonObject.getInt("idmerchant") == id && jsonObject.getString("type").equalsIgnoreCase("status")) {
                             int idnotifread = jsonObject.getInt("idnotif");
                             String description = jsonObject.getString("description");

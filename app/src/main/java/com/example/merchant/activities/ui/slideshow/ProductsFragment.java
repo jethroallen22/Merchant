@@ -2,11 +2,13 @@ package com.example.merchant.activities.ui.slideshow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +66,8 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
     TextView tv_product_namee2, tv_product_pricee2, tv_product_description2, tv_product_info;
 
     ImageView iv_product_imagee2;
+    Button btn_stock;
+    String stockStatus;
 
     public static String name = "";
     public static String email = "";
@@ -142,6 +146,7 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
         tv_product_pricee2 = bottomSheetView.findViewById(R.id.tv_product_pricee2);
         tv_product_description2 = bottomSheetView.findViewById(R.id.tv_product_description2);
         tv_product_info = bottomSheetView.findViewById(R.id.tv_product_info);
+        btn_stock = bottomSheetView.findViewById(R.id.btn_stock);
 
         iv_product_imagee2.setImageBitmap(product_list.get(position).getBitmapImage());
         tv_product_namee2.setText(product_list.get(position).getProductName());
@@ -150,6 +155,26 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
         tv_product_info.setText(product_list.get(position).getProductPrepTime() +
                 "min | " + product_list.get(position).getProductServingSize() +
                 " | " + product_list.get(position).getProductTag());
+        if(product_list.get(position).getStock().equalsIgnoreCase("stocked")){
+            btn_stock.setText("STOCKED");
+            btn_stock.setTextColor(Color.WHITE);
+            btn_stock.setBackgroundColor(getResources().getColor(R.color.mosibusPrimary));
+        } else {
+            btn_stock.setText("OUT OF\nSTOCK");
+            btn_stock.setBackgroundColor(Color.RED);
+        }
+
+        btn_stock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Log.d("Stock Button pos", String.valueOf(position));
+//                Log.d("Stock Button", String.valueOf(product_list.get(position).getIdProduct()));
+                if (product_list.get(position).getStock().equalsIgnoreCase("stocked")){
+                    stockStatus = "out";
+                } else stockStatus = "stocked";
+                stockProduct(position);
+            }
+        });
         Log.d(TAG,"bottomSheetView = LayoutInflater.from");
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.show();
@@ -178,9 +203,10 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
                             String storeName = jsonObjectFoodforyou.getString("storeName");
                             String storeImage = jsonObjectFoodforyou.getString("storeImage");
                             String weather = jsonObjectFoodforyou.getString("weather");
+                            String stock = jsonObjectFoodforyou.getString("stock");
 
                             ProductModel foodfyModel = new ProductModel(idProduct, idStore, productName, productDescription, productPrice, productImage,
-                                    productServingSize, productTag, productPrepTime, storeName, storeImage, weather);
+                                    productServingSize, productTag, productPrepTime, storeName, storeImage, weather, stock);
                             product_list.add(foodfyModel);
                             //list.add(productName);
                         }
@@ -249,6 +275,33 @@ public class ProductsFragment extends Fragment implements RecyclerViewInterface,
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
     }
 
+    public void stockProduct(int position){
+//        Log.d("Stock Product", (String) btn_stock.);
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,JSON_URL+ "stock.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String result) {
+                        Log.d("On Res", "inside on res");
+//                        Toast.makeText(getActivity(), "Your Product has been Removed", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error", String.valueOf(error));
+            }
+        }){
+            protected Map<String, String> getParams(){
+                Map<String, String> paramV = new HashMap<>();
+                paramV.put("idProduct", String.valueOf(product_list.get(position).getIdProduct()));
+                paramV.put("stockStatus", stockStatus);
+                Log.d("PARAM", product_list.get(position).getProductName());
+                return paramV;
+            }
+        };
+        queue.add(stringRequest);
+    }
     @Override
     public void onItemClick(int position) {
         showBottomSheet(position);
