@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
+import com.example.merchant.activities.ui.Dashboard.DashboardFragment;
 import com.example.merchant.activities.ui.ordersummary.OrderSummaryFragment;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.adapters.OrderAdapter;
@@ -37,7 +39,9 @@ import com.example.merchant.models.IPModel;
 import com.example.merchant.models.OrderItemModel;
 import com.example.merchant.models.OrderModel;
 import com.example.merchant.models.ProductModel;
+import com.google.android.gms.maps.model.Dash;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,15 +68,19 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     List<OrderModel> orderModelList;
     OrderAdapter orderAdapter;
     List<ProductModel> product_list;
-    private RequestQueue requestQueue4, requestQueue5;
+    private RequestQueue requestQueue3, requestQueue4, requestQueue5;
     private static String JSON_URL;
     private IPModel ipModel;
 
     public static String name = "";
     public static String email = "";
     public static int id;
+
+    List<Integer> orderId_list;
+    List<OrderModel> order_list;
     String dateTimeString, timedate;
-    String endTimeMilitary, endTimeStandard;
+    String currentTimeStandard, endTimeStandard;
+    int endtime;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -95,11 +103,13 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
         }
 
         rv_orders = root.findViewById(R.id.rv_orders);
+        requestQueue3 = Singleton.getsInstance(getActivity()).getRequestQueue();
         requestQueue4 = Singleton.getsInstance(getActivity()).getRequestQueue();
         requestQueue5 = Singleton.getsInstance(getActivity()).getRequestQueue();
-        Log.d("Start ", "Before ExtractOrderItem");
+
         product_list = new ArrayList<>();
         orderModelList = new ArrayList<>();
+        order_list = new ArrayList<>();
 
         // Get the current date and time
         Calendar calendar = Calendar.getInstance();
@@ -111,29 +121,19 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
         String formattedTime = timeFormat.format(currentDateAndTime);
 
         dateTimeString = formattedDate + " " + formattedTime;
-
-//        //Convert endTime
-//        SimpleDateFormat militaryTimeFormat = new SimpleDateFormat("HHmm");
-//        SimpleDateFormat standardTimeFormat = new SimpleDateFormat("hh:mm a");
-//
-//        Date date = null;
-//        try {
-//            date = militaryTimeFormat.parse(militaryTime);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        standardTimeFormat.format(date);
+        endtime = 0;
 
         root.postDelayed(new Runnable() {
             @Override
             public void run() {
+                orderModelList.clear();
+                order_list.clear();
                 extractOrder();
                 endOfDay();
                 //Log.d("OrderStatus", order.getOrderStatus());
                 root.postDelayed(this, 10000);
             }
-        }, 0);
-
+        }, 1000);
         return root;
     }
 
@@ -145,8 +145,6 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
     @Override
     public void onItemClick(int position) {
-
-        Log.d("Test", "Click");
         Bundle order = new Bundle();
         OrderSummaryFragment fragment = new OrderSummaryFragment();
         order.putParcelable("Order",orderModelList.get(position));
@@ -162,7 +160,6 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     }
 
     public void extractOrder(){
-        final List<OrderModel> order_list = new ArrayList<>();
         JsonArrayRequest jsonArrayRequestOrder = new JsonArrayRequest(Request.Method.GET, JSON_URL+"apiorderget.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -177,10 +174,10 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                         int store_idStore = jsonObjectOrder.getInt("store_idStore");
                         String name = jsonObjectOrder.getString("name");
                          timedate = jsonObjectOrder.getString("timedate");
-                        Log.d("ResponseIdStore", String.valueOf(store_idStore));
-                        Log.d("ResponseIdStoreMerch", String.valueOf(id));
+//                        Log.d("ResponseIdStore", String.valueOf(store_idStore));
+//                        Log.d("ResponseIdStoreMerch", String.valueOf(id));
                         if (store_idStore == id) {
-                            Log.d("ResponseMatchIdStore", "Match");
+//                            Log.d("ResponseMatchIdStore", "Match");
                             OrderModel tempOrderModel = new OrderModel();
                             List<OrderItemModel> tempOrderItemList = new ArrayList<>();
                             tempOrderModel.setIdOrder(idOrder);
@@ -193,8 +190,8 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
 
 //                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd/MM/yyyy hh:mm a" )
                             if (dateTimeString.compareTo(timedate) >= 0){
-                                Log.d("DATETIME", "before" + dateTimeString);
-                                Log.d("DATETIME DB", timedate);
+//                                Log.d("DATETIME", "before" + dateTimeString);
+//                                Log.d("DATETIME DB", timedate);
                                 tempOrderModel.setTimedate(null);
                             } else {
                                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -203,7 +200,7 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                                 try {
                                     date = formatter.parse(timedate);
                                     String formattedDate = formatter2.format(date);
-                                    Log.d("DATETIME DB Form", String.valueOf(formattedDate));
+//                                    Log.d("DATETIME DB Form", String.valueOf(formattedDate));
                                     tempOrderModel.setTimedate(formattedDate);
                                 } catch (ParseException e) {
                                     throw new RuntimeException(e);
@@ -213,15 +210,15 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                             JsonArrayRequest jsonArrayRequestOrderItemList = new JsonArrayRequest(Request.Method.GET, JSON_URL + "apiorderitemget.php", null, new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
-                                    Log.d("ResponseItemLength", String.valueOf(response.length()));
+//                                    Log.d("ResponseItemLength", String.valueOf(response.length()));
                                     List<OrderItemModel> orderItemModels = new ArrayList<>();
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
                                             JSONObject jsonObjectOrderItemList = response.getJSONObject(i);
                                             if (jsonObjectOrderItemList.getInt("idOrder") == idOrder) {
-                                                Log.d("ResponseIdOrder", String.valueOf(jsonObjectOrderItemList.getInt("idOrder")));
-                                                Log.d("ResponseIdOrderMerch", String.valueOf(idOrder));
-                                                Log.d("ResponseIdOrderMatch", "IdOrder Match");
+//                                                Log.d("ResponseIdOrder", String.valueOf(jsonObjectOrderItemList.getInt("idOrder")));
+//                                                Log.d("ResponseIdOrderMerch", String.valueOf(idOrder));
+//                                                Log.d("ResponseIdOrderMatch", "IdOrder Match");
                                                 int idProduct = jsonObjectOrderItemList.getInt("idProduct");
                                                 int idStore = jsonObjectOrderItemList.getInt("idStore");
                                                 int idUser = jsonObjectOrderItemList.getInt("idUser");
@@ -254,15 +251,15 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                                                 //orderItemModels.add(orderItemModel);
                                             }
                                         }
-                                        Log.d("ResponseOrderItemSize", String.valueOf(orderItemModels.size()));
+//                                        Log.d("ResponseOrderItemSize", String.valueOf(orderItemModels.size()));
                                         tempOrderModel.setOrderItem_list(orderItemModels);
                                         orderModelList = order_list;
-                                        Log.d("ResponseOrderSize", String.valueOf(orderModelList.size()));
+//                                        Log.d("ResponseOrderSize", String.valueOf(orderModelList.size()));
                                         orderAdapter = new OrderAdapter(getActivity(),orderModelList, OrdersFragment.this);
                                         rv_orders.setAdapter(orderAdapter);
                                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                                         rv_orders.setLayoutManager(layoutManager);
-
+                                        orderAdapter.notifyDataSetChanged();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                         Log.d("Error", String.valueOf(e));
@@ -294,20 +291,57 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
     }
 
     public void endOfDay(){
-        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST,JSON_URL+ "endTime.php", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.d("endTime", "inside on res");
                         Log.d("endTime", response);
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-//                            JSONObject jsonObjectOrderItemList = response.getJSONObject(i);
+                            JSONArray jsonArray = new JSONArray(response);
+                            for (int i = 0; i < 1; i++) {
+                                JSONObject jsonEndTime = jsonArray.getJSONObject(0);
 
-                            int storeEndTime = jsonObject.getInt("storeEndTime");
+                                int storeEndTime = jsonEndTime.getInt("storeEndTime");
 
-                            Log.d("endTime", String.valueOf(storeEndTime));
+                                Log.d("endTime", String.valueOf(storeEndTime));
+
+                                //Convert endTime
+                                SimpleDateFormat militaryTimeFormat = new SimpleDateFormat("HHmm");
+                                SimpleDateFormat standardTimeFormat = new SimpleDateFormat("hh:mm a");
+
+                                Date date = null;
+                                try {
+                                    date = militaryTimeFormat.parse(String.valueOf(storeEndTime));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                endTimeStandard = standardTimeFormat.format(date);
+                                Log.d("endTimeStandard", endTimeStandard);
+
+                                // Get the current date and time
+                                Calendar calendar = Calendar.getInstance();
+                                Date currentDateAndTime = calendar.getTime();
+
+                                currentTimeStandard = standardTimeFormat.format(currentDateAndTime);
+                                if (currentTimeStandard.compareTo(endTimeStandard) >= 0){
+                                    Log.d("endTimeCompare", "AFTER STORE HOURS " + currentTimeStandard);
+                                    endtime++;
+                                    Log.d("endtimecount", String.valueOf(endtime));
+                                    break;
+                                } else {
+                                    Log.d("endTimeCompare", "BEFORE STORE HOURS");
+                                    endtime = 0;
+                                }
+                            }
+                            if (order_list != null && endtime == 1){
+                                orderId_list = new ArrayList<>();
+                                for (int j=0;j<order_list.size();j++){
+//                                            Log.d("endTime OL", String.valueOf(order_list.get(j).getIdOrder()));
+                                    orderId_list.add(order_list.get(j).getIdOrder());
+//                                            Log.d("endTime OI", String.valueOf(orderId_list.get(j)));
+                                }
+                                completeOrders();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("Error", String.valueOf(e));
@@ -325,6 +359,37 @@ public class OrdersFragment extends Fragment implements RecyclerViewInterface {
                 return paramV;
             }
         };
-        queue.add(stringRequest);
+        requestQueue3.add(stringRequest);
+    }
+    public void completeOrders(){
+        StringRequest orderRequest = new StringRequest(Request.Method.POST,JSON_URL+ "completeOrders.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String result) {
+                Log.d("On Res", "inside on res");
+//                Toast.makeText(getContext(), "Store Hours Are Closed\nAll Orders Completed",Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Volley Error", String.valueOf(error));
+            }
+        }){
+            protected Map<String, String> getParams(){
+                Map<String, String> paramV = new HashMap<>();
+                Gson gson = new Gson();
+                String jsonArray = gson.toJson(orderId_list);
+                paramV.put("data", jsonArray);
+                return paramV;
+            }
+        };
+        requestQueue4.add(orderRequest);
+        Log.d("completeOrders", "after Queue");
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putInt("id", id);
+        bundle.putString("email", email);
+        OrdersFragment fragment = new OrdersFragment();
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
     }
 }

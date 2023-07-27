@@ -168,7 +168,7 @@ public class DashboardFragment extends Fragment {
         JsonArrayRequest jsonArrayRequestOrder = new JsonArrayRequest(Request.Method.GET, JSON_URL+"apiorderget.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("ResponseLength", String.valueOf(response));
+//                Log.d("ResponseLength", String.valueOf(response));
                 int incoming_count = 0;
                 try {
                     for (int i = 0; i < response.length(); i++) {
@@ -179,11 +179,11 @@ public class DashboardFragment extends Fragment {
                         String orderStatus = jsonObjectOrder.getString("orderStatus");
                         int store_idStore = jsonObjectOrder.getInt("store_idStore");
                         String name = jsonObjectOrder.getString("name");
-                        Log.d("ResponseIdStore", String.valueOf(store_idStore));
-                        Log.d("ResponseIdStoreMerch", String.valueOf(id));
+//                        Log.d("ResponseIdStore", String.valueOf(store_idStore));
+//                        Log.d("ResponseIdStoreMerch", String.valueOf(id));
                         if (store_idStore == id) {
                             incoming_count++;
-                            Log.d("ResponseMatchIdStore", "Match");
+//                            Log.d("ResponseMatchIdStore", "Match");
                             OrderModel tempOrderModel = new OrderModel();
                             List<OrderItemModel> tempOrderItemList = new ArrayList<>();
                             tempOrderModel.setIdOrder(idOrder);
@@ -197,15 +197,15 @@ public class DashboardFragment extends Fragment {
                             JsonArrayRequest jsonArrayRequestOrderItemList = new JsonArrayRequest(Request.Method.GET, JSON_URL + "apiorderitemget.php", null, new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
-                                    Log.d("ResponseItemLength", String.valueOf(response.length()));
+//                                    Log.d("ResponseItemLength", String.valueOf(response.length()));
                                     List<OrderItemModel> orderItemModels = new ArrayList<>();
                                     try {
                                         for (int i = 0; i < response.length(); i++) {
                                             JSONObject jsonObjectOrderItemList = response.getJSONObject(i);
                                             if (jsonObjectOrderItemList.getInt("idOrder") == idOrder) {
-                                                Log.d("ResponseIdOrder", String.valueOf(jsonObjectOrderItemList.getInt("idOrder")));
-                                                Log.d("ResponseIdOrderMerch", String.valueOf(idOrder));
-                                                Log.d("ResponseIdOrderMatch", "IdOrder Match");
+//                                                Log.d("ResponseIdOrder", String.valueOf(jsonObjectOrderItemList.getInt("idOrder")));
+//                                                Log.d("ResponseIdOrderMerch", String.valueOf(idOrder));
+//                                                Log.d("ResponseIdOrderMatch", "IdOrder Match");
                                                 int idProduct = jsonObjectOrderItemList.getInt("idProduct");
                                                 int idStore = jsonObjectOrderItemList.getInt("idStore");
                                                 int idUser = jsonObjectOrderItemList.getInt("idUser");
@@ -238,7 +238,7 @@ public class DashboardFragment extends Fragment {
                                                 //orderItemModels.add(orderItemModel);
                                             }
                                         }
-                                        Log.d("ResponseOrderItemSize", String.valueOf(orderItemModels.size()));
+//                                        Log.d("ResponseOrderItemSize", String.valueOf(orderItemModels.size()));
                                         tempOrderModel.setOrderItem_list(orderItemModels);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -307,8 +307,8 @@ public class DashboardFragment extends Fragment {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(stringRequest);
+//        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue1.add(stringRequest);
 
     }
 
@@ -317,9 +317,9 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onResponse(String result) {
                 try {
-                    Log.d("NewCust: success= ", result);
+//                    Log.d("NewCust: success= ", result);
                     JSONArray jsonArray = new JSONArray(result);
-                    Log.d("NewCust: Array Length ", String.valueOf(jsonArray.length()));
+//                    Log.d("NewCust: Array Length ", String.valueOf(jsonArray.length()));
 
                     int newcust_count = 0;
                     for(int i=0; i < jsonArray.length(); i++){
@@ -329,10 +329,10 @@ public class DashboardFragment extends Fragment {
 
                         if (orderStatus.equals("pending") || orderStatus.equals("preparing") || orderStatus.equals("pickup")){
                             newcust_count++;
-                            Log.d("NewCust Count", String.valueOf(newcust_count));
+//                            Log.d("NewCust Count", String.valueOf(newcust_count));
                         }
                     }
-                    Log.d("NewCust:", "Outside Loop");
+//                    Log.d("NewCust:", "Outside Loop");
                     tv_new_customers.setText(String.valueOf(newcust_count));
                 } catch (JSONException e) {
                     Log.d("Catch:", String.valueOf(e));
@@ -353,18 +353,18 @@ public class DashboardFragment extends Fragment {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(stringRequest);
+//        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue1.add(stringRequest);
     }
 
     //For Dynamic Table
     public void innit(List<OrderModel> orderModelList){
-        Log.d("Innit", "inside");
-        Log.d("Innit OL size", String.valueOf(orderModelList.size()));
+//        Log.d("Innit", "inside");
+//        Log.d("Innit OL size", String.valueOf(orderModelList.size()));
 //        TableLayout tl_dashboard  = (TableLayout) root.findViewById(R.id.tl_dashboard);
         tl_dashboard.removeViews(1,tl_dashboard.getChildCount()-1);
         for (int i=0;i<orderModelList.size();i++){
-            Log.d("Innit OL size", String.valueOf(orderModelList.size()));
+//            Log.d("Innit OL size", String.valueOf(orderModelList.size()));
             //Creating Table Rows
             TableRow tbrow = new TableRow(getActivity());
             TextView tv_orderID = new TextView(getActivity());
@@ -412,7 +412,7 @@ public class DashboardFragment extends Fragment {
                 }
             });
             tbrow.addView(tv_viewDetails);
-            Log.d("Innit TBrow", String.valueOf(tbrow.getChildCount()));
+//            Log.d("Innit TBrow", String.valueOf(tbrow.getChildCount()));
             tl_dashboard.addView(tbrow);
         }
     }

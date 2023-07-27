@@ -126,8 +126,8 @@ public class Home extends AppCompatActivity {
         JSON_URL = ipModel.getURL();
 
         currDate = new Date();
-        Log.d("HOME", "Inside Home");
-        Log.d("HOME DATE", String.valueOf(currDate));
+//        Log.d("HOME", "Inside Home");
+//        Log.d("HOME DATE", String.valueOf(currDate));
 
         Intent intent = getIntent();
         if(intent.getStringExtra("name") != null) {
@@ -351,24 +351,24 @@ public class Home extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequestRec1 = new JsonArrayRequest(Request.Method.GET, JSON_URL + "api.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("Store Profile Resp: ", String.valueOf(response.length()));
-                Log.d("Store Profile id", String.valueOf(id));
+//                Log.d("Store Profile Resp: ", String.valueOf(response.length()));
+//                Log.d("Store Profile id", String.valueOf(id));
                 for (int i=0; i < response.length(); i++){
                     try {
                         JSONObject jsonObjectRec1 = response.getJSONObject(i);
-                        Log.d("Store Profile idStore", String.valueOf(jsonObjectRec1.getInt("idStore")));
+//                        Log.d("Store Profile idStore", String.valueOf(jsonObjectRec1.getInt("idStore")));
                         if (id == jsonObjectRec1.getInt("idStore")){
-                            Log.d("Store Profile", "inside if");
-                            Log.d("Store Profile", jsonObjectRec1.getString("storeName"));
+//                            Log.d("Store Profile", "inside if");
+//                            Log.d("Store Profile", jsonObjectRec1.getString("storeName"));
                             name = jsonObjectRec1.getString("storeName");
                             image = jsonObjectRec1.getString("storeImage");
                             byte[] byteArray = Base64.decode(image, Base64.DEFAULT);
                             Bitmap bitmap2 = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
                             iv_user_image.setImageBitmap(bitmap2);
-                            Log.d("IMAGE", String.valueOf(bitmap));
+//                            Log.d("IMAGE", String.valueOf(bitmap));
                             tv_user_name.setText(name);
 
-                            Log.d("Store Profile", "after set");
+//                            Log.d("Store Profile", "after set");
                             long r_id = jsonObjectRec1.getLong("idStore");
                             String r_image = jsonObjectRec1.getString("storeImage");
                             String r_name = jsonObjectRec1.getString("storeName");
@@ -381,7 +381,7 @@ public class Home extends AppCompatActivity {
 
                             storeModel = new StoreModel(r_id,r_image,r_name,r_description,r_location,r_category,
                                     r_rating, r_open, r_close);
-                            Log.d("Store Profile", storeModel.getStore_name());
+//                            Log.d("Store Profile", storeModel.getStore_name());
 //                            storeModelList.add(storeModel);
 //                            Log.d("Store Profile", "list added");
 //                            Log.d("Store Profile", String.valueOf(storeModelList.size()));
@@ -420,7 +420,7 @@ public class Home extends AppCompatActivity {
 
                 }
                 if (endDate == null){
-                    Log.d("home date check", "is null");
+//                    Log.d("home date check", "is null");
                     NavigationView navigationView = binding.navView;
                     navigationView.getMenu().getItem(5).setVisible(false);
                 }
@@ -439,16 +439,16 @@ public class Home extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequestBalance = new JsonArrayRequest(Request.Method.GET, JSON_URL + "apihomenotifget.php", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d("notif_response", String.valueOf(response.length()));
-                Log.d("notif_response", String.valueOf(response));
+//                Log.d("notif_response", String.valueOf(response.length()));
+//                Log.d("notif_response", String.valueOf(response));
                 for (int i=0; i < response.length(); i++){
                     try {
                         JSONObject jsonObject = response.getJSONObject(i);
-                        Log.d("notif_id_json", String.valueOf(jsonObject.getInt("idmerchant") + " " + id));
+//                        Log.d("notif_id_json", String.valueOf(jsonObject.getInt("idmerchant") + " " + id));
                         if(jsonObject.getInt("idmerchant") == id && jsonObject.getString("type").equalsIgnoreCase("status")) {
                             int idnotifread = jsonObject.getInt("idnotif");
                             String description = jsonObject.getString("description");
-                            Log.d("notif_id_json", String.valueOf(idnotifread + " " + lastDisplayedNotificationId));
+//                            Log.d("notif_id_json", String.valueOf(idnotifread + " " + lastDisplayedNotificationId));
                             if (idnotifread != lastDisplayedNotificationId) {
                                 // Display the notification only if the ID is different
                                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "My Notification");
