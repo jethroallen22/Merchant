@@ -205,17 +205,26 @@ public class Home extends AppCompatActivity {
         });
 
         // Handle the click event of the MenuItem
+        if(status.equalsIgnoreCase("pending")) {
+            navigationView.getMenu().getItem(0).setEnabled(false);
+            navigationView.getMenu().getItem(1).setEnabled(false);
+            navigationView.getMenu().getItem(2).setEnabled(false);
+            navigationView.getMenu().getItem(3).setEnabled(false);
+            navigationView.getMenu().getItem(4).setEnabled(false);
+            navigationView.getMenu().getItem(5).setEnabled(false);
+
+        }
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.nav_dashboard){
                     Bundle bundle = new Bundle();
-                    bundle.putInt("idMerchant",id);
+                    bundle.putInt("idMerchant", id);
                     bundle.putString("name", name);
                     bundle.putString("email", email);
                     DashboardFragment fragment = new DashboardFragment();
                     fragment.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home, fragment).commit();
                 } else if (item.getItemId() == R.id.nav_orders) {
                     Bundle bundle = new Bundle();
                     bundle.putInt("idMerchant",id);
