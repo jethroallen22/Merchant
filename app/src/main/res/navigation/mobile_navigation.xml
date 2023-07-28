@@ -26,6 +26,9 @@
             android:id="@+id/action_nav_dashboard_to_nav_special"
             app:destination="@id/nav_special" />
         <action
+            android:id="@id/nav_feedback"
+            app:destination="@id/nav_feedback"/>
+        <action
             android:id="@id/nav_documents"
             app:destination="@id/nav_documents"/>
 <!--        <action-->
@@ -81,12 +84,18 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_feedback"
+        android:name="com.example.merchant.activities.ui.feedback.FeedbackFragment"
+        android:label="Feedback"
+        tools:layout="@layout/fragment_feedback">
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_documents"
         android:name="com.example.merchant.activities.ui.documents.DocumentsFragment"
         android:label="Documents"
         tools:layout="@layout/fragment_documents">
     </fragment>
-
 <!--    <fragment-->
 <!--        android:id="@+id/nav_reports"-->
 <!--        android:name="com.example.merchant.activities.ui.reports.ReportsFragment"-->

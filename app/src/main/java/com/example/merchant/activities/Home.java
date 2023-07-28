@@ -5,52 +5,38 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
 import com.example.merchant.activities.ui.Dashboard.DashboardFragment;
-import com.example.merchant.activities.ui.addproduct.AddProductFragment;
 import com.example.merchant.activities.ui.deals.DealsStatusFragment;
 import com.example.merchant.activities.ui.documents.DocumentsFragment;
+import com.example.merchant.activities.ui.feedback.FeedbackFragment;
 import com.example.merchant.activities.ui.orders.OrdersFragment;
 import com.example.merchant.activities.ui.profile.ProfileFragment;
-import com.example.merchant.activities.ui.reports.ReportsFragment;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
-import com.example.merchant.activities.ui.special.SpecialFragment;
 import com.example.merchant.activities.ui.special.SpecialStatusFragment;
 import com.example.merchant.activities.ui.voucher.VoucherStatusFragment;
 import com.example.merchant.adapters.OrderAdapter;
 import com.example.merchant.databinding.ActivityHomeBinding;
-import com.example.merchant.interfaces.RecyclerViewInterface;
 import com.example.merchant.interfaces.Singleton;
 import com.example.merchant.models.IPModel;
-import com.example.merchant.models.MerchantModel;
 import com.example.merchant.models.OrderItemModel;
 import com.example.merchant.models.OrderModel;
 import com.example.merchant.models.StoreModel;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -64,20 +50,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 //import com.example.merchant.activities.databinding.ActivityHomeBinding;
-import com.example.merchant.databinding.ActivityHomeBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Home extends AppCompatActivity {
 
@@ -212,7 +192,7 @@ public class Home extends AppCompatActivity {
             navigationView.getMenu().getItem(3).setEnabled(false);
             navigationView.getMenu().getItem(4).setEnabled(false);
             navigationView.getMenu().getItem(5).setEnabled(false);
-
+            navigationView.getMenu().getItem(6).setEnabled(false);
         }
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -265,6 +245,14 @@ public class Home extends AppCompatActivity {
                     bundle.putString("email", email);
                     fragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                } else if(item.getItemId() == R.id.nav_feedback){
+                    Bundle bundle = new Bundle();
+                    FeedbackFragment fragment = new FeedbackFragment();
+                    bundle.putString("name", name);
+                    bundle.putInt("id", id);
+                    bundle.putString("email", email);
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home, fragment).commit();
                 } else if(item.getItemId() == R.id.nav_documents){
                     Bundle bundle = new Bundle();
                     DocumentsFragment fragment = new DocumentsFragment();
@@ -338,21 +326,21 @@ public class Home extends AppCompatActivity {
 //                return false;
 //            }
 //        });
-        navigationView.getMenu().getItem(6).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
-
-                Bundle bundle = new Bundle();
-                ReportsFragment fragment = new ReportsFragment();
-                bundle.putString("name", name);
-                bundle.putInt("id", id);
-                bundle.putString("email", email);
-                fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
-
-                return false;
-            }
-        });
+//        navigationView.getMenu().getItem(6).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(@NonNull MenuItem item) {
+//
+//                Bundle bundle = new Bundle();
+//                ReportsFragment fragment = new ReportsFragment();
+//                bundle.putString("name", name);
+//                bundle.putInt("id", id);
+//                bundle.putString("email", email);
+//                fragment.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+//
+//                return false;
+//            }
+//        });
     }
 
     public void store_profile(){

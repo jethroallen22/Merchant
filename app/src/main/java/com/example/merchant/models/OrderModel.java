@@ -1,7 +1,12 @@
 package com.example.merchant.models;
 
+import static android.util.Base64.DEFAULT;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
@@ -17,6 +22,7 @@ public class OrderModel implements Parcelable {
     String users_name;
     List<OrderItemModel> orderItem_list;
     String timedate;
+    String feedback, proof;
 
     public OrderModel(int idOrder, float orderItemTotalPrice, String orderStatus, int store_idstore, String users_name, List<OrderItemModel> orderItem_list) {
         this.idOrder = idOrder;
@@ -37,26 +43,17 @@ public class OrderModel implements Parcelable {
         this.orderItem_list = orderItem_list;
     }
 
-    //    public OrderModel(long order_id, String name, String address, String time, String distance, List<OrderItemModel> orderItem_list, int item_count, float total) {
-//        this.order_id = order_id;
-//        this.name = name;
-//        this.address = address;
-//        this.time = time;
-//        this.distance = distance;
-//        this.orderItem_list = orderItem_list;
-//        this.item_count = item_count;
-//        this.total = total;
-//    }
-
-//    public OrderModel(String name, String address, String time, String distance, List<OrderItemModel> orderItem_list, int item_count, float total) {
-//        this.name = name;
-//        this.address = address;
-//        this.time = time;
-//        this.distance = distance;
-//        this.orderItem_list = orderItem_list;
-//        this.item_count = item_count;
-//        this.total = total;
-//    }
+    public OrderModel(int idOrder, float orderItemTotalPrice, String orderStatus, int store_idstore, String users_name, String timedate, String feedback, String proof, List<OrderItemModel> orderItem_list) {
+        this.idOrder = idOrder;
+        this.orderItemTotalPrice = orderItemTotalPrice;
+        this.orderStatus = orderStatus;
+        this.store_idstore = store_idstore;
+        this.users_name = users_name;
+        this.timedate = timedate;
+        this.feedback = feedback;
+        this.proof = proof;
+        this.orderItem_list = orderItem_list;
+    }
 
     public OrderModel() {
     }
@@ -68,6 +65,8 @@ public class OrderModel implements Parcelable {
         store_idstore = in.readInt();
         users_name = in.readString();
         timedate = in.readString();
+        feedback = in.readString();
+        proof = in.readString();
         orderItem_list = in.createTypedArrayList(OrderItemModel.CREATOR);
     }
 
@@ -139,6 +138,22 @@ public class OrderModel implements Parcelable {
         this.timedate = timedate;
     }
 
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public String getProof() {
+        return proof;
+    }
+
+    public void setProof(String proof) {
+        this.proof = proof;
+    }
+
     public List<OrderItemModel> getOrderItem_list() {
         return orderItem_list;
     }
@@ -146,6 +161,12 @@ public class OrderModel implements Parcelable {
     public void setOrderItem_list(List<OrderItemModel> orderItem_list) {
         this.orderItem_list = orderItem_list;
     }
+
+    public Bitmap getBitmapImage(){
+        byte[] byteArray = Base64.decode(proof, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.length);
+        return bitmap;
+    };
 
     @Override
     public int describeContents() {
@@ -160,6 +181,8 @@ public class OrderModel implements Parcelable {
         dest.writeInt(store_idstore);
         dest.writeString(users_name);
         dest.writeString(timedate);
+        dest.writeString(feedback);
+        dest.writeString(proof);
         dest.writeTypedList(orderItem_list);
     }
 }

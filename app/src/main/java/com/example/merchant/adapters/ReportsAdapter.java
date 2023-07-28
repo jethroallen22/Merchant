@@ -75,20 +75,20 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ViewHold
             tv_activity_address = itemView.findViewById(R.id.tv_activity_address);
             tv_activity_date = itemView.findViewById(R.id.tv_activity_date);
             tv_activity_price = itemView.findViewById(R.id.tv_activity_price);
-            btn_activity_details = itemView.findViewById(R.id.btn_activity_details);
+//            btn_activity_details = itemView.findViewById(R.id.btn_activity_details);
 
-            btn_activity_details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null){
-                        int pos = getAdapterPosition();
-
-                        if (pos != RecyclerView.NO_POSITION){
-                            listener.onItemClick(pos);
-                        }
-                    }
-                }
-            });
+//            btn_activity_details.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null){
+//                        int pos = getAdapterPosition();
+//
+//                        if (pos != RecyclerView.NO_POSITION){
+//                            listener.onItemClick(pos);
+//                        }
+//                    }
+//                }
+//            });
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
