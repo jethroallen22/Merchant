@@ -2,11 +2,13 @@ package com.example.merchant.activities.ui.feedback;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.merchant.R;
+import com.example.merchant.activities.ui.checkout.Checkout2Fragment;
 import com.example.merchant.activities.ui.slideshow.ProductsViewModel;
 import com.example.merchant.adapters.OrderItemsAdapter;
 import com.example.merchant.databinding.FragmentFeedbackSummaryBinding;
@@ -31,6 +34,7 @@ import com.example.merchant.databinding.FragmentOrderSummaryBinding;
 import com.example.merchant.models.IPModel;
 import com.example.merchant.models.OrderItemModel;
 import com.example.merchant.models.OrderModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,10 +50,13 @@ public class FeedbackSummaryFragment extends Fragment {
     List<OrderItemModel> order_item_list;
     OrderItemsAdapter orderItemsAdapter;
     TextView tv_order_id, tv_name, tv_total_price, tv_feedback;
-    Button btn_refund, btn_reject;
+    Button btn_refund, btn_reject, btn_send;
     ImageView iv_proof;
     Bitmap bitmap;
-
+    EditText et_feedback;
+    public static String name = "";
+    public static String email = "";
+    public static int id;
     //School IP
     private static String JSON_URL;
     private IPModel ipModel;
@@ -78,6 +85,9 @@ public class FeedbackSummaryFragment extends Fragment {
         if (bundle != null) {
             order = new OrderModel();
             order = bundle.getParcelable("Order");
+            name = bundle.getString("name");
+            id = bundle.getInt("id");
+            email = bundle.getString("email");
             Log.d("Bundle orderStat", order.getOrderStatus());
             bitmap = order.getBitmapImage();
         }
@@ -101,7 +111,12 @@ public class FeedbackSummaryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 UpdateStatus(order.getIdOrder(), "refund");
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putInt("id", id);
+                bundle.putString("email", email);
                 FeedbackFragment fragment = new FeedbackFragment();
+                fragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
             }
         });
@@ -109,9 +124,7 @@ public class FeedbackSummaryFragment extends Fragment {
         btn_reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UpdateStatus(order.getIdOrder(), "reject");
-                FeedbackFragment fragment = new FeedbackFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+                showBottomSheet();
             }
         });
 
@@ -148,7 +161,7 @@ public class FeedbackSummaryFragment extends Fragment {
                 if (status.equalsIgnoreCase("refund")){
                     params.put("description", "Your feedback was seen and your order has been refunded");
                 } else if (status.equalsIgnoreCase("reject")){
-                    params.put("description", "Your feedback was seen but your order will not be refunded");
+                    params.put("description", String.valueOf(et_feedback.getText()));
                 }
 
                 return params;
@@ -158,5 +171,35 @@ public class FeedbackSummaryFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
 
+    }
+    public void showBottomSheet(){
+        String TAG = "Bottomsheet";
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);
+        Log.d(TAG, "final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialogTheme);");
+        View bottomSheetView = LayoutInflater.from(getActivity().getApplicationContext())
+                .inflate(
+                        R.layout.feedback_bottom_sheet_layout,
+                        getActivity().findViewById(R.id.feedback_bottomSheet_container)
+                );
+        et_feedback = bottomSheetView.findViewById(R.id.et_feedback);
+        btn_send = bottomSheetView.findViewById(R.id.btn_send);
+
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdateStatus(order.getIdOrder(), "reject");
+                bottomSheetDialog.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putInt("id", id);
+                bundle.putString("email", email);
+                FeedbackFragment fragment = new FeedbackFragment();
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home,fragment).commit();
+            }
+        });
+
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
     }
 }

@@ -92,7 +92,13 @@ public class FeedbackFragment extends Fragment implements RecyclerViewInterface 
 
         dateTimeString = formattedDate + " " + formattedTime;
 
-        extractOrder();
+        root.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                extractOrder();
+                root.postDelayed(this, 10000);
+            }
+        }, 1000);
 
 
         return root;
@@ -246,6 +252,9 @@ public class FeedbackFragment extends Fragment implements RecyclerViewInterface 
         Log.d("Test", "Click");
         Bundle order = new Bundle();
         FeedbackSummaryFragment fragment = new FeedbackSummaryFragment();
+        order.putString("name", name);
+        order.putInt("id", id);
+        order.putString("email", email);
         order.putParcelable("Order",orderModelList.get(position));
         fragment.setArguments(order);
         Log.d("TAG", "Success");

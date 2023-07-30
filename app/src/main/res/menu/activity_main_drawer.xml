@@ -30,8 +30,12 @@
             android:title="Special Tags" />
         <item
             android:id="@+id/nav_feedback"
-            android:icon="@drawable/baseline_file_present_24"
+            android:icon="@drawable/ic_feedback"
             android:title="Feedback"/>
+        <item
+            android:id="@+id/nav_payout"
+            android:icon="@drawable/ic_payout"
+            android:title="Payout"/>
         <item
             android:id="@+id/nav_documents"
             android:icon="@drawable/baseline_file_present_24"

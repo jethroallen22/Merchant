@@ -29,6 +29,9 @@
             android:id="@id/nav_feedback"
             app:destination="@id/nav_feedback"/>
         <action
+            android:id="@id/nav_payout"
+            app:destination="@id/nav_payout"/>
+        <action
             android:id="@id/nav_documents"
             app:destination="@id/nav_documents"/>
 <!--        <action-->
@@ -88,6 +91,13 @@
         android:name="com.example.merchant.activities.ui.feedback.FeedbackFragment"
         android:label="Feedback"
         tools:layout="@layout/fragment_feedback">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_payout"
+        android:name="com.example.merchant.activities.ui.payout.PayoutFragment"
+        android:label="Payout"
+        tools:layout="@layout/fragment_payout">
     </fragment>
 
     <fragment

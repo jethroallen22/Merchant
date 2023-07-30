@@ -26,6 +26,7 @@ import com.example.merchant.activities.ui.deals.DealsStatusFragment;
 import com.example.merchant.activities.ui.documents.DocumentsFragment;
 import com.example.merchant.activities.ui.feedback.FeedbackFragment;
 import com.example.merchant.activities.ui.orders.OrdersFragment;
+import com.example.merchant.activities.ui.payout.PayoutFragment;
 import com.example.merchant.activities.ui.profile.ProfileFragment;
 import com.example.merchant.activities.ui.slideshow.ProductsFragment;
 import com.example.merchant.activities.ui.special.SpecialStatusFragment;
@@ -248,6 +249,14 @@ public class Home extends AppCompatActivity {
                 } else if(item.getItemId() == R.id.nav_feedback){
                     Bundle bundle = new Bundle();
                     FeedbackFragment fragment = new FeedbackFragment();
+                    bundle.putString("name", name);
+                    bundle.putInt("id", id);
+                    bundle.putString("email", email);
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_home, fragment).commit();
+                } else if(item.getItemId() == R.id.nav_payout){
+                    Bundle bundle = new Bundle();
+                    PayoutFragment fragment = new PayoutFragment();
                     bundle.putString("name", name);
                     bundle.putInt("id", id);
                     bundle.putString("email", email);
