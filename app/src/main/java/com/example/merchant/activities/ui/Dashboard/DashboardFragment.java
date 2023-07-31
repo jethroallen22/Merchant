@@ -93,6 +93,7 @@ public class DashboardFragment extends Fragment {
 //    String dateTimeString, timedate;
     Handler handler;
     Runnable myRunnable;
+    int currentMonth, adjustedMonth;
 
     private FragmentDashboardBinding binding;
 
@@ -134,6 +135,13 @@ public class DashboardFragment extends Fragment {
         requestQueue3 = Singleton.getsInstance(getActivity()).getRequestQueue();
         requestQueue4 = Singleton.getsInstance(getActivity()).getRequestQueue();
         requestQueue5 = Singleton.getsInstance(getActivity()).getRequestQueue();
+
+        // Get the current month
+        Calendar calendar = Calendar.getInstance();
+        currentMonth = calendar.get(Calendar.MONTH);
+
+        // Adjust the month value to start from 1 instead of 0 (January is represented as 0)
+        adjustedMonth = currentMonth + 1;
         root.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -280,11 +288,12 @@ public class DashboardFragment extends Fragment {
 //                    Log.d("NewCust: Array Length ", String.valueOf(jsonArray.length()));
                     for(int i=0; i < jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        if (adjustedMonth == jsonObject.getInt("month")) {
+                            float orderItemTotalPrice = jsonObject.getInt("orderItemTotalPrice");
 
-                        float orderItemTotalPrice = jsonObject.getInt("orderItemTotalPrice");
-
-                        tv_net_profit.setText("P "+String.valueOf((float)Math.round((orderItemTotalPrice * 0.95) * 100) / 100));
-                        tv_operating_expense.setText("P "+String.valueOf((float)Math.round((orderItemTotalPrice * 0.05) * 100) / 100));
+                            tv_net_profit.setText(String.valueOf((float) Math.round((orderItemTotalPrice * 0.95) * 100) / 100));
+                            tv_operating_expense.setText(String.valueOf((float) Math.round((orderItemTotalPrice * 0.05) * 100) / 100));
+                        }
                     }
 //                    Log.d("NewCust:", "Outside Loop");
 //                    tv_new_customers.setText(String.valueOf(newcust_count));

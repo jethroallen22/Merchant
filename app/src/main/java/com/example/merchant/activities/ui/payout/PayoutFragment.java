@@ -64,6 +64,7 @@ public class PayoutFragment extends Fragment implements RecyclerViewInterface {
 
     float orderItemTotalPrice;
     String dateTimeString, timedate;
+    int currentMonth, adjustedMonth;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -102,6 +103,12 @@ public class PayoutFragment extends Fragment implements RecyclerViewInterface {
         String formattedTime = timeFormat.format(currentDateAndTime);
 
         dateTimeString = formattedDate + " " + formattedTime;
+
+        // Get the current month
+        currentMonth = calendar.get(Calendar.MONTH);
+
+        // Adjust the month value to start from 1 instead of 0 (January is represented as 0)
+        adjustedMonth = currentMonth + 1;
 
         getPayoutHistory();
         sales(String.valueOf(id));
@@ -168,11 +175,12 @@ public class PayoutFragment extends Fragment implements RecyclerViewInterface {
 //                    Log.d("NewCust: Array Length ", String.valueOf(jsonArray.length()));
                     for(int i=0; i < jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        if (adjustedMonth == jsonObject.getInt("month")){
+                            orderItemTotalPrice = jsonObject.getInt("orderItemTotalPrice");
+                            orderItemTotalPrice = (float)Math.round((orderItemTotalPrice * 0.05) * 100) / 100;
 
-                        orderItemTotalPrice = jsonObject.getInt("orderItemTotalPrice");
-                        orderItemTotalPrice = (float)Math.round((orderItemTotalPrice * 0.05) * 100) / 100;
-
-                        tv_balance.setText("Balance: ₱ "+String.valueOf(orderItemTotalPrice));
+                            tv_balance.setText("Balance: ₱ "+String.valueOf(orderItemTotalPrice));
+                        }
                     }
 //                    Log.d("NewCust:", "Outside Loop");
 //                    tv_new_customers.setText(String.valueOf(newcust_count));
